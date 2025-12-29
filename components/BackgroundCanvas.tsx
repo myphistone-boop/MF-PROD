@@ -2,11 +2,24 @@
 import React, { useEffect, useRef } from 'react';
 import { Theme } from '../types';
 
-interface Star {
+interface Particle {
   x: number;
   y: number;
+  vx: number;
+  vy: number;
   size: number;
+  color: string;
   opacity: number;
+}
+
+interface Orb {
+  x: number;
+  y: number;
+  radius: number;
+  color: string;
+  angle: number;
+  speed: number;
+  range: number;
 }
 
 interface BackgroundCanvasProps {
@@ -15,7 +28,8 @@ interface BackgroundCanvasProps {
 
 const BackgroundCanvas: React.FC<BackgroundCanvasProps> = ({ theme = 'dark' }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const starsRef = useRef<Star[]>([]);
+  const particlesRef = useRef<Particle[]>([]);
+  const orbsRef = useRef<Orb[]>([]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -26,18 +40,33 @@ const BackgroundCanvas: React.FC<BackgroundCanvasProps> = ({ theme = 'dark' }) =
     let width = window.innerWidth;
     let height = window.innerHeight;
 
-    const generateStars = () => {
-      const starCount = Math.floor((width * height) / 3000);
-      const newStars: Star[] = [];
-      for (let i = 0; i < starCount; i++) {
-        newStars.push({
-          x: Math.random() * width,
-          y: Math.random() * height,
-          size: Math.random() * 2 + 0.1,
-          opacity: Math.random() * 0.7 + 0.1
-        });
-      }
-      starsRef.current = newStars;
+    const isDark = theme === 'dark';
+    
+    // Couleurs du logo
+    const colors = isDark 
+      ? ['rgba(0, 210, 255, 0.08)', 'rgba(255, 0, 122, 0.08)', 'rgba(255, 138, 0, 0.05)']
+      : ['rgba(0, 210, 255, 0.04)', 'rgba(255, 0, 122, 0.04)', 'rgba(255, 138, 0, 0.03)'];
+
+    const initOrbs = () => {
+      orbsRef.current = [
+        { x: width * 0.2, y: height * 0.3, radius: 600, color: colors[0], angle: Math.random() * Math.PI, speed: 0.002, range: 150 },
+        { x: width * 0.8, y: height * 0.7, radius: 700, color: colors[1], angle: Math.random() * Math.PI, speed: 0.0015, range: 200 },
+        { x: width * 0.5, y: height * 0.5, radius: 800, color: colors[2], angle: Math.random() * Math.PI, speed: 0.001, range: 100 },
+        { x: width * 0.9, y: height * 0.1, radius: 500, color: colors[0], angle: Math.random() * Math.PI, speed: 0.0025, range: 120 },
+      ];
+    };
+
+    const initParticles = () => {
+      const count = Math.floor((width * height) / 10000);
+      particlesRef.current = Array.from({ length: count }, () => ({
+        x: Math.random() * width,
+        y: Math.random() * height,
+        vx: (Math.random() - 0.5) * 0.2,
+        vy: (Math.random() - 0.5) * 0.2,
+        size: Math.random() * 1.5 + 0.5,
+        color: isDark ? '#FFFFFF' : '#64748b',
+        opacity: Math.random() * 0.4 + 0.1
+      }));
     };
 
     const resize = () => {
@@ -45,72 +74,63 @@ const BackgroundCanvas: React.FC<BackgroundCanvasProps> = ({ theme = 'dark' }) =
       height = window.innerHeight;
       canvas.width = width;
       canvas.height = height;
-      generateStars();
+      initOrbs();
+      initParticles();
     };
 
     window.addEventListener('resize', resize);
     resize();
 
-    const isDark = theme === 'dark';
-
-    const halos = [
-      {
-        x: width * 0.2,
-        y: height * 0.3,
-        radius: 800,
-        color: isDark ? 'rgba(0, 210, 255, 0.15)' : 'rgba(0, 210, 255, 0.08)',
-        phase: 0
-      },
-      {
-        x: width * 0.8,
-        y: height * 0.7,
-        radius: 900,
-        color: isDark ? 'rgba(255, 0, 122, 0.15)' : 'rgba(255, 0, 122, 0.08)',
-        phase: 2
-      },
-      {
-        x: width * 0.5,
-        y: height * 0.5,
-        radius: 1000,
-        color: isDark ? 'rgba(255, 138, 0, 0.08)' : 'rgba(255, 138, 0, 0.05)',
-        phase: 4
-      }
-    ];
-
     const animate = () => {
-      const time = Date.now() * 0.0002;
+      const time = Date.now() * 0.001;
       
-      // Fond adaptatif
-      ctx.fillStyle = isDark ? '#020617' : '#F8FAFC';
+      // 1. Fond de base (Dégradé très subtil)
+      const baseGradient = ctx.createLinearGradient(0, 0, width, height);
+      if (isDark) {
+        baseGradient.addColorStop(0, '#020617');
+        baseGradient.addColorStop(1, '#0f172a');
+      } else {
+        baseGradient.addColorStop(0, '#F8FAFC');
+        baseGradient.addColorStop(1, '#f1f5f9');
+      }
+      ctx.fillStyle = baseGradient;
       ctx.fillRect(0, 0, width, height);
 
-      // Halos dynamiques
-      halos.forEach(halo => {
-        const currentX = halo.x + Math.sin(time + halo.phase) * 100;
-        const currentY = halo.y + Math.cos(time * 1.5 + halo.phase) * 100;
-        const currentRadius = halo.radius + Math.sin(time * 2 + halo.phase) * 50;
-
-        const g = ctx.createRadialGradient(currentX, currentY, 0, currentX, currentY, currentRadius);
-        g.addColorStop(0, halo.color);
-        g.addColorStop(1, isDark ? 'rgba(2, 6, 23, 0)' : 'rgba(248, 250, 252, 0)');
+      // 2. Orbes flottants (Mesh effect)
+      orbsRef.current.forEach(orb => {
+        orb.angle += orb.speed;
+        const currentX = orb.x + Math.sin(orb.angle) * orb.range;
+        const currentY = orb.y + Math.cos(orb.angle * 0.8) * orb.range;
+        
+        const g = ctx.createRadialGradient(currentX, currentY, 0, currentX, currentY, orb.radius);
+        g.addColorStop(0, orb.color);
+        g.addColorStop(1, 'transparent');
 
         ctx.fillStyle = g;
         ctx.beginPath();
-        ctx.arc(currentX, currentY, currentRadius, 0, Math.PI * 2);
+        ctx.arc(currentX, currentY, orb.radius, 0, Math.PI * 2);
         ctx.fill();
       });
 
-      // Étoiles (seulement en mode sombre ou très discrètes en mode clair)
-      ctx.fillStyle = isDark ? '#FFFFFF' : '#64748b'; 
-      starsRef.current.forEach(star => {
-        const twinkle = Math.sin(time * 10 + star.x) * 0.3 + 0.7;
-        ctx.globalAlpha = star.opacity * twinkle * (isDark ? 1.0 : 0.3);
+      // 3. Particules (Dust effect)
+      particlesRef.current.forEach(p => {
+        p.x += p.vx;
+        p.y += p.vy;
+
+        if (p.x < 0) p.x = width;
+        if (p.x > width) p.x = 0;
+        if (p.y < 0) p.y = height;
+        if (p.y > height) p.y = 0;
+
+        const twinkle = Math.sin(time + p.x) * 0.2 + 0.8;
+        ctx.globalAlpha = p.opacity * twinkle;
+        ctx.fillStyle = p.color;
         ctx.beginPath();
-        ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
         ctx.fill();
       });
-      ctx.globalAlpha = 1.0;
 
+      ctx.globalAlpha = 1.0;
       requestAnimationFrame(animate);
     };
 
@@ -121,7 +141,7 @@ const BackgroundCanvas: React.FC<BackgroundCanvasProps> = ({ theme = 'dark' }) =
     };
   }, [theme]);
 
-  return <canvas ref={canvasRef} className="fixed top-0 left-0 w-full h-full -z-10" />;
+  return <canvas ref={canvasRef} className="fixed top-0 left-0 w-full h-full -z-10 pointer-events-none" />;
 };
 
 export default BackgroundCanvas;
