@@ -66,13 +66,13 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, theme, onToggl
     <>
       <nav 
         className={`fixed top-4 md:top-6 left-1/2 transform -translate-x-1/2 z-50 transition-all duration-700 ease-in-out
-          ${scrolled ? 'w-[95%] max-w-[1200px] py-2' : 'w-[95%] max-w-[1600px] py-4'}
+          ${scrolled ? 'w-[95%] max-w-[1250px] py-2' : 'w-[95%] max-w-[1600px] py-4'}
         `}
       >
         <div className={`
-          relative w-full h-full rounded-full flex items-center justify-between px-6 lg:px-10 transition-all duration-700
+          relative w-full h-full rounded-full flex items-center justify-between px-6 lg:px-12 transition-all duration-700
           backdrop-blur-2xl border border-black/5 dark:border-white/10 shadow-2xl
-          ${scrolled ? 'bg-white/90 dark:bg-brand-dark-soft/90' : 'bg-white/40 dark:bg-brand-dark/40'}
+          ${scrolled ? 'bg-white/95 dark:bg-brand-dark-soft/95' : 'bg-white/60 dark:bg-brand-dark/60'}
         `}>
           
           <div 
@@ -95,7 +95,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, theme, onToggl
             </span>
           </div>
 
-          <div className="hidden lg:flex items-center gap-8 xl:gap-10">
+          <div className="hidden lg:flex items-center gap-10 xl:gap-14">
             {NAV_ITEMS.map((item) => {
               const isPrestations = item.label === 'Prestations';
               
@@ -109,13 +109,20 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, theme, onToggl
                   <button
                     onClick={() => handleNavClick(item)}
                     className={`
-                      uppercase tracking-[0.3em] text-[10px] xl:text-[11px] font-black transition-all duration-300 relative py-4 flex items-center gap-2
+                      uppercase tracking-[0.2em] text-xl xl:text-2xl font-black transition-all duration-300 relative py-4 flex items-center gap-3
                       hover:text-brand-magenta
-                      ${currentView === item.view && !item.sectionId ? 'text-brand-cyan' : 'text-brand-dark/60 dark:text-brand-light/60'}
+                      ${currentView === item.view && !item.sectionId 
+                        ? 'text-brand-cyan' 
+                        : 'text-brand-dark dark:text-white'}
                     `}
                   >
                     {item.label}
-                    {isPrestations && <ChevronDown size={12} className={`transition-transform duration-300 ${dropdownOpen ? 'rotate-180 text-brand-magenta' : ''}`} />}
+                    {isPrestations && (
+                      <ChevronDown 
+                        size={20} 
+                        className={`transition-transform duration-300 ${dropdownOpen ? 'rotate-180 text-brand-magenta' : ''}`} 
+                      />
+                    )}
                   </button>
 
                   {isPrestations && (
@@ -123,13 +130,13 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, theme, onToggl
                       absolute top-full left-1/2 -translate-x-1/2 pt-4 transition-all duration-300 transform
                       ${dropdownOpen ? 'opacity-100 translate-y-0 pointer-events-auto' : 'opacity-0 -translate-y-4 pointer-events-none'}
                     `}>
-                      <div className="bg-white/95 dark:bg-brand-dark-soft/95 backdrop-blur-2xl border border-black/5 dark:border-white/10 rounded-[2rem] p-6 w-[280px] shadow-2xl">
-                        <div className="flex flex-col gap-2">
+                      <div className="bg-white/98 dark:bg-brand-dark-soft/98 backdrop-blur-2xl border border-black/5 dark:border-white/10 rounded-[2.5rem] p-8 w-[350px] shadow-2xl">
+                        <div className="flex flex-col gap-3">
                           {prestationsLinks.map((link) => (
                             <button
                               key={link.label}
                               onClick={() => handlePrestationClick(link.view)}
-                              className="text-left px-4 py-3 rounded-xl hover:bg-black/5 dark:hover:bg-white/5 text-[10px] uppercase tracking-[0.2em] font-black text-brand-dark/60 dark:text-white/60 hover:text-brand-cyan transition-all"
+                              className="text-left px-5 py-4 rounded-2xl hover:bg-black/5 dark:hover:bg-white/5 text-xs xl:text-sm uppercase tracking-[0.2em] font-black text-brand-dark/70 dark:text-white/70 hover:text-brand-magenta transition-all"
                             >
                               {link.label}
                             </button>
@@ -142,13 +149,12 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, theme, onToggl
               );
             })}
             
-            {/* Theme Toggle */}
             <button 
                 onClick={onToggleTheme}
-                className="w-10 h-10 rounded-full bg-black/5 dark:bg-white/5 flex items-center justify-center text-brand-dark dark:text-white hover:bg-brand-magenta hover:text-white transition-all duration-300"
+                className="w-14 h-14 rounded-full bg-black/5 dark:bg-white/5 flex items-center justify-center text-brand-dark dark:text-white hover:bg-brand-magenta hover:text-white transition-all duration-300 shadow-sm"
                 aria-label="Toggle Theme"
             >
-                {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
+                {theme === 'dark' ? <Sun size={24} /> : <Moon size={24} />}
             </button>
           </div>
 
@@ -156,7 +162,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, theme, onToggl
             className="lg:hidden text-brand-dark dark:text-white p-2"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           >
-            {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            {mobileMenuOpen ? <X size={32} /> : <Menu size={32} />}
           </button>
         </div>
       </nav>
@@ -165,12 +171,12 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, theme, onToggl
         <div className="fixed inset-0 z-40 bg-white/98 dark:bg-brand-dark/98 backdrop-blur-3xl flex flex-col items-center justify-center p-12 lg:hidden animate-fade-in-up overflow-y-auto">
            <button 
                 onClick={onToggleTheme}
-                className="absolute top-10 right-10 w-12 h-12 rounded-full bg-brand-dark/5 dark:bg-white/5 flex items-center justify-center text-brand-dark dark:text-white"
+                className="absolute top-10 right-10 w-16 h-16 rounded-full bg-brand-dark/5 dark:bg-white/5 flex items-center justify-center text-brand-dark dark:text-white shadow-lg"
             >
-                {theme === 'dark' ? <Sun size={24} /> : <Moon size={24} />}
+                {theme === 'dark' ? <Sun size={32} /> : <Moon size={32} />}
             </button>
 
-           <div className="flex flex-col items-center gap-6 w-full py-20">
+           <div className="flex flex-col items-center gap-10 w-full py-20">
             {NAV_ITEMS.map((item) => {
                 const isPrestations = item.label === 'Prestations';
                 
@@ -178,18 +184,18 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, theme, onToggl
                   <div key={item.label} className="w-full flex flex-col items-center">
                     <button
                       onClick={() => !isPrestations ? handleNavClick(item) : setMobilePrestationsOpen(!mobilePrestationsOpen)}
-                      className={`text-3xl font-sans font-black uppercase tracking-tighter transition-colors ${currentView === item.view ? 'text-brand-cyan' : 'text-brand-dark dark:text-white'}`}
+                      className={`text-5xl font-sans font-black uppercase tracking-tighter transition-colors ${currentView === item.view ? 'text-brand-cyan' : 'text-brand-dark dark:text-white'}`}
                     >
                       {item.label}
                     </button>
                     
                     {isPrestations && mobilePrestationsOpen && (
-                      <div className="flex flex-col items-center gap-4 mt-6 animate-fade-in-up bg-black/5 dark:bg-white/5 rounded-3xl p-6 w-full max-w-xs">
+                      <div className="flex flex-col items-center gap-6 mt-8 animate-fade-in-up bg-black/5 dark:bg-white/5 rounded-[3rem] p-10 w-full max-w-sm">
                         {prestationsLinks.map((link) => (
                           <button
                             key={link.label}
                             onClick={() => handlePrestationClick(link.view)}
-                            className="text-sm font-black text-brand-dark/50 dark:text-white/50 hover:text-brand-magenta uppercase tracking-widest text-center"
+                            className="text-lg font-black text-brand-dark/60 dark:text-white/60 hover:text-brand-magenta uppercase tracking-widest text-center"
                           >
                             {link.label}
                           </button>
