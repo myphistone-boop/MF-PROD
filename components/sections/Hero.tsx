@@ -34,25 +34,25 @@ const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
             ${mounted ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-10'}
           `}>
           
-          <div className="inline-flex items-center gap-3 px-4 py-2 rounded-full border border-white/10 bg-white/5 mb-8 shadow-xl">
+          <div className="inline-flex items-center gap-3 px-4 py-2 rounded-full border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 mb-8 shadow-xl">
             <Zap size={14} className="text-brand-cyan animate-pulse" />
-            <span className="text-[10px] uppercase tracking-[0.3em] text-brand-light font-bold">MF Prod - Creative Studio</span>
+            <span className="text-[10px] uppercase tracking-[0.3em] text-brand-dark dark:text-brand-light font-bold">MF Prod - Creative Studio</span>
           </div>
 
-          <h1 className="font-sans font-extrabold text-5xl md:text-7xl lg:text-8xl xl:text-9xl text-white leading-[0.9] tracking-tighter mb-8">
+          <h1 className="font-sans font-extrabold text-5xl md:text-7xl lg:text-8xl xl:text-9xl text-brand-dark dark:text-white leading-[0.9] tracking-tighter mb-8">
             L'ART DE <br />
             <span className="gradient-text">CRÉER</span>
           </h1>
 
-          <p className="font-sans text-brand-light/70 text-base md:text-lg lg:text-xl leading-relaxed mb-10 max-w-xl font-light">
+          <p className="font-sans text-brand-dark/70 dark:text-brand-light/70 text-base md:text-lg lg:text-xl leading-relaxed mb-10 max-w-xl font-light">
             De la scène à l'écran, nous donnons vie à vos visions. Spectacles immersifs, coaching vocal d'élite et production média.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-5">
-            <Button onClick={scrollToPrestations} className="shadow-[0_20px_40px_rgba(0,210,255,0.2)]">
+            <Button onClick={scrollToPrestations} className="shadow-[0_20px_40px_rgba(0,210,255,0.2)] dark:shadow-[0_20px_40px_rgba(0,210,255,0.4)]">
               Explorer nos Prestations
             </Button>
-            <Button variant="secondary" onClick={() => onNavigate(View.SPECTACLES)}>
+            <Button variant="secondary" onClick={() => onNavigate(View.SPECTACLES)} className="bg-black/5 dark:bg-brand-dark-soft border-black/10 dark:border-white/10">
               Voir les Spectacles
             </Button>
           </div>

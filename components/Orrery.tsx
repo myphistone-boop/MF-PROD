@@ -7,11 +7,11 @@ const Orrery: React.FC = () => {
   // Anneau 2 : Notes moyennes et éléments de studio
   const ring2Items = [
     { icon: <Music size={22} className="text-brand-cyan" />, angle: 0 },
-    { icon: <Music2 size={18} className="text-white" />, angle: 45 },
+    { icon: <Music2 size={18} className="text-brand-dark dark:text-white" />, angle: 45 },
     { icon: <Music3 size={24} className="text-brand-magenta" />, angle: 100 },
     { icon: <Music4 size={20} className="text-brand-cyan" />, angle: 180 },
     { icon: <Mic2 size={18} className="text-brand-orange" />, angle: 230 },
-    { icon: <Music2 size={16} className="text-white" />, angle: 300 },
+    { icon: <Music2 size={16} className="text-brand-dark dark:text-white" />, angle: 300 },
   ];
 
   // Anneau 3 : Grandes notes et accents colorés
@@ -20,7 +20,7 @@ const Orrery: React.FC = () => {
     { icon: <Music4 size={22} className="text-brand-orange" />, angle: 60 },
     { icon: <Music size={34} strokeWidth={1.5} className="text-brand-cyan" />, angle: 110 },
     { icon: <Music2 size={24} className="text-brand-orange" />, angle: 200 },
-    { icon: <Star size={16} className="text-white" />, angle: 250 },
+    { icon: <Star size={16} className="text-brand-dark dark:text-white" />, angle: 250 },
     { icon: <Music3 size={38} strokeWidth={1.5} className="text-brand-magenta" />, angle: 310 },
   ];
 
@@ -28,16 +28,16 @@ const Orrery: React.FC = () => {
     <div className="relative w-[1100px] h-[1100px] flex items-center justify-center pointer-events-none select-none">
       
       {/* Halo central dynamique */}
-      <div className="absolute w-[500px] h-[500px] bg-brand-magenta rounded-full blur-[150px] opacity-20 animate-pulse-glow" />
+      <div className="absolute w-[500px] h-[500px] bg-brand-magenta rounded-full blur-[150px] opacity-10 dark:opacity-20 animate-pulse-glow" />
 
       {/* Conteneur Logo Central */}
-      <div className="relative z-20 w-[420px] h-[420px] rounded-full bg-brand-dark border-2 border-white/5 flex items-center justify-center shadow-[0_0_100px_rgba(255,0,122,0.15)] animate-float">
+      <div className="relative z-20 w-[420px] h-[420px] rounded-full bg-white dark:bg-brand-dark border-2 border-black/5 dark:border-white/5 flex items-center justify-center shadow-xl dark:shadow-[0_0_100px_rgba(255,0,122,0.15)] animate-float">
         <div className="absolute inset-4 rounded-full border border-brand-cyan/20 animate-spin-slow"></div>
         <img src={LOGO_URL} alt="MF Prod" className="w-[300px] h-[300px] object-contain relative z-30" />
       </div>
 
       {/* Orbite 1 (Intérieure) : Notes rapides */}
-      <div className="absolute border border-white/5 w-[550px] h-[550px] rounded-full animate-spin-slow duration-[40s]">
+      <div className="absolute border border-black/5 dark:border-white/5 w-[550px] h-[550px] rounded-full animate-spin-slow duration-[40s]">
          {[<Music size={28} />, <Music2 size={24} />, <Music3 size={26} />, <Music4 size={24} />].map((icon, i) => (
              <div 
                 key={i} 
@@ -50,7 +50,7 @@ const Orrery: React.FC = () => {
       </div>
 
       {/* Orbite 2 (Milieu) */}
-      <div className="absolute border border-white/10 w-[800px] h-[800px] rounded-full animate-spin-reverse-slow duration-[80s]">
+      <div className="absolute border border-black/10 dark:border-white/10 w-[800px] h-[800px] rounded-full animate-spin-reverse-slow duration-[80s]">
         {ring2Items.map((item, i) => (
              <div 
                 key={i} 
@@ -63,7 +63,8 @@ const Orrery: React.FC = () => {
       </div>
 
       {/* Orbite 3 (Extérieure) */}
-      <div className="absolute border border-white/5 w-[1050px] h-[1050px] rounded-full animate-spin-super-slow duration-[160s]">
+      <div className="absolute border border-black/5 dark:border-white/5 w-[1050px] h-[1050px] rounded-full animate-spin-super-slow duration-[160s]">
+         {/* Fixed syntax error: removed 'show =>' which was incorrectly placed */}
          {ring3Items.map((item, i) => (
              <div 
                 key={i} 
@@ -79,7 +80,7 @@ const Orrery: React.FC = () => {
       </div>
       
       {/* Accents Esthétiques Statiques */}
-      <div className="absolute border border-white/5 w-[1150px] h-[1150px] rounded-full opacity-20" />
+      <div className="absolute border border-black/5 dark:border-white/5 w-[1150px] h-[1150px] rounded-full opacity-20" />
     </div>
   );
 };

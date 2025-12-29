@@ -1,17 +1,21 @@
 
 import React, { useState, useEffect } from 'react';
-import { View, NavItem } from '../types';
+import { View, NavItem, Theme } from '../types';
 import { NAV_ITEMS, LOGO_URL } from '../constants';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, ChevronDown, Sun, Moon } from 'lucide-react';
 
 interface NavbarProps {
   currentView: View;
   onNavigate: (view: View) => void;
+  theme: Theme;
+  onToggleTheme: () => void;
 }
 
-const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate }) => {
+const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, theme, onToggleTheme }) => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [mobilePrestationsOpen, setMobilePrestationsOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -20,6 +24,13 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate }) => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  const prestationsLinks = [
+    { label: 'Production de Spectacles', view: View.PRODUCTION_SPECTACLES },
+    { label: 'Stages de Perfectionnement', view: View.STAGES_PERFECTIONNEMENT },
+    { label: 'Cours Individuels', view: View.COURS_INDIVIDUELS },
+    { label: 'Chorale (Année)', view: View.CHORALE },
+  ];
 
   const handleNavClick = (item: NavItem) => {
     if (item.view !== currentView) {
@@ -41,6 +52,14 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate }) => {
         }
     }
     setMobileMenuOpen(false);
+    setDropdownOpen(false);
+  };
+
+  const handlePrestationClick = (view: View) => {
+    onNavigate(view);
+    window.scrollTo(0, 0);
+    setDropdownOpen(false);
+    setMobileMenuOpen(false);
   };
 
   return (
@@ -52,8 +71,8 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate }) => {
       >
         <div className={`
           relative w-full h-full rounded-full flex items-center justify-between px-6 lg:px-10 transition-all duration-700
-          backdrop-blur-2xl border border-white/10 shadow-2xl
-          ${scrolled ? 'bg-brand-dark-soft/90' : 'bg-brand-dark/40'}
+          backdrop-blur-2xl border border-black/5 dark:border-white/10 shadow-2xl
+          ${scrolled ? 'bg-white/90 dark:bg-brand-dark-soft/90' : 'bg-white/40 dark:bg-brand-dark/40'}
         `}>
           
           <div 
@@ -61,8 +80,8 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate }) => {
             onClick={() => onNavigate(View.HOME)}
           >
             <div className={`
-                relative z-50 flex items-center justify-center bg-brand-dark rounded-full 
-                border-2 border-white/10 shadow-lg transition-all duration-500 group-hover:border-brand-magenta
+                relative z-50 flex items-center justify-center bg-white dark:bg-brand-dark rounded-full 
+                border-2 border-black/5 dark:border-white/10 shadow-lg transition-all duration-500 group-hover:border-brand-magenta
                 ${scrolled ? 'w-10 h-10 lg:w-14 lg:h-14' : 'w-14 h-14 lg:w-20 lg:h-20'}
             `}>
               <img 
@@ -71,32 +90,70 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate }) => {
                 className="w-full h-full object-contain p-2" 
               />
             </div>
-            <span className="font-sans font-black tracking-tighter text-white text-lg lg:text-xl hidden md:block">
+            <span className="font-sans font-black tracking-tighter text-brand-dark dark:text-white text-lg lg:text-xl hidden md:block">
               MF <span className="text-brand-cyan">PROD</span>
             </span>
           </div>
 
-          <div className="hidden lg:flex items-center gap-10">
-            {NAV_ITEMS.map((item) => (
-              <button
-                key={item.label}
-                onClick={() => handleNavClick(item)}
-                className={`
-                  uppercase tracking-[0.3em] text-[10px] xl:text-[11px] font-black transition-all duration-300 relative py-2
-                  hover:text-brand-magenta
-                  ${currentView === item.view && !item.sectionId ? 'text-brand-cyan' : 'text-brand-light/60'}
-                `}
-              >
-                {item.label}
-                {currentView === item.view && !item.sectionId && (
-                  <div className="absolute -bottom-1 left-0 w-full h-0.5 bg-brand-cyan"></div>
-                )}
-              </button>
-            ))}
+          <div className="hidden lg:flex items-center gap-8 xl:gap-10">
+            {NAV_ITEMS.map((item) => {
+              const isPrestations = item.label === 'Prestations';
+              
+              return (
+                <div 
+                  key={item.label} 
+                  className="relative h-full flex items-center"
+                  onMouseEnter={() => isPrestations && setDropdownOpen(true)}
+                  onMouseLeave={() => isPrestations && setDropdownOpen(false)}
+                >
+                  <button
+                    onClick={() => handleNavClick(item)}
+                    className={`
+                      uppercase tracking-[0.3em] text-[10px] xl:text-[11px] font-black transition-all duration-300 relative py-4 flex items-center gap-2
+                      hover:text-brand-magenta
+                      ${currentView === item.view && !item.sectionId ? 'text-brand-cyan' : 'text-brand-dark/60 dark:text-brand-light/60'}
+                    `}
+                  >
+                    {item.label}
+                    {isPrestations && <ChevronDown size={12} className={`transition-transform duration-300 ${dropdownOpen ? 'rotate-180 text-brand-magenta' : ''}`} />}
+                  </button>
+
+                  {isPrestations && (
+                    <div className={`
+                      absolute top-full left-1/2 -translate-x-1/2 pt-4 transition-all duration-300 transform
+                      ${dropdownOpen ? 'opacity-100 translate-y-0 pointer-events-auto' : 'opacity-0 -translate-y-4 pointer-events-none'}
+                    `}>
+                      <div className="bg-white/95 dark:bg-brand-dark-soft/95 backdrop-blur-2xl border border-black/5 dark:border-white/10 rounded-[2rem] p-6 w-[280px] shadow-2xl">
+                        <div className="flex flex-col gap-2">
+                          {prestationsLinks.map((link) => (
+                            <button
+                              key={link.label}
+                              onClick={() => handlePrestationClick(link.view)}
+                              className="text-left px-4 py-3 rounded-xl hover:bg-black/5 dark:hover:bg-white/5 text-[10px] uppercase tracking-[0.2em] font-black text-brand-dark/60 dark:text-white/60 hover:text-brand-cyan transition-all"
+                            >
+                              {link.label}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+            
+            {/* Theme Toggle */}
+            <button 
+                onClick={onToggleTheme}
+                className="w-10 h-10 rounded-full bg-black/5 dark:bg-white/5 flex items-center justify-center text-brand-dark dark:text-white hover:bg-brand-magenta hover:text-white transition-all duration-300"
+                aria-label="Toggle Theme"
+            >
+                {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
+            </button>
           </div>
 
           <button 
-            className="lg:hidden text-white p-2"
+            className="lg:hidden text-brand-dark dark:text-white p-2"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           >
             {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
@@ -105,16 +162,44 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate }) => {
       </nav>
 
       {mobileMenuOpen && (
-        <div className="fixed inset-0 z-40 bg-brand-dark/98 backdrop-blur-3xl flex flex-col items-center justify-center gap-8 lg:hidden animate-fade-in-up">
-           {NAV_ITEMS.map((item) => (
-              <button
-                key={item.label}
-                onClick={() => handleNavClick(item)}
-                className="text-4xl font-sans font-black text-white hover:text-brand-magenta transition-colors"
-              >
-                {item.label}
-              </button>
-            ))}
+        <div className="fixed inset-0 z-40 bg-white/98 dark:bg-brand-dark/98 backdrop-blur-3xl flex flex-col items-center justify-center p-12 lg:hidden animate-fade-in-up overflow-y-auto">
+           <button 
+                onClick={onToggleTheme}
+                className="absolute top-10 right-10 w-12 h-12 rounded-full bg-brand-dark/5 dark:bg-white/5 flex items-center justify-center text-brand-dark dark:text-white"
+            >
+                {theme === 'dark' ? <Sun size={24} /> : <Moon size={24} />}
+            </button>
+
+           <div className="flex flex-col items-center gap-6 w-full py-20">
+            {NAV_ITEMS.map((item) => {
+                const isPrestations = item.label === 'Prestations';
+                
+                return (
+                  <div key={item.label} className="w-full flex flex-col items-center">
+                    <button
+                      onClick={() => !isPrestations ? handleNavClick(item) : setMobilePrestationsOpen(!mobilePrestationsOpen)}
+                      className={`text-3xl font-sans font-black uppercase tracking-tighter transition-colors ${currentView === item.view ? 'text-brand-cyan' : 'text-brand-dark dark:text-white'}`}
+                    >
+                      {item.label}
+                    </button>
+                    
+                    {isPrestations && mobilePrestationsOpen && (
+                      <div className="flex flex-col items-center gap-4 mt-6 animate-fade-in-up bg-black/5 dark:bg-white/5 rounded-3xl p-6 w-full max-w-xs">
+                        {prestationsLinks.map((link) => (
+                          <button
+                            key={link.label}
+                            onClick={() => handlePrestationClick(link.view)}
+                            className="text-sm font-black text-brand-dark/50 dark:text-white/50 hover:text-brand-magenta uppercase tracking-widest text-center"
+                          >
+                            {link.label}
+                          </button>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+           </div>
         </div>
       )}
     </>

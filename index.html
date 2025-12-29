@@ -11,6 +11,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
       tailwind.config = {
+        darkMode: 'class',
         theme: {
           extend: {
             colors: {
@@ -75,8 +76,14 @@
         background-color: #020617;
         color: #F8FAFC;
         overflow-x: hidden;
+        transition: background-color 0.5s ease, color 0.5s ease;
       }
       
+      html.light body {
+        background-color: #F8FAFC;
+        color: #020617;
+      }
+
       @media (min-width: 1024px) {
         body {
           zoom: 0.75;
@@ -88,6 +95,9 @@
       }
       ::-webkit-scrollbar-track {
         background: #020617;
+      }
+      html.light ::-webkit-scrollbar-track {
+        background: #F8FAFC;
       }
       ::-webkit-scrollbar-thumb {
         background: #1e293b;
@@ -107,20 +117,6 @@
         background: linear-gradient(to right, #00D2FF, #FF007A, #FF8A00);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
-      }
-      .gradient-border {
-        position: relative;
-        background: #0f172a;
-        border-radius: 2rem;
-      }
-      .gradient-border::before {
-        content: "";
-        position: absolute;
-        top: -2px; bottom: -2px; left: -2px; right: -2px;
-        background: linear-gradient(45deg, #00D2FF, #FF007A, #FF8A00);
-        border-radius: 2rem;
-        z-index: -1;
-        opacity: 0.3;
       }
     </style>
     <script type="importmap">
