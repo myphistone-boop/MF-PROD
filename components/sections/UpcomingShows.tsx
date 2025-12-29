@@ -34,7 +34,7 @@ const UpcomingShows: React.FC = () => {
   };
 
   return (
-    <section className="py-24 lg:py-32 px-6 relative dark:bg-brand-dark transition-colors duration-500 overflow-hidden">
+    <section className="py-24 lg:py-32 relative dark:bg-brand-dark transition-colors duration-500 overflow-hidden">
       {/* Background Decor */}
       <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-brand-magenta/5 rounded-full blur-[120px] pointer-events-none" />
       <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-brand-cyan/5 rounded-full blur-[120px] pointer-events-none" />
@@ -57,7 +57,7 @@ const UpcomingShows: React.FC = () => {
           {/* Custom Arrows */}
           <button 
             onClick={() => scroll('left')}
-            className="absolute left-0 top-[40%] -translate-y-1/2 z-30 w-14 h-14 rounded-full bg-white/80 dark:bg-brand-dark-soft/80 border border-black/10 dark:border-white/20 text-brand-dark dark:text-white flex items-center justify-center backdrop-blur-xl transition-all duration-300 hover:bg-brand-magenta hover:text-white hover:border-brand-magenta hover:scale-110 opacity-0 group-hover/slider:opacity-100 shadow-2xl hidden md:flex"
+            className="absolute left-4 top-[40%] -translate-y-1/2 z-30 w-14 h-14 rounded-full bg-white/80 dark:bg-brand-dark-soft/80 border border-black/10 dark:border-white/20 text-brand-dark dark:text-white flex items-center justify-center backdrop-blur-xl transition-all duration-300 hover:bg-brand-magenta hover:text-white hover:border-brand-magenta hover:scale-110 opacity-0 group-hover/slider:opacity-100 shadow-2xl hidden md:flex"
             aria-label="Previous"
           >
             <ChevronLeft size={28} />
@@ -65,7 +65,7 @@ const UpcomingShows: React.FC = () => {
           
           <button 
             onClick={() => scroll('right')}
-            className="absolute right-0 top-[40%] -translate-y-1/2 z-30 w-14 h-14 rounded-full bg-white/80 dark:bg-brand-dark-soft/80 border border-black/10 dark:border-white/20 text-brand-dark dark:text-white flex items-center justify-center backdrop-blur-xl transition-all duration-300 hover:bg-brand-magenta hover:text-white hover:border-brand-magenta hover:scale-110 opacity-0 group-hover/slider:opacity-100 shadow-2xl hidden md:flex"
+            className="absolute right-4 top-[40%] -translate-y-1/2 z-30 w-14 h-14 rounded-full bg-white/80 dark:bg-brand-dark-soft/80 border border-black/10 dark:border-white/20 text-brand-dark dark:text-white flex items-center justify-center backdrop-blur-xl transition-all duration-300 hover:bg-brand-magenta hover:text-white hover:border-brand-magenta hover:scale-110 opacity-0 group-hover/slider:opacity-100 shadow-2xl hidden md:flex"
             aria-label="Next"
           >
             <ChevronRight size={28} />
@@ -73,15 +73,12 @@ const UpcomingShows: React.FC = () => {
 
           <div 
             ref={scrollRef}
-            className="flex overflow-x-auto pb-12 pt-4 gap-8 lg:gap-12 no-scrollbar snap-x snap-mandatory items-start"
+            className="flex overflow-x-auto pb-12 pt-4 gap-8 lg:gap-10 no-scrollbar snap-x snap-mandatory items-start px-6 lg:px-12 scroll-px-6 lg:scroll-px-12"
           >
-            {/* Initial Spacer */}
-            <div className="flex-shrink-0 w-4 lg:w-12"></div>
-
             {shows.map((show, index) => (
               <div 
                 key={index}
-                className={`flex-shrink-0 w-[240px] sm:w-[300px] lg:w-[340px] snap-center flex flex-col items-center transition-all duration-700 ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'}`}
+                className={`flex-shrink-0 w-[260px] sm:w-[300px] lg:w-[340px] snap-start flex flex-col items-center transition-all duration-700 ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'}`}
                 style={{ transitionDelay: `${index * 150}ms` }}
               >
                 {/* 1. TOP BADGE - OUTSIDE IMAGE */}
@@ -115,8 +112,6 @@ const UpcomingShows: React.FC = () => {
                 </div>
               </div>
             ))}
-            
-            <div className="flex-shrink-0 w-10 lg:w-40"></div>
           </div>
         </div>
       </div>
