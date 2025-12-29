@@ -42,30 +42,42 @@ const BackgroundCanvas: React.FC<BackgroundCanvasProps> = ({ theme = 'dark' }) =
 
     const isDark = theme === 'dark';
     
-    // Couleurs du logo
-    const colors = isDark 
-      ? ['rgba(0, 210, 255, 0.08)', 'rgba(255, 0, 122, 0.08)', 'rgba(255, 138, 0, 0.05)']
-      : ['rgba(0, 210, 255, 0.04)', 'rgba(255, 0, 122, 0.04)', 'rgba(255, 138, 0, 0.03)'];
+    // Couleurs du logo : Cyan (#00D2FF), Magenta (#FF007A), Orange (#FF8A00)
+    const brandColors = isDark 
+      ? [
+          'rgba(0, 210, 255, 0.12)',   // Cyan
+          'rgba(255, 0, 122, 0.12)',   // Magenta
+          'rgba(255, 138, 0, 0.08)',   // Orange
+        ]
+      : [
+          'rgba(0, 210, 255, 0.06)', 
+          'rgba(255, 0, 122, 0.06)', 
+          'rgba(255, 138, 0, 0.04)',
+        ];
 
     const initOrbs = () => {
       orbsRef.current = [
-        { x: width * 0.2, y: height * 0.3, radius: 600, color: colors[0], angle: Math.random() * Math.PI, speed: 0.002, range: 150 },
-        { x: width * 0.8, y: height * 0.7, radius: 700, color: colors[1], angle: Math.random() * Math.PI, speed: 0.0015, range: 200 },
-        { x: width * 0.5, y: height * 0.5, radius: 800, color: colors[2], angle: Math.random() * Math.PI, speed: 0.001, range: 100 },
-        { x: width * 0.9, y: height * 0.1, radius: 500, color: colors[0], angle: Math.random() * Math.PI, speed: 0.0025, range: 120 },
+        // Orbe Cyan
+        { x: width * 0.1, y: height * 0.2, radius: width * 0.5, color: brandColors[0], angle: Math.random() * Math.PI, speed: 0.001, range: 100 },
+        // Orbe Magenta
+        { x: width * 0.8, y: height * 0.7, radius: width * 0.6, color: brandColors[1], angle: Math.random() * Math.PI, speed: 0.0008, range: 150 },
+        // Orbe Orange
+        { x: width * 0.4, y: height * 0.5, radius: width * 0.4, color: brandColors[2], angle: Math.random() * Math.PI, speed: 0.0012, range: 80 },
+        // Supplémentaires pour combler
+        { x: width * 0.9, y: height * 0.1, radius: width * 0.3, color: brandColors[0], angle: Math.random() * Math.PI, speed: 0.0015, range: 50 },
       ];
     };
 
     const initParticles = () => {
-      const count = Math.floor((width * height) / 10000);
+      const count = Math.floor((width * height) / 12000);
       particlesRef.current = Array.from({ length: count }, () => ({
         x: Math.random() * width,
         y: Math.random() * height,
-        vx: (Math.random() - 0.5) * 0.2,
-        vy: (Math.random() - 0.5) * 0.2,
-        size: Math.random() * 1.5 + 0.5,
+        vx: (Math.random() - 0.5) * 0.15,
+        vy: (Math.random() - 0.5) * 0.15,
+        size: Math.random() * 2 + 0.5,
         color: isDark ? '#FFFFFF' : '#64748b',
-        opacity: Math.random() * 0.4 + 0.1
+        opacity: Math.random() * 0.3 + 0.05
       }));
     };
 
@@ -84,19 +96,12 @@ const BackgroundCanvas: React.FC<BackgroundCanvasProps> = ({ theme = 'dark' }) =
     const animate = () => {
       const time = Date.now() * 0.001;
       
-      // 1. Fond de base (Dégradé très subtil)
-      const baseGradient = ctx.createLinearGradient(0, 0, width, height);
-      if (isDark) {
-        baseGradient.addColorStop(0, '#020617');
-        baseGradient.addColorStop(1, '#0f172a');
-      } else {
-        baseGradient.addColorStop(0, '#F8FAFC');
-        baseGradient.addColorStop(1, '#f1f5f9');
-      }
-      ctx.fillStyle = baseGradient;
+      // 1. Fond plat de base
+      ctx.fillStyle = isDark ? '#020617' : '#F8FAFC';
       ctx.fillRect(0, 0, width, height);
 
-      // 2. Orbes flottants (Mesh effect)
+      // 2. Mesh Gradient Effect (Orbes flous)
+      ctx.globalCompositeOperation = isDark ? 'screen' : 'multiply';
       orbsRef.current.forEach(orb => {
         orb.angle += orb.speed;
         const currentX = orb.x + Math.sin(orb.angle) * orb.range;
@@ -104,7 +109,7 @@ const BackgroundCanvas: React.FC<BackgroundCanvasProps> = ({ theme = 'dark' }) =
         
         const g = ctx.createRadialGradient(currentX, currentY, 0, currentX, currentY, orb.radius);
         g.addColorStop(0, orb.color);
-        g.addColorStop(1, 'transparent');
+        g.addColorStop(1, 'rgba(0,0,0,0)');
 
         ctx.fillStyle = g;
         ctx.beginPath();
@@ -112,7 +117,8 @@ const BackgroundCanvas: React.FC<BackgroundCanvasProps> = ({ theme = 'dark' }) =
         ctx.fill();
       });
 
-      // 3. Particules (Dust effect)
+      // 3. Texture & Particules (Dust)
+      ctx.globalCompositeOperation = 'source-over';
       particlesRef.current.forEach(p => {
         p.x += p.vx;
         p.y += p.vy;
@@ -122,13 +128,25 @@ const BackgroundCanvas: React.FC<BackgroundCanvasProps> = ({ theme = 'dark' }) =
         if (p.y < 0) p.y = height;
         if (p.y > height) p.y = 0;
 
-        const twinkle = Math.sin(time + p.x) * 0.2 + 0.8;
+        const twinkle = Math.sin(time + p.x * 0.1) * 0.5 + 0.5;
         ctx.globalAlpha = p.opacity * twinkle;
         ctx.fillStyle = p.color;
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
         ctx.fill();
       });
+
+      // 4. Subtle "Light Beams" (Lignes de fond très transparentes)
+      ctx.globalAlpha = isDark ? 0.02 : 0.01;
+      ctx.strokeStyle = isDark ? '#FFFFFF' : '#000000';
+      ctx.lineWidth = 1;
+      for (let i = 0; i < 3; i++) {
+          const xOffset = Math.sin(time * 0.1 + i) * 100;
+          ctx.beginPath();
+          ctx.moveTo(width * (0.2 + i * 0.3) + xOffset, 0);
+          ctx.lineTo(width * (0.1 + i * 0.3) + xOffset, height);
+          ctx.stroke();
+      }
 
       ctx.globalAlpha = 1.0;
       requestAnimationFrame(animate);

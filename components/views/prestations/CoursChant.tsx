@@ -44,7 +44,7 @@ const CoursChant: React.FC<Props> = ({ onNavigate }) => {
             id: 'chant_chorale',
             title: "Chorale",
             badge: "Puissance Collective",
-            image: "https://images.unsplash.com/photo-1514525253344-f814d074e03b?auto=format&fit=crop&w=800&q=80",
+            image: "https://images.unsplash.com/photo-1559225306-2e70aa9424b9?auto=format&fit=crop&w=800&q=80",
             desc: "Vivez l'harmonie vocale au sein d'un ensemble passionné.",
             features: ["Écoute & Harmonie", "Technique collective", "Répertoire diversifié", "Aventure humaine"],
             bookingType: 'RESERVATION' as const,
@@ -137,5 +137,4 @@ const CoursChant: React.FC<Props> = ({ onNavigate }) => {
     );
 };
 
-// Fixed error: Added missing default export
 export default CoursChant;

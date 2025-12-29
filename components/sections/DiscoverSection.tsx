@@ -18,7 +18,7 @@ const DiscoverSection: React.FC<DiscoverSectionProps> = ({ onNavigate }) => {
         {
             id: View.PRODUCTION_SPECTACLES,
             icon: <Zap className="w-8 h-8" />,
-            image: "https://images.unsplash.com/photo-1514525253344-f814d074e03b?auto=format&fit=crop&w=800&q=80",
+            image: "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=1200&q=80",
             title: "Spectacles",
             subtitle: "Production & Contact",
             desc: "Direction artistique et création complète. Contact direct Mikael."
@@ -26,7 +26,7 @@ const DiscoverSection: React.FC<DiscoverSectionProps> = ({ onNavigate }) => {
         {
             id: View.STAGES_PERFECTIONNEMENT,
             icon: <Music className="w-8 h-8" />,
-            image: "https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?auto=format&fit=crop&w=800&q=80",
+            image: "https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?auto=format&fit=crop&w=1200&q=80",
             title: "Stages",
             subtitle: "1 Semaine / Places Limitées",
             desc: "Perfectionnement intensif avec décompte de places disponibles."
@@ -34,7 +34,7 @@ const DiscoverSection: React.FC<DiscoverSectionProps> = ({ onNavigate }) => {
         {
             id: View.COURS_INDIVIDUELS,
             icon: <Mic2 className="w-8 h-8" />,
-            image: "https://images.unsplash.com/photo-1559519529-bb3963102c4b?auto=format&fit=crop&w=800&q=80",
+            image: "https://images.unsplash.com/photo-1516280440614-37939bbacd81?auto=format&fit=crop&w=1200&q=80",
             title: "Cours",
             subtitle: "Agenda / Individuel",
             desc: "Coaching vocal hebdomadaire sur réservation en ligne."
@@ -42,7 +42,7 @@ const DiscoverSection: React.FC<DiscoverSectionProps> = ({ onNavigate }) => {
         {
             id: View.CHORALE,
             icon: <Star className="w-8 h-8" />,
-            image: "https://images.unsplash.com/photo-1516280440614-37939bbacd81?auto=format&fit=crop&w=800&q=80",
+            image: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=1200&q=80",
             title: "Chorale",
             subtitle: "Annuel / Collectif",
             desc: "Vivez l'harmonie vocale. Décompte des inscriptions annuelles."

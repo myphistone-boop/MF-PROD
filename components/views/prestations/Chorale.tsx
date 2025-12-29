@@ -12,6 +12,7 @@ const Chorale: React.FC<Props> = ({ onNavigate }) => {
 
     const choraleData = {
         title: "Chorale MF Prod",
+        image: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=1200&q=80",
         schedule: "Mercredi : 20H30 - 22H00",
         price: "280 €",
         spots: { total: 30, taken: 26 },
@@ -50,6 +51,11 @@ const Chorale: React.FC<Props> = ({ onNavigate }) => {
                         <p className="text-brand-dark/60 dark:text-brand-light/60 text-xl lg:text-2xl font-light mb-12 leading-relaxed">
                             Rejoignez notre ensemble vocal pour une année riche en harmonies. Un répertoire varié, des concerts et une ambiance unique à Cornas.
                         </p>
+                        
+                        <div className="relative h-64 lg:h-80 rounded-[3rem] overflow-hidden border-2 border-black/5 dark:border-white/10 shadow-2xl mt-12">
+                             <img src={choraleData.image} alt="Chorale ensemble" className="w-full h-full object-cover" />
+                             <div className="absolute inset-0 bg-gradient-to-t from-brand-dark/60 to-transparent"></div>
+                        </div>
                     </div>
 
                     <div className="bg-white dark:bg-brand-dark-soft border-2 border-black/5 dark:border-white/10 rounded-[4rem] p-12 lg:p-16 relative shadow-2xl transition-colors duration-500">

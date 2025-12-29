@@ -19,7 +19,7 @@ const Discover: React.FC<DiscoverProps> = ({ onNavigate }) => {
         {
             id: View.PRODUCTION_SPECTACLES,
             icon: <Zap className="w-8 h-8" />,
-            image: "https://images.unsplash.com/photo-1514525253344-f814d074e03b?auto=format&fit=crop&w=800&q=80",
+            image: "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=1200&q=80",
             title: "Production de Spectacles",
             subtitle: "Direction Artistique",
             desc: "Création de shows sur-mesure. Contact direct avec Mikael Ferreira par email ou téléphone.",
@@ -28,7 +28,7 @@ const Discover: React.FC<DiscoverProps> = ({ onNavigate }) => {
         {
             id: View.STAGES_PERFECTIONNEMENT,
             icon: <Music className="w-8 h-8" />,
-            image: "https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?auto=format&fit=crop&w=800&q=80",
+            image: "https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?auto=format&fit=crop&w=1200&q=80",
             title: "Stages Perfectionnement",
             subtitle: "Immersion 1 semaine",
             desc: "Stage intensif pour booster votre niveau. Places limitées avec décompte en temps réel.",
@@ -37,7 +37,7 @@ const Discover: React.FC<DiscoverProps> = ({ onNavigate }) => {
         {
             id: View.COURS_INDIVIDUELS,
             icon: <Mic2 className="w-8 h-8" />,
-            image: "https://images.unsplash.com/photo-1559519529-bb3963102c4b?auto=format&fit=crop&w=800&q=80",
+            image: "https://images.unsplash.com/photo-1516280440614-37939bbacd81?auto=format&fit=crop&w=1200&q=80",
             title: "Cours Individuels",
             subtitle: "Agenda Flexible",
             desc: "Coaching vocal personnalisé. Gérez vos rendez-vous directement dans notre agenda en ligne.",
@@ -46,7 +46,7 @@ const Discover: React.FC<DiscoverProps> = ({ onNavigate }) => {
         {
             id: View.CHORALE,
             icon: <Star className="w-8 h-8" />,
-            image: "https://images.unsplash.com/photo-1516280440614-37939bbacd81?auto=format&fit=crop&w=800&q=80",
+            image: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=1200&q=80",
             title: "Chorale",
             subtitle: "Engagement Annuel",
             desc: "Rejoignez l'aventure collective. Inscription à l'année selon les places disponibles.",
