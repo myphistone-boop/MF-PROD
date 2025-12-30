@@ -6,7 +6,6 @@ import Hero from '../sections/Hero';
 import About from '../sections/About';
 import Contact from '../sections/Contact';
 import DiscoverSection from '../sections/DiscoverSection';
-import MenSection from '../sections/MenSection';
 import UpcomingShows from '../sections/UpcomingShows';
 
 interface HomeProps {
@@ -24,8 +23,6 @@ const Home: React.FC<HomeProps> = ({ onNavigate }) => {
       <div id="prestations">
         <DiscoverSection onNavigate={onNavigate} />
       </div>
-
-      <MenSection onNavigate={onNavigate} />
 
       <div id="about">
         <About />
