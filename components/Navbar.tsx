@@ -26,10 +26,12 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, theme, onToggl
   }, []);
 
   const prestationsLinks = [
-    { label: 'Production de Spectacles', view: View.PRODUCTION_SPECTACLES },
-    { label: 'Stages de Perfectionnement', view: View.STAGES_PERFECTIONNEMENT },
-    { label: 'Cours Individuels', view: View.COURS_INDIVIDUELS },
-    { label: 'Chorale (Année)', view: View.CHORALE },
+    { label: 'Spectacles', view: View.PRODUCTION_SPECTACLES },
+    { label: 'Coaching Vocal', view: View.COACHING_VOCAL },
+    { label: 'Création de Spectacles', view: View.ATELIER_SPECTACLE },
+    { label: 'Animation Télévisuelle', view: View.ANIMATION_TV },
+    { label: 'Voix Off', view: View.VOIX_OFF },
+    { label: 'Stages Perfectionnement', view: View.STAGES_PERFECTIONNEMENT },
   ];
 
   const handleNavClick = (item: NavItem) => {
@@ -130,13 +132,13 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate, theme, onToggl
                       absolute top-full left-1/2 -translate-x-1/2 pt-4 transition-all duration-300 transform
                       ${dropdownOpen ? 'opacity-100 translate-y-0 pointer-events-auto' : 'opacity-0 -translate-y-4 pointer-events-none'}
                     `}>
-                      <div className="bg-white/98 dark:bg-brand-dark-soft/98 backdrop-blur-2xl border border-black/5 dark:border-white/10 rounded-[2.5rem] p-8 w-[350px] shadow-2xl">
-                        <div className="flex flex-col gap-3">
+                      <div className="bg-white/98 dark:bg-brand-dark-soft/98 backdrop-blur-2xl border border-black/5 dark:border-white/10 rounded-[2.5rem] p-8 w-[380px] shadow-2xl">
+                        <div className="flex flex-col gap-2">
                           {prestationsLinks.map((link) => (
                             <button
                               key={link.label}
                               onClick={() => handlePrestationClick(link.view)}
-                              className="text-left px-5 py-4 rounded-2xl hover:bg-black/5 dark:hover:bg-white/5 text-xs xl:text-sm uppercase tracking-[0.2em] font-black text-brand-dark/70 dark:text-white/70 hover:text-brand-magenta transition-all"
+                              className="text-left px-5 py-3 rounded-2xl hover:bg-black/5 dark:hover:bg-white/5 text-xs xl:text-[11px] uppercase tracking-[0.2em] font-black text-brand-dark/70 dark:text-white/70 hover:text-brand-magenta transition-all"
                             >
                               {link.label}
                             </button>

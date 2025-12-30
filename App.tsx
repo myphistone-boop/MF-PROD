@@ -9,12 +9,12 @@ import BookingView from './components/views/BookingView';
 import WhatsAppButton from './components/ui/WhatsAppButton';
 import ProductionSpectacles from './components/views/prestations/ProductionSpectacles';
 import StagesPerfectionnement from './components/views/prestations/StagesPerfectionnement';
-import CoursIndividuels from './components/views/prestations/CoursIndividuels';
+import CoachingVocal from './components/views/prestations/CoachingVocal';
 import Chorale from './components/views/prestations/Chorale';
-import CoursChant from './components/views/prestations/CoursChant';
+import AnimationTV from './components/views/prestations/AnimationTV';
+import VoixOff from './components/views/prestations/VoixOff';
 import AtelierSpectacle from './components/views/prestations/AtelierSpectacle';
-import DanseInstruments from './components/views/prestations/DanseInstruments';
-import FormationVoix from './components/views/prestations/FormationVoix';
+import Evenements from './components/views/Evenements';
 import { View, BookingContext, Theme } from './types';
 
 const App: React.FC = () => {
@@ -54,16 +54,15 @@ const App: React.FC = () => {
         {currentView === View.HOME && <Home onNavigate={navigate} />}
         {currentView === View.SPECTACLES && <Men onNavigate={navigate} />}
         {currentView === View.SERVICES && <Discover onNavigate={navigate} />}
+        {currentView === View.EVENEMENTS && <Evenements onNavigate={navigate} />}
         
         {currentView === View.PRODUCTION_SPECTACLES && <ProductionSpectacles onNavigate={navigate} />}
-        {currentView === View.STAGES_PERFECTIONNEMENT && <StagesPerfectionnement onNavigate={navigate} />}
-        {currentView === View.COURS_INDIVIDUELS && <CoursIndividuels onNavigate={navigate} />}
+        {currentView === View.COACHING_VOCAL && <CoachingVocal onNavigate={navigate} />}
+        {currentView === View.ANIMATION_TV && <AnimationTV onNavigate={navigate} />}
+        {currentView === View.VOIX_OFF && <VoixOff onNavigate={navigate} />}
         {currentView === View.CHORALE && <Chorale onNavigate={navigate} />}
-        
-        {currentView === View.COURS_CHANT && <CoursChant onNavigate={navigate} />}
+        {currentView === View.STAGES_PERFECTIONNEMENT && <StagesPerfectionnement onNavigate={navigate} />}
         {currentView === View.ATELIER_SPECTACLE && <AtelierSpectacle onNavigate={navigate} />}
-        {currentView === View.DANSE_INSTRUMENTS && <DanseInstruments onNavigate={navigate} />}
-        {currentView === View.FORMATION_VOIX && <FormationVoix onNavigate={navigate} />}
         
         {currentView === View.BOOKING && (
           <BookingView 

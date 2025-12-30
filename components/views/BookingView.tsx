@@ -71,7 +71,7 @@ const BookingView: React.FC<BookingViewProps> = ({
                     </div>
                     <h2 className="text-4xl font-black mb-4 uppercase tracking-tighter text-brand-dark dark:text-white">C'est Partis !</h2>
                     <p className="text-brand-dark/60 dark:text-brand-light/60 mb-10 leading-relaxed font-light">
-                        Votre demande pour <strong>{activeContext.serviceName}</strong> a été reçue. Mikael vous contactera très rapidement.
+                        Votre demande pour <strong>{activeContext.serviceName}</strong> a été reçue. Mikaël vous contactera très rapidement.
                     </p>
                     <Button onClick={() => onNavigate && onNavigate(View.HOME)}>Retour</Button>
                 </div>
@@ -160,7 +160,7 @@ const BookingView: React.FC<BookingViewProps> = ({
                         {isReservation && (
                             <div className="p-8 bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/5 rounded-3xl mb-8 flex items-center gap-6">
                                 <AlertCircle className="text-brand-cyan" size={32} />
-                                <p className="text-sm text-brand-dark/60 dark:text-brand-light/60">Veuillez laisser vos coordonnées pour réserver votre place. Mikael vous confirmera l'inscription sous 24h.</p>
+                                <p className="text-sm text-brand-dark/60 dark:text-brand-light/60">Veuillez laisser vos coordonnées pour réserver votre place. Mikaël vous confirmera l'inscription sous 24h.</p>
                             </div>
                         )}
 

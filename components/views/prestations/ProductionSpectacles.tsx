@@ -1,78 +1,573 @@
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { Button } from '../../ui/Button';
 import { View, BookingContext } from '../../../types';
-import { Zap, ArrowLeft, Phone, Mail, Star, Quote } from 'lucide-react';
+import { 
+  Zap, ArrowLeft, Star, Users, Clock, Youtube, Tv, 
+  Camera, Instagram, Newspaper, Mic, PlayCircle, 
+  Sparkles, ChevronRight, UserPlus, MapPin,
+  ExternalLink, MousePointer2, ChevronLeft, Calendar, 
+  Ticket, Info, History, Video
+} from 'lucide-react';
 
 interface Props { onNavigate: (view: View, context?: BookingContext) => void; }
 
 const ProductionSpectacles: React.FC<Props> = ({ onNavigate }) => {
     const [mounted, setMounted] = useState(false);
+    const scrollRef = useRef<HTMLDivElement>(null);
+    
     useEffect(() => { setMounted(true); window.scrollTo(0, 0); }, []);
 
+    const scrollToSection = (id: string) => {
+        const element = document.getElementById(id);
+        if (element) {
+            element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    };
+
+    const handleContact = (service: string) => {
+        onNavigate(View.BOOKING, {
+            serviceId: View.PRODUCTION_SPECTACLES,
+            serviceName: service,
+            type: 'CONTACT'
+        });
+    };
+
+    const handleBooking = (service: string) => {
+        onNavigate(View.BOOKING, {
+            serviceId: View.PRODUCTION_SPECTACLES,
+            serviceName: `Billetterie - ${service}`,
+            type: 'RESERVATION'
+        });
+    };
+
+    const handleArtistApplication = () => {
+        onNavigate(View.BOOKING, {
+            serviceId: View.PRODUCTION_SPECTACLES,
+            serviceName: "Candidature Casting",
+            type: 'ARTIST_APPLICATION'
+        });
+    };
+
+    const scroll = (direction: 'left' | 'right') => {
+        if (scrollRef.current) {
+            const { scrollLeft, clientWidth } = scrollRef.current;
+            const scrollTo = direction === 'left' 
+                ? scrollLeft - clientWidth * 0.6 
+                : scrollLeft + clientWidth * 0.6;
+            
+            scrollRef.current.scrollTo({
+                left: scrollTo,
+                behavior: 'smooth'
+            });
+        }
+    };
+
+    // --- DATA : SAISON 2026 ---
+    const upcomingShows = [
+        {
+            id: "rois-reines-pop",
+            title: "LES ROIS ET REINES DE LA POP",
+            year: "2026",
+            duration: "2 H",
+            artists: "Troupe Pop MF",
+            desc: "Un hommage flamboyant aux icônes mondiales. De Michael Jackson à Madonna, une explosion de tubes intergénérationnels portée par une mise en scène ultra-moderne.",
+            details: "Scénographie LED immersive, 12 danseurs et 4 chanteurs lead. Une production qui repousse les limites du show live.",
+            image: "https://storage.googleapis.com/novelec_assets/Spectacle%202.webp",
+            tag: "PRODUCTION 2026",
+            color: "brand-cyan"
+        },
+        {
+            id: "musics-girls",
+            title: "MUSIC'S GIRLS",
+            year: "2026",
+            duration: "1 H 45",
+            artists: "Ensemble Féminin",
+            desc: "Le pouvoir au féminin. Une célébration des plus grandes voix de femmes à travers les décennies. De la soul au R'n'B moderne.",
+            details: "Un spectacle puissant, élégant et engagé, mettant en lumière l'excellence vocale féminine de notre troupe.",
+            image: "https://storage.googleapis.com/novelec_assets/Spectacle%203.webp",
+            tag: "PRODUCTION 2026",
+            color: "brand-magenta"
+        },
+        {
+            id: "coco",
+            title: "COCO",
+            year: "2026",
+            duration: "1 H 30",
+            artists: "Troupe Scénique",
+            desc: "Un voyage coloré et émouvant inspiré des traditions et de la magie des souvenirs. Une épopée musicale pour toute la famille.",
+            details: "Costumes traditionnels revisités, décors enchanteurs et une partition musicale qui touche le cœur.",
+            image: "https://storage.googleapis.com/novelec_assets/Spectacle%204.webp",
+            tag: "PRODUCTION 2026",
+            color: "brand-orange"
+        },
+        {
+            id: "marie-curie",
+            title: "MARIE CURIE",
+            year: "2026",
+            duration: "2 H",
+            artists: "Comédie Musicale",
+            desc: "L'histoire épique d'une femme qui a changé la science. Un spectacle biographique intense, poétique et visuellement époustouflant.",
+            details: "Une narration théâtrale rythmée par des compositions originales. Le destin d'une pionnière raconté avec force.",
+            image: "https://storage.googleapis.com/novelec_assets/Spectacle%205.webp",
+            tag: "PRODUCTION 2026",
+            color: "brand-cyan"
+        },
+        {
+            id: "boogie-wonderland",
+            title: "BOOGIE WONDERLAND",
+            year: "2026",
+            duration: "2 H 15",
+            artists: "Troupe Disco MF",
+            desc: "Le retour du Disco. Boules à facettes, pattes d'éph' et rythmes endiablés pour une soirée 100% paillettes et énergie communicative.",
+            details: "Interactivité maximale avec le public. Les plus grands hits Earth, Wind & Fire, Chic et bien d'autres.",
+            image: "https://storage.googleapis.com/novelec_assets/Spectacle%206.webp",
+            tag: "PRODUCTION 2026",
+            color: "brand-magenta"
+        },
+        {
+            id: "nouvelles-exploratrices",
+            title: "LES NOUVELLES EXPLORATRICES",
+            year: "2026",
+            duration: "1 H 30",
+            artists: "Aventure & Chant",
+            desc: "Partez à la découverte de contrées imaginaires avec ces pionnières de l'aventure moderne. Un voyage onirique et musical.",
+            details: "Mise en scène intégrant du mapping vidéo pour des décors changeant au gré des explorations de la troupe.",
+            image: "https://storage.googleapis.com/novelec_assets/Spectacle%207.webp",
+            tag: "PRODUCTION 2026",
+            color: "brand-orange"
+        }
+    ];
+
+    // --- DATA : HISTORIQUE ---
+    const historicalShows = [
+        {
+            id: "fever",
+            title: "GROUPE FEVER",
+            year: "2025",
+            producer: "MF PROD",
+            duration: "2 H",
+            artists: "12 ARTISTES",
+            desc: "Plongez dans l’histoire des plus grands groupes anglo-saxons et français de la pop mais également du rock. Spectacle vivant et dynamique qui abordera les plus grands tubes des années 80 à nos jours.",
+            details: "Réunissant 12 artistes chanteurs et danseurs sur scène pour une énergie rock communicative.",
+            stats: "DÉJÀ PLUS DE 2 000 SPECTATEURS EN 4 REPRÉSENTATIONS",
+            locations: "Bourg-lès-Valence / Saint-Péray / Guilherand-Granges",
+            image: "https://images.unsplash.com/photo-1493225255756-d9584f8606e9?auto=format&fit=crop&w=1200&q=80",
+            medias: ['youtube', 'tv', 'photo'],
+            tag: "SUCCÈS 2025"
+        },
+        {
+            id: "super60",
+            title: "SUPER 60 & TOP 90",
+            year: "2025",
+            producer: "MF PROD",
+            duration: "1 H 30",
+            artists: "TROUPE MF PROD",
+            desc: "Concept innovant : deux spectacles format court dans la même soirée. L'histoire d'un diner américain à Paris en 1962, suivi du meilleur des années 90 de Larusso à Ophélie Winter.",
+            details: "10 serveuses hautes en couleur et des chorégraphies endiablées pour un voyage temporel musical.",
+            stats: "DÉJÀ PLUS DE 2 000 SPECTATEURS EN 4 REPRÉSENTATIONS",
+            locations: "Bourg-lès-Valence / Saint-Péray / Guilherand-Granges",
+            image: "https://images.unsplash.com/photo-1514525253361-bee8a4874aad?auto=format&fit=crop&w=1200&q=80",
+            medias: ['youtube', 'photo'],
+            tag: "CONCEPT DOUBLE"
+        },
+        {
+            id: "superstars",
+            title: "SUPERSTARS",
+            year: "2022 - 2023",
+            producer: "MF PROD",
+            duration: "2 H 30",
+            artists: "28 ARTISTES",
+            desc: "Show conçu à l’américaine qui rend hommage à 11 superstars d’hier et aujourd’hui allant d’Edith PIAF à Lady GAGA en passant par Mylène FARMER, Madonna ou encore Rihanna.",
+            details: "Une production monumentale en association avec Accord D’Voix réunissant 28 artistes sur scène.",
+            stats: "DÉJÀ PLUS DE 2 000 SPECTATEURS EN 4 REPRÉSENTATIONS",
+            locations: "Bourg-lès-Valence / Saint-Péray / Guilherand-Granges",
+            image: "https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?auto=format&fit=crop&w=1200&q=80",
+            medias: ['tv', 'mic', 'youtube', 'instagram'],
+            hasBooking: true,
+            tag: "PRODUCTION PHARE"
+        },
+        {
+            id: "livre-brise",
+            title: "LE LIVRE BRISÉ DE NOËL",
+            year: "2023",
+            producer: "MF PROD",
+            duration: "1 H",
+            artists: "16 ARTISTES",
+            desc: "Comédie musicale où le Père Noël casse le livre magique des contes. Cendrillon, Raiponce et Blanche Neige s'unissent pour sauver la fête de Noël.",
+            details: "Un spectacle drôle et émouvant où les princesses ne sont pas que des accros du ménage !",
+            stats: "DÉJÀ PLUS DE 2 000 SPECTATEURS EN 4 REPRÉSENTATIONS",
+            locations: "Bourg-lès-Valence / Saint-Péray / Guilherand-Granges",
+            image: "https://images.unsplash.com/photo-1512470876302-972faa2aa9a4?auto=format&fit=crop&w=1200&q=80",
+            medias: ['photo', 'news'],
+            hasBooking: true,
+            tag: "SPÉCIAL NOËL"
+        },
+        {
+            id: "magic-cabaret",
+            title: "MAGIC CABARET",
+            year: "2023",
+            producer: "MF PROD (ALTC)",
+            duration: "2 H",
+            artists: "17 ARTISTES",
+            desc: "Comédie musicale située dans un cirque itinérant des années 30. Une troupe de saltimbanques unie autour d'une romance entre une femme à barbe et un lanceur de couteaux.",
+            details: "Une immersion poétique dans l'univers forain d'autrefois avec les artistes amateurs de l'ALTC.",
+            stats: "DÉJÀ PLUS DE 2 000 SPECTATEURS EN 4 REPRÉSENTATIONS",
+            locations: "Bourg-lès-Valence / Saint-Péray / Guilherand-Granges",
+            image: "https://images.unsplash.com/photo-1460723237483-7a6dc9d0b212?auto=format&fit=crop&w=1200&q=80",
+            medias: ['tv', 'instagram', 'news'],
+            hasBooking: true,
+            tag: "CABARET"
+        },
+        {
+            id: "lola-disco",
+            title: "LOLA DISCO",
+            year: "2024",
+            producer: "MF PROD",
+            duration: "2 H",
+            artists: "25 ARTISTES",
+            desc: "Voyage de découverte de soi au cœur de la vibrante scène New-Yorkaise des années 1970. À travers des chansons emblématiques, Lola Disco célèbre la résilience humaine.",
+            details: "Un casting de 25 artistes pour une explosion de rythme et de paillettes.",
+            stats: "DÉJÀ PLUS DE 2 000 SPECTATEURS EN 4 REPRÉSENTATIONS",
+            locations: "Bourg-lès-Valence / Saint-Péray / Guilherand-Granges",
+            image: "https://images.unsplash.com/photo-1545128485-c400e7702796?auto=format&fit=crop&w=1200&q=80",
+            medias: ['instagram', 'news', 'tv'],
+            hasBooking: true,
+            tag: "ANNÉES 70"
+        },
+        {
+            id: "magiciennes",
+            title: "LES MAGICIENNES DE NOËL",
+            year: "2024",
+            producer: "MF PROD",
+            duration: "1 H",
+            artists: "6 ARTISTES",
+            desc: "Comment les 5 magiciennes de Noël préparent méthodiquement la potion qui assure la magie des fêtes chaque année depuis des millénaires.",
+            details: "Un spectacle chanté et dansé, ludique et interactif.",
+            stats: "DÉJÀ PLUS DE 2 000 SPECTATEURS EN 4 REPRÉSENTATIONS",
+            locations: "Régional",
+            image: "https://images.unsplash.com/photo-1543589077-47d81606c1bf?auto=format&fit=crop&w=1200&q=80",
+            medias: ['instagram', 'news', 'tv'],
+            tag: "MAGIE DE NOËL"
+        },
+        {
+            id: "super-heroines",
+            title: "LES SUPERS HÉROÏNES",
+            year: "2023",
+            producer: "MF PROD",
+            duration: "45 MIN",
+            artists: "4 ARTISTES + NARRATEUR",
+            desc: "Spectacle interactif (3-10 ans). Mélodia, Etoile, Super Glace et la Gardienne des rêves partent en quête des ingrédients de la potion magique pour faire voler les rennes.",
+            details: "Un moment joyeux et totalement divertissant pour les parents et les enfants.",
+            stats: "DÉJÀ PLUS DE 2 000 SPECTATEURS EN 4 REPRÉSENTATIONS",
+            locations: "Bourg-lès-Valence / Saint-Péray / Guilherand-Granges",
+            image: "https://images.unsplash.com/photo-1503944583220-79d8926ad5e2?auto=format&fit=crop&w=1200&q=80",
+            medias: ['instagram', 'news', 'tv'],
+            hasBooking: true,
+            tag: "JEUNE PUBLIC"
+        },
+        {
+            id: "zapping",
+            title: "ZAPPING FOLIES",
+            year: "2013 - 2017",
+            producer: "PRODUCTION CO-DIRIGÉE",
+            duration: "2 H",
+            artists: "32 ARTISTES",
+            desc: "Comédie musicale articulée autour d’une émission de télévision loufoque revisitant nos souvenirs de séries, dessins animés, comédies musicales et films cultes.",
+            details: "Réunissant 30 chanteurs/danseurs et 2 comédiens. Produit en 2013, 2015 et 2017.",
+            stats: "HISTORIQUE MF PROD",
+            locations: "Sud-Est France",
+            image: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=1200&q=80",
+            medias: ['youtube', 'news'],
+            tag: "PATRIMOINE"
+        }
+    ];
+
+    const MediaIcon = ({ type }: { type: string }) => {
+        switch(type) {
+            case 'youtube': return <div className="flex flex-col items-center gap-1"><Youtube size={16} /><span className="text-[8px] font-black uppercase">Youtube</span></div>;
+            case 'tv': return <div className="flex flex-col items-center gap-1"><Tv size={16} /><span className="text-[8px] font-black uppercase">TV</span></div>;
+            case 'photo': return <div className="flex flex-col items-center gap-1"><Camera size={16} /><span className="text-[8px] font-black uppercase">Photos</span></div>;
+            case 'instagram': return <div className="flex flex-col items-center gap-1"><Instagram size={16} /><span className="text-[8px] font-black uppercase">Insta</span></div>;
+            case 'news': return <div className="flex flex-col items-center gap-1"><Newspaper size={16} /><span className="text-[8px] font-black uppercase">Presse</span></div>;
+            case 'mic': return <div className="flex flex-col items-center gap-1"><Mic size={16} /><span className="text-[8px] font-black uppercase">Micro</span></div>;
+            default: return <PlayCircle size={16} />;
+        }
+    };
+
     return (
-        <div className="w-full pt-32 lg:pt-48 pb-24 px-6 lg:px-12 bg-brand-light dark:bg-brand-dark transition-colors duration-500 min-h-screen overflow-hidden">
+        <div className="w-full pt-32 lg:pt-48 pb-24 px-6 lg:px-12 bg-brand-light dark:bg-brand-dark transition-colors duration-500 min-h-screen">
             <div className="max-w-[1400px] mx-auto">
                 <button onClick={() => onNavigate(View.SERVICES)} className="flex items-center gap-3 text-brand-dark/40 dark:text-brand-light/40 hover:text-brand-magenta dark:hover:text-white transition-colors mb-16 uppercase text-xs font-black tracking-widest group">
                     <ArrowLeft size={16} className="group-hover:-translate-x-2 transition-transform" /> Retour Prestations
                 </button>
 
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-32 items-start">
-                    <div className={`lg:col-span-8 transition-all duration-1000 ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-                        <div className="inline-flex items-center gap-3 px-6 py-2 rounded-full border border-brand-magenta/30 bg-brand-magenta/10 mb-8">
-                            <Zap size={14} className="text-brand-magenta" />
-                            <span className="text-[10px] uppercase tracking-[0.4em] text-brand-magenta font-black">Direction Artistique</span>
-                        </div>
-                        
-                        <h1 className="font-sans font-black text-5xl md:text-7xl lg:text-8xl xl:text-9xl text-brand-dark dark:text-white mb-12 tracking-tighter leading-[0.85] uppercase">
-                            PRODUCTION <br/><span className="gradient-text italic">DE SPECTACLES</span>
-                        </h1>
-                        
-                        <div className="relative rounded-[3rem] overflow-hidden mb-16 group aspect-video border-2 border-black/5 dark:border-white/10 shadow-2xl">
-                            <img src="https://images.unsplash.com/photo-1501281668745-f74dea327912?auto=format&fit=crop&w=1200&q=80" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-[3s]" alt="Production" />
-                            <div className="absolute inset-0 bg-gradient-to-r from-brand-light/60 dark:from-brand-dark/60 via-transparent to-transparent"></div>
-                        </div>
+                {/* --- HEADER --- */}
+                <div className={`mb-32 transition-all duration-1000 ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+                    <div className="inline-flex items-center gap-3 px-6 py-2 rounded-full border border-brand-orange/30 bg-brand-orange/10 mb-8">
+                        <Zap size={14} className="text-brand-orange" />
+                        <span className="text-[10px] uppercase tracking-[0.4em] text-brand-orange font-black">Production & Direction Artistique</span>
+                    </div>
+                    
+                    <h1 className="font-sans font-black text-6xl md:text-8xl lg:text-9xl text-brand-dark dark:text-white mb-12 tracking-tighter leading-[0.85] uppercase">
+                        RÉALISATIONS <br/><span className="gradient-text italic">MF PROD</span>
+                    </h1>
+                </div>
 
-                        <p className="text-brand-dark/70 dark:text-brand-light/70 text-2xl lg:text-3xl font-light leading-relaxed mb-16">
-                            Mikael Ferreira assure la création complète de shows immersifs : casting, direction musicale, mise en scène et régie. Donnez une dimension professionnelle à vos événements.
-                        </p>
-
-                        <div className="bg-white dark:bg-white/5 border-l-8 border-brand-magenta p-12 rounded-r-[3rem] shadow-xl max-w-4xl relative overflow-hidden border border-black/5 dark:border-white/5 transition-colors duration-500">
-                             <Quote className="text-brand-magenta/20 w-16 h-16 mb-4 relative z-10" />
-                             <p className="text-2xl lg:text-4xl font-black text-brand-dark dark:text-white italic tracking-tight leading-tight relative z-10">
-                                "Chaque spectacle est une histoire unique que nous écrivons ensemble."
-                             </p>
+                {/* --- SECTION 1: LE CARROUSSEL 2026 (STYLE HOME) --- */}
+                <section className="mb-48">
+                    <div className="flex items-center justify-between mb-16 px-4">
+                        <div className="flex items-center gap-6">
+                            <h2 className="text-xs font-black uppercase tracking-[0.6em] text-brand-cyan">SAISON 2026 - LES PROCHAINES PRODUCTIONS</h2>
+                            <div className="h-px w-32 bg-brand-cyan/30 hidden md:block"></div>
+                        </div>
+                        <div className="flex gap-4">
+                            <button onClick={() => scroll('left')} className="w-12 h-12 rounded-full bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/10 flex items-center justify-center hover:bg-brand-magenta hover:text-white transition-all shadow-lg"><ChevronLeft size={20} /></button>
+                            <button onClick={() => scroll('right')} className="w-12 h-12 rounded-full bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/10 flex items-center justify-center hover:bg-brand-magenta hover:text-white transition-all shadow-lg"><ChevronRight size={20} /></button>
                         </div>
                     </div>
 
-                    <div className="lg:col-span-4 sticky top-40 lg:top-48 z-10">
-                        <div className="bg-white dark:bg-brand-dark-soft border-2 border-black/5 dark:border-white/10 p-10 lg:p-14 rounded-[4rem] relative shadow-2xl overflow-hidden transition-colors duration-500">
-                            <h3 className="text-2xl lg:text-3xl font-black text-brand-dark dark:text-white mb-8 tracking-tight uppercase">PARLONS DE VOTRE PROJET</h3>
-                            
-                            <div className="space-y-8 mb-16">
-                                <a href="tel:0606578951" className="flex items-center gap-6 p-6 rounded-3xl bg-brand-light dark:bg-brand-dark border border-black/5 dark:border-white/5 hover:border-brand-magenta transition-all group shadow-sm">
-                                    <div className="p-4 rounded-2xl bg-brand-magenta/10 text-brand-magenta group-hover:scale-110 transition-transform"><Phone size={24} /></div>
-                                    <div>
-                                        <span className="text-[10px] uppercase tracking-widest text-brand-dark/40 dark:text-white/40 block mb-1">Direct Mikael</span>
-                                        <span className="text-xl font-black text-brand-dark dark:text-white">06 06 57 89 51</span>
+                    <div 
+                        ref={scrollRef}
+                        className="flex overflow-x-auto pb-12 pt-4 gap-8 lg:gap-10 no-scrollbar snap-x snap-mandatory scroll-smooth"
+                    >
+                        {upcomingShows.map((show, i) => (
+                            <div 
+                                key={i}
+                                onClick={() => scrollToSection(show.id)}
+                                className="flex-shrink-0 w-[280px] lg:w-[380px] snap-start flex flex-col items-center group cursor-pointer"
+                            >
+                                <div className="mb-6 flex items-center gap-3 px-4 py-2 rounded-full border border-brand-magenta/30 bg-brand-magenta/5 dark:bg-brand-magenta/10 shadow-lg animate-breathe">
+                                   <Sparkles size={12} className="text-brand-magenta" />
+                                   <span className="text-[10px] font-black text-brand-dark dark:text-white uppercase tracking-[0.2em]">Saison 2026</span>
+                                </div>
+
+                                <div className="relative w-full aspect-[2/3] rounded-[3rem] overflow-hidden border-2 border-black/5 dark:border-white/10 bg-white dark:bg-brand-dark-soft transition-all duration-500 hover:border-brand-magenta/50 shadow-xl group-hover:shadow-[0_30px_60px_-15px_rgba(255,0,122,0.3)]">
+                                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent z-10 opacity-60"></div>
+                                    <img src={show.image} alt={show.title} className="w-full h-full object-cover transform scale-100 group-hover:scale-110 transition-transform duration-[2s] ease-out" />
+                                    <div className="absolute bottom-8 left-8 right-8 text-white z-20">
+                                        <h4 className="text-xl font-black uppercase tracking-tighter leading-tight mb-2 drop-shadow-lg">{show.title}</h4>
+                                        <div className="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                                            <span className="text-[8px] font-black uppercase tracking-widest text-brand-cyan">Cliquer pour détails</span>
+                                            <MousePointer2 size={10} className="text-brand-cyan" />
+                                        </div>
                                     </div>
-                                </a>
-                                <a href="mailto:mikmarc@hotmail.fr" className="flex items-center gap-6 p-6 rounded-3xl bg-brand-light dark:bg-brand-dark border border-black/5 dark:border-white/5 hover:border-brand-magenta transition-all group shadow-sm">
-                                    <div className="p-4 rounded-2xl bg-brand-magenta/10 text-brand-magenta group-hover:scale-110 transition-transform"><Mail size={24} /></div>
-                                    <div>
-                                        <span className="text-[10px] uppercase tracking-widest text-brand-dark/40 dark:text-white/40 block mb-1">Email</span>
-                                        <span className="text-xl font-black text-brand-dark dark:text-white">mikmarc@hotmail.fr</span>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </section>
+
+                {/* --- SECTION 2: LE CATALOGUE COMPLET (INDEX SPLIT) --- */}
+                <section className="mb-48 space-y-24">
+                    {/* Index 2026 */}
+                    <div>
+                        <div className="flex items-center gap-6 mb-16 px-4">
+                            <h2 className="text-xs font-black uppercase tracking-[0.6em] text-brand-cyan whitespace-nowrap">INDEX SAISON 2026</h2>
+                            <div className="h-[1px] flex-1 bg-gradient-to-r from-brand-cyan/30 to-transparent"></div>
+                        </div>
+                        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
+                            {upcomingShows.map((show, i) => (
+                                <div 
+                                    key={i} 
+                                    onClick={() => scrollToSection(show.id)}
+                                    className="group cursor-pointer relative aspect-square rounded-[2rem] overflow-hidden border border-black/5 dark:border-white/10 shadow-lg hover:-translate-y-2 transition-all duration-500"
+                                >
+                                    <img src={show.image} alt={show.title} className="w-full h-full object-cover transition-all duration-700" />
+                                    <div className="absolute inset-0 bg-brand-cyan/10 opacity-30 group-hover:opacity-0 transition-opacity"></div>
+                                    <div className="absolute bottom-4 left-4 right-4 text-white">
+                                        <h4 className="text-[9px] font-black uppercase tracking-widest leading-tight drop-shadow-lg">{show.title}</h4>
                                     </div>
-                                </a>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+
+                    {/* Index Historique */}
+                    <div>
+                        <div className="flex items-center gap-6 mb-16 px-4">
+                            <h2 className="text-xs font-black uppercase tracking-[0.6em] text-brand-magenta whitespace-nowrap">HISTORIQUE DES PRODUCTIONS</h2>
+                            <div className="h-[1px] flex-1 bg-gradient-to-r from-brand-magenta/30 to-transparent"></div>
+                        </div>
+                        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-6 lg:gap-8">
+                            {historicalShows.map((show, i) => (
+                                <div 
+                                    key={i} 
+                                    onClick={() => scrollToSection(show.id)}
+                                    className="group cursor-pointer relative aspect-square rounded-[2.5rem] overflow-hidden border border-black/5 dark:border-white/10 shadow-xl transition-all duration-500 hover:-translate-y-4 hover:border-brand-magenta/50"
+                                >
+                                    <img src={show.image} alt={show.title} className="w-full h-full object-cover transition-all duration-700" />
+                                    <div className="absolute inset-0 bg-brand-dark/30 opacity-40 group-hover:opacity-10 transition-opacity"></div>
+                                    <div className="absolute bottom-6 left-6 right-6 text-white transform group-hover:-translate-y-2 transition-transform">
+                                        <span className="text-[9px] font-black uppercase tracking-widest text-brand-magenta mb-1 block">{show.year}</span>
+                                        <h4 className="text-xs font-black uppercase tracking-tighter leading-none">{show.title}</h4>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </section>
+
+                {/* --- SECTION 3: FOCUS SAISON 2026 --- */}
+                <div className="space-y-64 mb-64">
+                    <div className="flex flex-col items-center gap-4 mb-32">
+                        <div className="h-20 w-px bg-gradient-to-b from-transparent to-brand-cyan"></div>
+                        <h2 className="text-xs font-black uppercase tracking-[1em] text-brand-cyan">FOCUS SAISON 2026</h2>
+                    </div>
+
+                    {upcomingShows.map((show, i) => (
+                        <div key={i} id={show.id} className="relative scroll-mt-48 group">
+                            <div className="flex items-center gap-6 mb-16">
+                                <span className="text-8xl lg:text-9xl font-black opacity-5 dark:opacity-10 select-none">0{i + 1}</span>
+                                <div className="h-px flex-1 bg-brand-cyan/20"></div>
+                                <span className="text-[10px] font-black uppercase tracking-[0.5em] text-brand-cyan">{show.tag}</span>
                             </div>
 
-                            <Button onClick={() => onNavigate(View.BOOKING, { serviceId: View.PRODUCTION_SPECTACLES, serviceName: "Production de Spectacles", type: 'CONTACT' })} className="w-full py-6 shadow-xl">
-                                Demander un Devis
+                            <div className={`grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24 items-center ${i % 2 !== 0 ? 'lg:flex-row-reverse' : ''}`}>
+                                <div className={`lg:col-span-5 ${i % 2 !== 0 ? 'lg:order-2' : ''}`}>
+                                    <div className="relative rounded-[4rem] overflow-hidden shadow-2xl border-4 border-white dark:border-brand-dark-soft group-hover:scale-105 transition-transform duration-700">
+                                        <img src={show.image} alt={show.title} className="w-full h-full object-cover" />
+                                        <div className="absolute inset-0 bg-gradient-to-t from-brand-dark/40 to-transparent"></div>
+                                    </div>
+                                </div>
+
+                                <div className={`lg:col-span-7 ${i % 2 !== 0 ? 'lg:order-1' : ''}`}>
+                                    <div className="flex flex-wrap gap-4 mb-10">
+                                        <div className="px-5 py-2 rounded-full bg-brand-cyan text-brand-dark text-[9px] font-black uppercase tracking-widest">EXCLUSIVITÉ 2026</div>
+                                        <div className="px-5 py-2 rounded-full bg-black/5 dark:bg-white/10 text-brand-dark dark:text-white text-[9px] font-black uppercase tracking-widest">DURÉE {show.duration}</div>
+                                        <div className="px-5 py-2 rounded-full bg-black/5 dark:bg-white/10 text-brand-dark dark:text-white text-[9px] font-black uppercase tracking-widest">{show.artists}</div>
+                                    </div>
+
+                                    <h3 className="text-5xl lg:text-8xl font-black text-brand-dark dark:text-white uppercase tracking-tighter mb-10 leading-none">
+                                        {show.title}
+                                    </h3>
+
+                                    <div className="p-10 lg:p-14 bg-white dark:bg-brand-dark-soft rounded-[3.5rem] border border-black/5 dark:border-white/10 shadow-2xl mb-12">
+                                        <p className="text-xl lg:text-3xl font-light text-brand-dark/70 dark:text-brand-light/80 leading-relaxed mb-8 italic font-serif">
+                                            "{show.desc}"
+                                        </p>
+                                        <p className="text-brand-dark/40 dark:text-brand-light/40 font-light leading-relaxed">
+                                            {show.details}
+                                        </p>
+                                    </div>
+
+                                    <div className="flex flex-col sm:flex-row gap-6">
+                                        <Button onClick={() => handleContact(show.title)} className="py-7 px-14 text-sm shadow-xl">Pré-réserver pour ma commune</Button>
+                                        <Button variant="outline" onClick={() => handleArtistApplication()} className="py-7">Postuler au Casting</Button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+
+                {/* --- SECTION 4: MF PROD ANTHOLOGY (MEME FORMAT QUE 2026) --- */}
+                <div className="space-y-64">
+                    <div className="flex flex-col items-center gap-4 mb-32">
+                        <div className="h-20 w-px bg-gradient-to-b from-transparent to-brand-magenta"></div>
+                        <h2 className="text-xs font-black uppercase tracking-[1em] text-brand-magenta text-center">MF PROD ANTHOLOGY<br/><span className="text-[10px] opacity-40">HISTORIQUE DES RÉALISATIONS</span></h2>
+                    </div>
+
+                    {historicalShows.map((show, i) => (
+                        <div key={i} id={show.id} className="relative scroll-mt-48 group">
+                            {/* Numérotation stylisée comme en 2026 */}
+                            <div className="flex items-center gap-6 mb-16">
+                                <span className="text-8xl lg:text-9xl font-black opacity-5 dark:opacity-10 select-none">{String(upcomingShows.length + i + 1).padStart(2, '0')}</span>
+                                <div className="h-px flex-1 bg-brand-magenta/20"></div>
+                                <span className="text-[10px] font-black uppercase tracking-[0.5em] text-brand-magenta">{show.tag}</span>
+                            </div>
+
+                            <div className={`grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24 items-center ${i % 2 !== 0 ? 'lg:flex-row-reverse' : ''}`}>
+                                {/* IMAGE FORMAT PAYSAGE (aspect-video) */}
+                                <div className={`lg:col-span-6 ${i % 2 !== 0 ? 'lg:order-2' : ''}`}>
+                                    <div className="relative aspect-video rounded-[4rem] overflow-hidden shadow-2xl border-4 border-white dark:border-brand-dark-soft group-hover:scale-105 transition-transform duration-700">
+                                        <img src={show.image} alt={show.title} className="w-full h-full object-cover" />
+                                        <div className="absolute inset-0 bg-gradient-to-t from-brand-dark/40 to-transparent"></div>
+                                        <div className="absolute top-8 left-8 bg-brand-magenta text-white px-6 py-2 rounded-full text-[10px] font-black uppercase tracking-widest shadow-xl">{show.year}</div>
+                                    </div>
+                                    {/* Barre média sous l'image */}
+                                    <div className="mt-8 flex gap-4 justify-center lg:justify-start overflow-hidden">
+                                        {show.medias?.map((m, idx) => (
+                                            <div key={idx} className="w-14 h-14 rounded-2xl bg-white dark:bg-brand-dark border border-black/5 dark:border-white/10 flex items-center justify-center text-brand-dark/40 dark:text-white/40 hover:bg-brand-magenta hover:text-white transition-all cursor-pointer shadow-md">
+                                                <MediaIcon type={m} />
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+
+                                <div className={`lg:col-span-6 ${i % 2 !== 0 ? 'lg:order-1' : ''}`}>
+                                    {/* Badges format 2026 */}
+                                    <div className="flex flex-wrap gap-4 mb-10">
+                                        <div className="px-5 py-2 rounded-full bg-brand-magenta text-white text-[9px] font-black uppercase tracking-widest">{show.producer}</div>
+                                        <div className="px-5 py-2 rounded-full bg-black/5 dark:bg-white/10 text-brand-dark dark:text-white text-[9px] font-black uppercase tracking-widest">DURÉE {show.duration}</div>
+                                        <div className="px-5 py-2 rounded-full bg-black/5 dark:bg-white/10 text-brand-dark dark:text-white text-[9px] font-black uppercase tracking-widest">{show.artists}</div>
+                                    </div>
+
+                                    <h3 className="text-5xl lg:text-7xl font-black text-brand-dark dark:text-white uppercase tracking-tighter mb-10 leading-none">
+                                        {show.title}
+                                    </h3>
+
+                                    {/* Boîte de contenu format 2026 */}
+                                    <div className="p-10 lg:p-14 bg-white dark:bg-brand-dark-soft rounded-[3.5rem] border border-black/5 dark:border-white/10 shadow-2xl mb-12">
+                                        <p className="text-xl lg:text-2xl font-light text-brand-dark/70 dark:text-brand-light/80 leading-relaxed mb-8 italic font-serif">
+                                            "{show.desc}"
+                                        </p>
+                                        <p className="text-brand-dark/40 dark:text-brand-light/40 font-light leading-relaxed text-sm">
+                                            {show.details}
+                                        </p>
+                                        
+                                        {/* Stats format badge dans la boîte */}
+                                        {show.stats && (
+                                            <div className="mt-8 pt-8 border-t border-black/5 dark:border-white/10 flex flex-col gap-4">
+                                                <div className="flex items-center gap-4 text-brand-orange">
+                                                    <Star size={20} className="animate-pulse" />
+                                                    <span className="text-xs font-black uppercase tracking-widest">{show.stats}</span>
+                                                </div>
+                                                <div className="flex items-center gap-4 text-brand-dark/40 dark:text-white/40">
+                                                    <MapPin size={16} className="text-brand-magenta" />
+                                                    <span className="text-[10px] font-bold uppercase tracking-[0.2em]">{show.locations}</span>
+                                                </div>
+                                            </div>
+                                        )}
+                                    </div>
+
+                                    {/* CTAs */}
+                                    <div className="flex flex-col sm:flex-row gap-6">
+                                        <Button onClick={() => handleContact(show.title)} className="py-7 px-10 text-xs shadow-xl">Commander pour ma commune</Button>
+                                        {show.hasBooking && (
+                                            <Button variant="outline" onClick={() => handleBooking(show.title)} className="py-7 text-xs">
+                                                <Ticket size={16} className="mr-2" /> Billetterie ouverte
+                                            </Button>
+                                        )}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+
+                {/* --- ARTISTE CASTING CTA --- */}
+                <section className="mt-64">
+                    <div className="p-16 lg:p-24 rounded-[5rem] bg-brand-dark text-white border-2 border-white/10 relative overflow-hidden shadow-2xl text-center group">
+                        <div className="absolute inset-0 bg-gradient-to-br from-brand-cyan/10 to-brand-magenta/10 pointer-events-none" />
+                        <Sparkles className="mx-auto mb-10 text-brand-cyan animate-pulse" size={56} />
+                        <h3 className="text-5xl lg:text-8xl font-black uppercase tracking-tighter mb-12 leading-tight">VOTRE TALENT <br/><span className="text-brand-magenta italic underline decoration-brand-magenta/30 underline-offset-8">AU COEUR DU SHOW</span></h3>
+                        <p className="text-xl font-light text-white/60 max-w-4xl mx-auto mb-16 leading-relaxed">
+                            Nous recherchons en permanence de nouveaux profils pour enrichir notre historique. Serez-vous le prochain visage de MF Prod ?
+                        </p>
+                        <div className="flex flex-col sm:flex-row gap-6 justify-center">
+                            <Button className="py-8 px-20 text-xl shadow-[0_20px_40px_rgba(255,0,122,0.3)]" onClick={handleArtistApplication}>
+                                <UserPlus size={24} className="mr-3" /> Postuler au Casting
                             </Button>
                         </div>
                     </div>
-                </div>
+                </section>
             </div>
+
+            <style dangerouslySetInnerHTML={{ __html: `
+                .no-scrollbar::-webkit-scrollbar { display: none; }
+                .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+            `}} />
         </div>
     );
 };

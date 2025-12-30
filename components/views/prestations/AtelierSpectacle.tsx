@@ -15,7 +15,7 @@ const AtelierSpectacle: React.FC<Props> = ({ onNavigate }) => {
             id: 'atelier_adulte',
             title: "Adultes",
             subtitle: "3 Groupes Disponibles",
-            image: "https://images.unsplash.com/photo-1503095396549-807039045349?auto=format&fit=crop&w=1000&q=80",
+            image: "https://images.unsplash.com/photo-1514525253361-bee8a4874aad?auto=format&fit=crop&w=1000&q=80",
             desc: "Créez et interprétez un spectacle pro. Chant, danse et jeu scénique.",
             schedules: ["Jeudi : 19H00 - 20H15 / 20H30 - 21H45", "Vendredi : 18H30 - 19H45"],
             price: "360 €",
@@ -40,7 +40,7 @@ const AtelierSpectacle: React.FC<Props> = ({ onNavigate }) => {
     const handleBooking = (group: typeof groups[0]) => {
         onNavigate(View.BOOKING, {
             serviceId: View.ATELIER_SPECTACLE,
-            serviceName: `Atelier Spectacle ${group.title}`,
+            serviceName: `Création de Spectacles ${group.title}`,
             type: 'RESERVATION',
             price: group.price,
             spotsTotal: group.spots.total,
@@ -57,7 +57,7 @@ const AtelierSpectacle: React.FC<Props> = ({ onNavigate }) => {
 
                 <div className={`mb-24 transition-all duration-1000 ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
                     <h1 className="font-sans font-black text-5xl md:text-7xl lg:text-9xl text-brand-dark dark:text-white mb-8 tracking-tighter leading-none uppercase">
-                        ATELIER <br/><span className="gradient-text italic">SPECTACLE</span>
+                        CRÉATION DE <br/><span className="gradient-text italic">SPECTACLES</span>
                     </h1>
                 </div>
 
@@ -102,5 +102,4 @@ const AtelierSpectacle: React.FC<Props> = ({ onNavigate }) => {
     );
 };
 
-// Fixed error: Added missing default export
 export default AtelierSpectacle;

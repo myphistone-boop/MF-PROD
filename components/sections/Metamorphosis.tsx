@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { Button } from '../ui/Button';
-import { Mic2, Music, Tv, Sparkles, Check, ChevronDown } from 'lucide-react';
+import { Mic2, Music, Tv, Sparkles, Check, ChevronDown, Video } from 'lucide-react';
 import { View } from '../../types';
 
 interface MetamorphosisProps {
@@ -16,38 +16,41 @@ const Metamorphosis: React.FC<MetamorphosisProps> = ({ onNavigate }) => {
     {
         id: 0,
         title: "Coaching Vocal",
-        subtitle: "Expertise Scénique",
-        description: "Un accompagnement sur mesure pour libérer votre plein potentiel vocal. De la technique respiratoire à l'interprétation émotionnelle, nous travaillons sur la signature unique de votre voix.",
+        subtitle: "Expertise Chant & Voix",
+        description: "Un accompagnement sur mesure pour libérer votre plein potentiel vocal. De la technique respiratoire à l'interprétation émotionnelle, pour chanteurs et orateurs.",
         detail: "Dominez la scène avec une voix assurée, puissante et nuancée.",
         icon: <Mic2 className="w-8 h-8 lg:w-10 lg:h-10" />,
         steps: ["Diagnostic Vocal", "Technique & Respiration", "Interprétation", "Mise en Situation"],
         duration: "1h00",
         science: "Physiologie Vocale",
-        color: "brand-cyan"
+        color: "brand-cyan",
+        view: View.COACHING_VOCAL
     },
     {
         id: 1,
-        title: "Spectacles Musicaux",
+        title: "Création Spectacle",
         subtitle: "Production MF Prod",
-        description: "Nous créons des univers immersifs où la musique rencontre la narration. MF Prod assure la direction artistique complète, du casting à la mise en scène, pour des productions inoubliables.",
+        description: "Nous créons des univers immersifs où la musique rencontre la narration. MF Prod assure la direction artistique complète, du casting à la mise en scène.",
         detail: "Des créations originales qui marquent l'esprit des spectateurs.",
         icon: <Music className="w-8 h-8 lg:w-10 lg:h-10" />,
         steps: ["Concept Créatif", "Direction Musicale", "Scénographie", "Première Scène"],
-        duration: "Sur Projet",
+        duration: "Sur Devis",
         science: "Scénographie",
-        color: "brand-magenta"
+        color: "brand-magenta",
+        view: View.PRODUCTION_SPECTACLES
     },
     {
         id: 2,
-        title: "Animation & TV",
+        title: "Animation TV",
         subtitle: "Présence Médiatique",
-        description: "Donnez du relief à vos émissions et événements. Mikael Ferreira apporte son expertise de l'image et du micro pour une animation fluide, rythmée et professionnelle devant la caméra.",
+        description: "Mikaël Ferreira apporte son expertise de l'image et du micro pour une animation fluide, rythmée et professionnelle devant la caméra.",
         detail: "Une maîtrise totale de l'antenne et du direct.",
         icon: <Tv className="w-8 h-8 lg:w-10 lg:h-10" />,
         steps: ["Écriture Script", "Maîtrise du Direct", "Interactivité", "Bilan Média"],
-        duration: "Journalier",
-        science: "Communication TV",
-        color: "brand-orange"
+        duration: "Sur Projet",
+        science: "Audiovisuel",
+        color: "brand-orange",
+        view: View.ANIMATION_TV
     }
   ];
 
@@ -93,7 +96,7 @@ const Metamorphosis: React.FC<MetamorphosisProps> = ({ onNavigate }) => {
                                         </div>
                                     </div>
                                     <div className="mt-6">
-                                        <Button variant="outline" onClick={() => onNavigate(View.SERVICES)} className="w-full text-xs py-3">Voir Détails</Button>
+                                        <Button variant="outline" onClick={() => onNavigate(feature.view)} className="w-full text-xs py-3">Voir Détails</Button>
                                     </div>
                                 </div>
                             )}
@@ -131,12 +134,12 @@ const Metamorphosis: React.FC<MetamorphosisProps> = ({ onNavigate }) => {
                                             <span className="text-white text-lg font-medium">{features[activeFeature].science}</span>
                                         </div>
                                         <div className="bg-white/5 rounded-2xl p-5 border border-white/10">
-                                            <div className="text-[10px] uppercase font-black text-brand-cyan mb-2">Disponibilité</div>
+                                            <div className="text-[10px] uppercase font-black text-brand-cyan mb-2">Tarif</div>
                                             <span className="text-white text-lg font-medium">{features[activeFeature].duration}</span>
                                         </div>
                                     </div>
                                 </div>
-                                <Button className="w-max" onClick={() => onNavigate(View.SERVICES)}>Explorer les réalisations</Button>
+                                <Button className="w-max" onClick={() => onNavigate(features[activeFeature].view)}>Explorer la prestation</Button>
                             </div>
                             <div className="bg-brand-dark rounded-[2.5rem] p-10 border border-white/10 flex flex-col justify-center shadow-inner">
                                 <h4 className="font-sans font-black text-2xl text-white mb-10 tracking-tight">LA MÉTHODE MF PROD</h4>

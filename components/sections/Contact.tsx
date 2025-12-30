@@ -49,7 +49,7 @@ const Contact: React.FC<ContactProps> = ({ onNavigate }) => {
                     </div>
                     <span className="text-[10px] uppercase tracking-[0.5em] text-brand-dark/30 dark:text-brand-light/30 font-black block mb-4">LIGNE DIRECTE</span>
                     <h3 className="text-4xl lg:text-5xl font-black text-brand-dark dark:text-white font-sans tracking-tight mb-4">06 06 57 89 51</h3>
-                    <p className="text-brand-dark/60 dark:text-brand-light/60 font-light text-xl">Mikael Ferreira <br/>Directeur Artistique</p>
+                    <p className="text-brand-dark/60 dark:text-brand-light/60 font-light text-xl">Mikaël Ferreira <br/>Directeur Artistique</p>
                 </a>
 
                 {/* EMAIL */}
