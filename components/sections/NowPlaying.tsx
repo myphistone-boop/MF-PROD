@@ -147,25 +147,24 @@ const NowPlaying: React.FC<NowPlayingProps> = ({ onNavigate }) => {
 
           <div className="w-full lg:w-3/5 order-2">
             {/* 
-              AJOUT DE STYLE INLINE POUR LE MASQUAGE WEBKIT 
-              Ce trick force le clipping des angles pendant l'animation de scale.
+              SUPPRESSION DES INTERACTIONS (pointer-events-none) ET DE L'EFFET HOVER
+              Cela règle définitivement le bug visuel des angles arrondis sur certains navigateurs.
             */}
             <div 
-              className="relative group rounded-[4rem] overflow-hidden border-4 border-white dark:border-brand-dark-soft shadow-[0_40px_100px_rgba(0,0,0,0.3)] aspect-video bg-black transform transition-transform duration-700 hover:scale-[1.02] transform-gpu will-change-transform isolation-isolate"
+              className="relative rounded-[4rem] overflow-hidden border-4 border-white dark:border-brand-dark-soft shadow-[0_40px_100px_rgba(0,0,0,0.3)] aspect-video bg-black transform-gpu pointer-events-none select-none"
               style={{
                 WebkitMaskImage: '-webkit-radial-gradient(white, black)',
                 backfaceVisibility: 'hidden'
               }}
             >
-              
-              <div className="absolute inset-0 z-30 cursor-default"></div>
-
-              <div className="absolute inset-0 w-full h-full pointer-events-none bg-brand-dark">
+              <div className="absolute inset-0 w-full h-full bg-brand-dark">
                 <div id="youtube-player-container" className="w-full h-full scale-[1.05]"></div>
               </div>
 
-              <div className="absolute inset-0 z-10 pointer-events-none border-[1px] border-white/10 rounded-[4rem]"></div>
+              {/* Overlay Glass pour la profondeur */}
+              <div className="absolute inset-0 z-10 border-[1px] border-white/10 rounded-[4rem]"></div>
               
+              {/* Badges sur la vidéo (Toujours visibles car les interactions sont bloquées) */}
               <div className="absolute top-8 left-8 z-20 flex items-center gap-3 px-5 py-2.5 rounded-full backdrop-blur-xl bg-brand-dark/30 border border-white/20">
                 <div className="relative flex items-center justify-center">
                    <div className="absolute inset-0 bg-brand-magenta rounded-full animate-ping opacity-75"></div>
@@ -174,7 +173,7 @@ const NowPlaying: React.FC<NowPlayingProps> = ({ onNavigate }) => {
                 <span className="text-[10px] font-black uppercase tracking-widest text-white">Extrait SuperStar</span>
               </div>
 
-              <div className="absolute bottom-8 right-8 z-20 flex items-center gap-3 px-5 py-2.5 rounded-full backdrop-blur-xl bg-white/10 border border-white/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+              <div className="absolute bottom-8 right-8 z-20 flex items-center gap-3 px-5 py-2.5 rounded-full backdrop-blur-xl bg-white/10 border border-white/20 opacity-80">
                 <Music size={14} className="text-white" />
                 <span className="text-[10px] font-black uppercase tracking-widest text-white">Performance Live</span>
               </div>
