@@ -5,6 +5,7 @@ import BackgroundCanvas from './components/BackgroundCanvas';
 import Home from './components/views/Home';
 import Men from './components/views/Men';
 import Discover from './components/views/Discover';
+import Gallery from './components/views/Gallery';
 import BookingView from './components/views/BookingView';
 import WhatsAppButton from './components/ui/WhatsAppButton';
 import ProductionSpectacles from './components/views/prestations/ProductionSpectacles';
@@ -15,26 +16,16 @@ import AnimationTV from './components/views/prestations/AnimationTV';
 import VoixOff from './components/views/prestations/VoixOff';
 import AtelierSpectacle from './components/views/prestations/AtelierSpectacle';
 import Evenements from './components/views/Evenements';
-import { View, BookingContext, Theme } from './types';
+import { View, BookingContext } from './types';
 
 const App: React.FC = () => {
   const [currentView, setCurrentView] = useState<View>(View.HOME);
   const [bookingContext, setBookingContext] = useState<BookingContext | null>(null);
-  const [theme, setTheme] = useState<Theme>(() => {
-    const saved = localStorage.getItem('mf-prod-theme');
-    return (saved as Theme) || 'dark';
-  });
 
   useEffect(() => {
-    const root = window.document.documentElement;
-    root.classList.remove('light', 'dark');
-    root.classList.add(theme);
-    localStorage.setItem('mf-prod-theme', theme);
-  }, [theme]);
-
-  const toggleTheme = () => {
-    setTheme(prev => prev === 'dark' ? 'light' : 'dark');
-  };
+    // Force dark mode
+    window.document.documentElement.classList.add('dark');
+  }, []);
 
   const navigate = (view: View, context?: BookingContext) => {
     if (context) {
@@ -45,16 +36,17 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen transition-colors duration-500 text-brand-dark dark:text-white font-sans selection:bg-brand-magenta selection:text-white">
-      <BackgroundCanvas theme={theme} />
+    <div className="min-h-screen bg-brand-dark text-white font-sans selection:bg-brand-magenta selection:text-white">
+      <BackgroundCanvas />
       
-      <Navbar currentView={currentView} onNavigate={navigate} theme={theme} onToggleTheme={toggleTheme} />
+      <Navbar currentView={currentView} onNavigate={navigate} />
       
       <main className="transition-opacity duration-500 ease-in-out">
         {currentView === View.HOME && <Home onNavigate={navigate} />}
         {currentView === View.SPECTACLES && <Men onNavigate={navigate} />}
         {currentView === View.SERVICES && <Discover onNavigate={navigate} />}
         {currentView === View.EVENEMENTS && <Evenements onNavigate={navigate} />}
+        {currentView === View.GALLERY && <Gallery onNavigate={navigate} />}
         
         {currentView === View.PRODUCTION_SPECTACLES && <ProductionSpectacles onNavigate={navigate} />}
         {currentView === View.COACHING_VOCAL && <CoachingVocal onNavigate={navigate} />}

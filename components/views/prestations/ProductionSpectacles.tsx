@@ -2,6 +2,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { Button } from '../../ui/Button';
 import { View, BookingContext } from '../../../types';
+import { ASSETS } from '../../../assets';
 import { 
   Zap, ArrowLeft, Star, Users, Clock, Youtube, Tv, 
   Camera, Instagram, Newspaper, Mic, PlayCircle, 
@@ -33,14 +34,6 @@ const ProductionSpectacles: React.FC<Props> = ({ onNavigate }) => {
         });
     };
 
-    const handleBooking = (service: string) => {
-        onNavigate(View.BOOKING, {
-            serviceId: View.PRODUCTION_SPECTACLES,
-            serviceName: `Billetterie - ${service}`,
-            type: 'RESERVATION'
-        });
-    };
-
     const handleArtistApplication = () => {
         onNavigate(View.BOOKING, {
             serviceId: View.PRODUCTION_SPECTACLES,
@@ -63,29 +56,29 @@ const ProductionSpectacles: React.FC<Props> = ({ onNavigate }) => {
         }
     };
 
-    // --- DATA : SAISON 2026 ---
+    // --- DATA : SAISON 2026 (Synchronisée avec ASSETS) ---
     const upcomingShows = [
         {
-            id: "rois-reines-pop",
+            id: "pop",
             title: "LES ROIS ET REINES DE LA POP",
             year: "2026",
             duration: "2 H",
             artists: "Troupe Pop MF",
             desc: "Un hommage flamboyant aux icônes mondiales. De Michael Jackson à Madonna, une explosion de tubes intergénérationnels portée par une mise en scène ultra-moderne.",
             details: "Scénographie LED immersive, 12 danseurs et 4 chanteurs lead. Une production qui repousse les limites du show live.",
-            image: "https://storage.googleapis.com/novelec_assets/Spectacle%202.webp",
+            image: ASSETS.SHOWS_2026.find(s => s.id === "pop")?.url || "",
             tag: "PRODUCTION 2026",
             color: "brand-cyan"
         },
         {
-            id: "musics-girls",
+            id: "girls",
             title: "MUSIC'S GIRLS",
             year: "2026",
             duration: "1 H 45",
             artists: "Ensemble Féminin",
             desc: "Le pouvoir au féminin. Une célébration des plus grandes voix de femmes à travers les décennies. De la soul au R'n'B moderne.",
             details: "Un spectacle puissant, élégant et engagé, mettant en lumière l'excellence vocale féminine de notre troupe.",
-            image: "https://storage.googleapis.com/novelec_assets/Spectacle%203.webp",
+            image: ASSETS.SHOWS_2026.find(s => s.id === "girls")?.url || "",
             tag: "PRODUCTION 2026",
             color: "brand-magenta"
         },
@@ -97,43 +90,43 @@ const ProductionSpectacles: React.FC<Props> = ({ onNavigate }) => {
             artists: "Troupe Scénique",
             desc: "Un voyage coloré et émouvant inspiré des traditions et de la magie des souvenirs. Une épopée musicale pour toute la famille.",
             details: "Costumes traditionnels revisités, décors enchanteurs et une partition musicale qui touche le cœur.",
-            image: "https://storage.googleapis.com/novelec_assets/Spectacle%204.webp",
+            image: ASSETS.SHOWS_2026.find(s => s.id === "coco")?.url || "",
             tag: "PRODUCTION 2026",
             color: "brand-orange"
         },
         {
-            id: "marie-curie",
+            id: "curie",
             title: "MARIE CURIE",
             year: "2026",
             duration: "2 H",
             artists: "Comédie Musicale",
             desc: "L'histoire épique d'une femme qui a changé la science. Un spectacle biographique intense, poétique et visuellement époustouflant.",
             details: "Une narration théâtrale rythmée par des compositions originales. Le destin d'une pionnière raconté avec force.",
-            image: "https://storage.googleapis.com/novelec_assets/Spectacle%205.webp",
+            image: ASSETS.SHOWS_2026.find(s => s.id === "curie")?.url || "",
             tag: "PRODUCTION 2026",
             color: "brand-cyan"
         },
         {
-            id: "boogie-wonderland",
+            id: "boogie",
             title: "BOOGIE WONDERLAND",
             year: "2026",
             duration: "2 H 15",
             artists: "Troupe Disco MF",
             desc: "Le retour du Disco. Boules à facettes, pattes d'éph' et rythmes endiablés pour une soirée 100% paillettes et énergie communicative.",
             details: "Interactivité maximale avec le public. Les plus grands hits Earth, Wind & Fire, Chic et bien d'autres.",
-            image: "https://storage.googleapis.com/novelec_assets/Spectacle%206.webp",
+            image: ASSETS.SHOWS_2026.find(s => s.id === "boogie")?.url || "",
             tag: "PRODUCTION 2026",
             color: "brand-magenta"
         },
         {
-            id: "nouvelles-exploratrices",
+            id: "exploratrices",
             title: "LES NOUVELLES EXPLORATRICES",
             year: "2026",
             duration: "1 H 30",
             artists: "Aventure & Chant",
             desc: "Partez à la découverte de contrées imaginaires avec ces pionnières de l'aventure moderne. Un voyage onirique et musical.",
             details: "Mise en scène intégrant du mapping vidéo pour des décors changeant au gré des explorations de la troupe.",
-            image: "https://storage.googleapis.com/novelec_assets/Spectacle%207.webp",
+            image: ASSETS.SHOWS_2026.find(s => s.id === "exploratrices")?.url || "",
             tag: "PRODUCTION 2026",
             color: "brand-orange"
         }
@@ -314,7 +307,7 @@ const ProductionSpectacles: React.FC<Props> = ({ onNavigate }) => {
                     </h1>
                 </div>
 
-                {/* --- SECTION 1: LE CARROUSSEL 2026 (STYLE HOME) --- */}
+                {/* --- SECTION 1: LE CARROUSSEL 2026 --- */}
                 <section className="mb-48">
                     <div className="flex items-center justify-between mb-16 px-4">
                         <div className="flex items-center gap-6">
@@ -358,7 +351,7 @@ const ProductionSpectacles: React.FC<Props> = ({ onNavigate }) => {
                     </div>
                 </section>
 
-                {/* --- SECTION 2: LE CATALOGUE COMPLET (INDEX SPLIT) --- */}
+                {/* --- SECTION 2: LE CATALOGUE COMPLET --- */}
                 <section className="mb-48 space-y-24">
                     {/* Index 2026 */}
                     <div>
@@ -461,7 +454,7 @@ const ProductionSpectacles: React.FC<Props> = ({ onNavigate }) => {
                     ))}
                 </div>
 
-                {/* --- SECTION 4: MF PROD ANTHOLOGY (MEME FORMAT QUE 2026) --- */}
+                {/* --- SECTION 4: MF PROD ANTHOLOGY --- */}
                 <div className="space-y-64">
                     <div className="flex flex-col items-center gap-4 mb-32">
                         <div className="h-20 w-px bg-gradient-to-b from-transparent to-brand-magenta"></div>
@@ -470,7 +463,6 @@ const ProductionSpectacles: React.FC<Props> = ({ onNavigate }) => {
 
                     {historicalShows.map((show, i) => (
                         <div key={i} id={show.id} className="relative scroll-mt-48 group">
-                            {/* Numérotation stylisée comme en 2026 */}
                             <div className="flex items-center gap-6 mb-16">
                                 <span className="text-8xl lg:text-9xl font-black opacity-5 dark:opacity-10 select-none">{String(upcomingShows.length + i + 1).padStart(2, '0')}</span>
                                 <div className="h-px flex-1 bg-brand-magenta/20"></div>
@@ -478,14 +470,12 @@ const ProductionSpectacles: React.FC<Props> = ({ onNavigate }) => {
                             </div>
 
                             <div className={`grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24 items-center ${i % 2 !== 0 ? 'lg:flex-row-reverse' : ''}`}>
-                                {/* IMAGE FORMAT PAYSAGE (aspect-video) */}
                                 <div className={`lg:col-span-6 ${i % 2 !== 0 ? 'lg:order-2' : ''}`}>
                                     <div className="relative aspect-video rounded-[4rem] overflow-hidden shadow-2xl border-4 border-white dark:border-brand-dark-soft group-hover:scale-105 transition-transform duration-700">
                                         <img src={show.image} alt={show.title} className="w-full h-full object-cover" />
                                         <div className="absolute inset-0 bg-gradient-to-t from-brand-dark/40 to-transparent"></div>
                                         <div className="absolute top-8 left-8 bg-brand-magenta text-white px-6 py-2 rounded-full text-[10px] font-black uppercase tracking-widest shadow-xl">{show.year}</div>
                                     </div>
-                                    {/* Barre média sous l'image */}
                                     <div className="mt-8 flex gap-4 justify-center lg:justify-start overflow-hidden">
                                         {show.medias?.map((m, idx) => (
                                             <div key={idx} className="w-14 h-14 rounded-2xl bg-white dark:bg-brand-dark border border-black/5 dark:border-white/10 flex items-center justify-center text-brand-dark/40 dark:text-white/40 hover:bg-brand-magenta hover:text-white transition-all cursor-pointer shadow-md">
@@ -496,7 +486,6 @@ const ProductionSpectacles: React.FC<Props> = ({ onNavigate }) => {
                                 </div>
 
                                 <div className={`lg:col-span-6 ${i % 2 !== 0 ? 'lg:order-1' : ''}`}>
-                                    {/* Badges format 2026 */}
                                     <div className="flex flex-wrap gap-4 mb-10">
                                         <div className="px-5 py-2 rounded-full bg-brand-magenta text-white text-[9px] font-black uppercase tracking-widest">{show.producer}</div>
                                         <div className="px-5 py-2 rounded-full bg-black/5 dark:bg-white/10 text-brand-dark dark:text-white text-[9px] font-black uppercase tracking-widest">DURÉE {show.duration}</div>
@@ -507,7 +496,6 @@ const ProductionSpectacles: React.FC<Props> = ({ onNavigate }) => {
                                         {show.title}
                                     </h3>
 
-                                    {/* Boîte de contenu format 2026 */}
                                     <div className="p-10 lg:p-14 bg-white dark:bg-brand-dark-soft rounded-[3.5rem] border border-black/5 dark:border-white/10 shadow-2xl mb-12">
                                         <p className="text-xl lg:text-2xl font-light text-brand-dark/70 dark:text-brand-light/80 leading-relaxed mb-8 italic font-serif">
                                             "{show.desc}"
@@ -516,7 +504,6 @@ const ProductionSpectacles: React.FC<Props> = ({ onNavigate }) => {
                                             {show.details}
                                         </p>
                                         
-                                        {/* Stats format badge dans la boîte */}
                                         {show.stats && (
                                             <div className="mt-8 pt-8 border-t border-black/5 dark:border-white/10 flex flex-col gap-4">
                                                 <div className="flex items-center gap-4 text-brand-orange">
@@ -531,14 +518,8 @@ const ProductionSpectacles: React.FC<Props> = ({ onNavigate }) => {
                                         )}
                                     </div>
 
-                                    {/* CTAs */}
                                     <div className="flex flex-col sm:flex-row gap-6">
                                         <Button onClick={() => handleContact(show.title)} className="py-7 px-10 text-xs shadow-xl">Commander pour ma commune</Button>
-                                        {show.hasBooking && (
-                                            <Button variant="outline" onClick={() => handleBooking(show.title)} className="py-7 text-xs">
-                                                <Ticket size={16} className="mr-2" /> Billetterie ouverte
-                                            </Button>
-                                        )}
                                     </div>
                                 </div>
                             </div>

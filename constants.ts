@@ -5,7 +5,7 @@ export const NAV_ITEMS: NavItem[] = [
   { label: 'Accueil', view: View.HOME },
   { label: 'Prestations', view: View.SERVICES },
   { label: 'Spectacles', view: View.PRODUCTION_SPECTACLES },
-  { label: 'Événements', view: View.EVENEMENTS },
+  { label: 'Galerie', view: View.GALLERY },
   { label: 'À Propos', view: View.HOME, sectionId: 'about' },
   { label: 'Contact', view: View.HOME, sectionId: 'contact' },
 ];

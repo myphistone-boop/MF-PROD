@@ -140,7 +140,7 @@ const Evenements: React.FC<EvenementsProps> = ({ onNavigate }) => {
                                 
                                 <div className="relative z-10">
                                     <div className="aspect-video w-full rounded-3xl overflow-hidden mb-8 shadow-lg">
-                                        <img src={highlight.image} alt={highlight.title} className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700" />
+                                        <img src={highlight.image} alt={highlight.title} className="w-full h-full object-cover group-hover:scale-110 transition-all duration-700" />
                                     </div>
                                     <div className="flex items-center gap-3 mb-4">
                                         <div className={`w-2 h-2 rounded-full bg-${highlight.color}`}></div>

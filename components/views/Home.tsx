@@ -7,6 +7,8 @@ import About from '../sections/About';
 import Contact from '../sections/Contact';
 import DiscoverSection from '../sections/DiscoverSection';
 import UpcomingShows from '../sections/UpcomingShows';
+import Partners from '../sections/Partners';
+import NowPlaying from '../sections/NowPlaying';
 
 interface HomeProps {
   onNavigate: (view: View) => void;
@@ -17,6 +19,9 @@ const Home: React.FC<HomeProps> = ({ onNavigate }) => {
     <div className="w-full relative bg-brand-light dark:bg-brand-dark transition-colors duration-500">
       <Hero onNavigate={onNavigate} />
       
+      {/* Section À l'affiche - Vidéo & Focus Superstar */}
+      <NowPlaying onNavigate={onNavigate} />
+
       {/* Productions 2026 */}
       <UpcomingShows />
       
@@ -27,6 +32,9 @@ const Home: React.FC<HomeProps> = ({ onNavigate }) => {
       <div id="about">
         <About />
       </div>
+
+      {/* Partenaires juste avant le contact */}
+      <Partners />
       
       <div id="contact">
           <Contact onNavigate={onNavigate} />

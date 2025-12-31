@@ -1,6 +1,5 @@
 
 import React, { useEffect, useRef } from 'react';
-import { Theme } from '../types';
 
 interface Particle {
   x: number;
@@ -22,11 +21,7 @@ interface Orb {
   range: number;
 }
 
-interface BackgroundCanvasProps {
-  theme?: Theme;
-}
-
-const BackgroundCanvas: React.FC<BackgroundCanvasProps> = ({ theme = 'dark' }) => {
+const BackgroundCanvas: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const particlesRef = useRef<Particle[]>([]);
   const orbsRef = useRef<Orb[]>([]);
@@ -40,30 +35,18 @@ const BackgroundCanvas: React.FC<BackgroundCanvasProps> = ({ theme = 'dark' }) =
     let width = window.innerWidth;
     let height = window.innerHeight;
 
-    const isDark = theme === 'dark';
-    
-    // Couleurs du logo : Cyan (#00D2FF), Magenta (#FF007A), Orange (#FF8A00)
-    const brandColors = isDark 
-      ? [
-          'rgba(0, 210, 255, 0.12)',   // Cyan
-          'rgba(255, 0, 122, 0.12)',   // Magenta
-          'rgba(255, 138, 0, 0.08)',   // Orange
-        ]
-      : [
-          'rgba(0, 210, 255, 0.06)', 
-          'rgba(255, 0, 122, 0.06)', 
-          'rgba(255, 138, 0, 0.04)',
-        ];
+    // Couleurs du logo optimisées pour fond sombre
+    const brandColors = [
+      'rgba(0, 210, 255, 0.12)',   // Cyan
+      'rgba(255, 0, 122, 0.12)',   // Magenta
+      'rgba(255, 138, 0, 0.08)',   // Orange
+    ];
 
     const initOrbs = () => {
       orbsRef.current = [
-        // Orbe Cyan
         { x: width * 0.1, y: height * 0.2, radius: width * 0.5, color: brandColors[0], angle: Math.random() * Math.PI, speed: 0.001, range: 100 },
-        // Orbe Magenta
         { x: width * 0.8, y: height * 0.7, radius: width * 0.6, color: brandColors[1], angle: Math.random() * Math.PI, speed: 0.0008, range: 150 },
-        // Orbe Orange
         { x: width * 0.4, y: height * 0.5, radius: width * 0.4, color: brandColors[2], angle: Math.random() * Math.PI, speed: 0.0012, range: 80 },
-        // Supplémentaires pour combler
         { x: width * 0.9, y: height * 0.1, radius: width * 0.3, color: brandColors[0], angle: Math.random() * Math.PI, speed: 0.0015, range: 50 },
       ];
     };
@@ -76,7 +59,7 @@ const BackgroundCanvas: React.FC<BackgroundCanvasProps> = ({ theme = 'dark' }) =
         vx: (Math.random() - 0.5) * 0.15,
         vy: (Math.random() - 0.5) * 0.15,
         size: Math.random() * 2 + 0.5,
-        color: isDark ? '#FFFFFF' : '#64748b',
+        color: '#FFFFFF',
         opacity: Math.random() * 0.3 + 0.05
       }));
     };
@@ -96,12 +79,10 @@ const BackgroundCanvas: React.FC<BackgroundCanvasProps> = ({ theme = 'dark' }) =
     const animate = () => {
       const time = Date.now() * 0.001;
       
-      // 1. Fond plat de base
-      ctx.fillStyle = isDark ? '#020617' : '#F8FAFC';
+      ctx.fillStyle = '#020617';
       ctx.fillRect(0, 0, width, height);
 
-      // 2. Mesh Gradient Effect (Orbes flous)
-      ctx.globalCompositeOperation = isDark ? 'screen' : 'multiply';
+      ctx.globalCompositeOperation = 'screen';
       orbsRef.current.forEach(orb => {
         orb.angle += orb.speed;
         const currentX = orb.x + Math.sin(orb.angle) * orb.range;
@@ -117,7 +98,6 @@ const BackgroundCanvas: React.FC<BackgroundCanvasProps> = ({ theme = 'dark' }) =
         ctx.fill();
       });
 
-      // 3. Texture & Particules (Dust)
       ctx.globalCompositeOperation = 'source-over';
       particlesRef.current.forEach(p => {
         p.x += p.vx;
@@ -136,9 +116,8 @@ const BackgroundCanvas: React.FC<BackgroundCanvasProps> = ({ theme = 'dark' }) =
         ctx.fill();
       });
 
-      // 4. Subtle "Light Beams" (Lignes de fond très transparentes)
-      ctx.globalAlpha = isDark ? 0.02 : 0.01;
-      ctx.strokeStyle = isDark ? '#FFFFFF' : '#000000';
+      ctx.globalAlpha = 0.02;
+      ctx.strokeStyle = '#FFFFFF';
       ctx.lineWidth = 1;
       for (let i = 0; i < 3; i++) {
           const xOffset = Math.sin(time * 0.1 + i) * 100;
@@ -157,7 +136,7 @@ const BackgroundCanvas: React.FC<BackgroundCanvasProps> = ({ theme = 'dark' }) =
         window.removeEventListener('resize', resize);
         cancelAnimationFrame(animationId);
     };
-  }, [theme]);
+  }, []);
 
   return <canvas ref={canvasRef} className="fixed top-0 left-0 w-full h-full -z-10 pointer-events-none" />;
 };

@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { Quote, Zap, Music, Star, Tv, Headphones, Mic2 } from 'lucide-react';
+import { ASSETS } from '../../assets';
 
 const About: React.FC = () => {
   return (
@@ -40,7 +41,7 @@ const About: React.FC = () => {
             <div className="absolute -top-10 -left-10 w-full h-full border-2 border-brand-magenta/20 rounded-[4rem] -z-10 transition-transform duration-700 group-hover:-top-5 group-hover:-left-5"></div>
             <div className="relative aspect-[4/5] w-full rounded-[4rem] overflow-hidden shadow-2xl filter contrast-110 transition-all duration-1000 bg-brand-dark">
               <img 
-                src="https://storage.googleapis.com/novelec_assets/Mickael.webp" 
+                src={ASSETS.BIO.MIKAEL_PORTRAIT} 
                 className="w-full h-full object-cover transform scale-100 group-hover:scale-105 transition-transform duration-[2s]" 
                 alt="Mikaël Ferreira" 
               />

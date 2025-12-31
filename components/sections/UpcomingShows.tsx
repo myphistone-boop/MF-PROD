@@ -1,5 +1,6 @@
 
 import React, { useEffect, useState, useRef } from 'react';
+import { ASSETS } from '../../assets';
 import { Calendar, Sparkles, ChevronRight, ChevronLeft } from 'lucide-react';
 
 const UpcomingShows: React.FC = () => {
@@ -10,14 +11,7 @@ const UpcomingShows: React.FC = () => {
     setMounted(true);
   }, []);
 
-  const shows = [
-    { url: "https://storage.googleapis.com/novelec_assets/Spectacle%202.webp", title: "Production I" },
-    { url: "https://storage.googleapis.com/novelec_assets/Spectacle%203.webp", title: "Production II" },
-    { url: "https://storage.googleapis.com/novelec_assets/Spectacle%204.webp", title: "Production III" },
-    { url: "https://storage.googleapis.com/novelec_assets/Spectacle%205.webp", title: "Production IV" },
-    { url: "https://storage.googleapis.com/novelec_assets/Spectacle%206.webp", title: "Production V" },
-    { url: "https://storage.googleapis.com/novelec_assets/Spectacle%207.webp", title: "Production VI" },
-  ];
+  const shows = ASSETS.SHOWS_2026;
 
   const scroll = (direction: 'left' | 'right') => {
     if (scrollRef.current) {

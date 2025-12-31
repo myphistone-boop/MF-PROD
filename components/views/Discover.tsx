@@ -1,6 +1,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { View } from '../../types';
+import { ASSETS } from '../../assets';
 import { Sparkles, ChevronRight, Zap, Music, Mic2, Star, Tv, Mic } from 'lucide-react';
 
 interface DiscoverProps {
@@ -19,7 +20,7 @@ const Discover: React.FC<DiscoverProps> = ({ onNavigate }) => {
         {
             id: View.PRODUCTION_SPECTACLES,
             icon: <Zap className="w-8 h-8" />,
-            image: "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=1200&q=80",
+            image: ASSETS.PRESTATIONS.SPECTACLES,
             title: "Spectacles",
             subtitle: "Direction Artistique",
             desc: "Conception, casting et production complète de shows immersifs sur-mesure.",
@@ -28,7 +29,7 @@ const Discover: React.FC<DiscoverProps> = ({ onNavigate }) => {
         {
             id: View.COACHING_VOCAL,
             icon: <Mic2 className="w-8 h-8" />,
-            image: "https://images.unsplash.com/photo-1516280440614-37939bbacd81?auto=format&fit=crop&w=1200&q=80",
+            image: ASSETS.PRESTATIONS.COACHING,
             title: "Coaching Vocal",
             subtitle: "Voix & Instruments",
             desc: "Cours individuels, collectifs, chorale, danse et instruments à l'Atelier de Cornas.",
@@ -37,34 +38,34 @@ const Discover: React.FC<DiscoverProps> = ({ onNavigate }) => {
         {
             id: View.ATELIER_SPECTACLE,
             icon: <Star className="w-8 h-8" />,
-            image: "https://images.unsplash.com/photo-1514525253361-bee8a4874aad?auto=format&fit=crop&w=1200&q=80",
-            title: "Création de Spectacles",
-            subtitle: "Atelier Scénique",
+            image: ASSETS.PRESTATIONS.ATELIER,
+            title: "Atelier Scénique",
+            subtitle: "Création Collective",
             desc: "Rejoignez une troupe et montez sur scène. Chant, danse et jeu théâtral.",
-            color: "brand-magenta"
+            color: "brand-orange"
         },
         {
             id: View.ANIMATION_TV,
             icon: <Tv className="w-8 h-8" />,
-            image: "https://images.unsplash.com/photo-1533750516457-a7f992034fec?auto=format&fit=crop&w=1200&q=80",
+            image: ASSETS.PRESTATIONS.ANIMATION,
             title: "Animation Télé",
             subtitle: "Présence Médiatique",
             desc: "Animation d'émissions et d'événements live. Maîtrise de l'image et du micro.",
-            color: "brand-orange"
+            color: "brand-magenta"
         },
         {
             id: View.VOIX_OFF,
             icon: <Mic className="w-8 h-8" />,
-            image: "https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?auto=format&fit=crop&w=1200&q=80",
+            image: ASSETS.PRESTATIONS.VOIX_OFF,
             title: "Voix Off",
-            subtitle: "Studio Enregistrement",
+            subtitle: "Signature Sonore",
             desc: "Doublage, publicités, documentaires. Une signature vocale unique pour vos projets.",
-            color: "brand-magenta"
+            color: "brand-cyan"
         },
         {
             id: View.STAGES_PERFECTIONNEMENT,
             icon: <Music className="w-8 h-8" />,
-            image: "https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?auto=format&fit=crop&w=1200&q=80",
+            image: ASSETS.PRESTATIONS.STAGES,
             title: "Stages Pro",
             subtitle: "Perfectionnement",
             desc: "Immersion intensive d'une semaine pour booster votre niveau artistique ou pro.",
@@ -80,8 +81,8 @@ const Discover: React.FC<DiscoverProps> = ({ onNavigate }) => {
                         <Sparkles size={16} className="text-brand-magenta" />
                         <span className="text-xs uppercase tracking-[0.4em] text-brand-dark dark:text-white font-black">Expertise MF Prod</span>
                     </div>
-                    <h1 className="font-sans font-black text-6xl md:text-8xl lg:text-9xl text-brand-dark dark:text-white mb-8 tracking-tighter leading-none">
-                        NOS <br/><span className="gradient-text uppercase italic">PRESTATIONS</span>
+                    <h1 className="font-sans font-black text-6xl md:text-8xl lg:text-9xl text-brand-dark dark:text-white mb-8 tracking-tighter leading-none uppercase">
+                        NOS <br/><span className="gradient-text italic">PRESTATIONS</span>
                     </h1>
                 </div>
 
