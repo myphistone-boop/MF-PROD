@@ -20,11 +20,8 @@ const NowPlaying: React.FC<NowPlayingProps> = ({ onNavigate }) => {
   
   /**
    * Configuration du lecteur :
-   * - youtube-nocookie.com : évite les erreurs de blocage de cookies/origine
-   * - autoplay=1 & mute=1 : nécessaire pour que le navigateur autorise la lecture auto
-   * - loop=1 & playlist=... : indispensable pour que la boucle fonctionne sur YouTube
-   * - playsinline=1 : vital pour la lecture automatique sur mobile
-   * - modestbranding=1 & controls=0 : épure l'interface
+   * - On garde le nocookie pour la compatibilité
+   * - On ajoute disablekb=1 pour éviter les interactions clavier
    */
   const videoParams = `autoplay=1&mute=1&loop=1&playlist=${videoId}&controls=0&modestbranding=1&rel=0&iv_load_policy=3&disablekb=1&playsinline=1&enablejsapi=1`;
   const videoSrc = `https://www.youtube-nocookie.com/embed/${videoId}?${videoParams}`;
@@ -93,22 +90,29 @@ const NowPlaying: React.FC<NowPlayingProps> = ({ onNavigate }) => {
             </div>
           </div>
 
-          {/* Vidéo YouTube (À DROITE) */}
+          {/* Vidéo YouTube (À DROITE) avec masquage UI */}
           <div className="w-full lg:w-3/5 order-2">
             <div className="relative group rounded-[4rem] overflow-hidden border-4 border-white dark:border-brand-dark-soft shadow-[0_40px_100px_rgba(0,0,0,0.3)] aspect-video bg-black transform transition-transform duration-700 hover:scale-[1.02]">
-              {/* Overlay Glass pour la profondeur */}
-              <div className="absolute inset-0 z-10 pointer-events-none border-[1px] border-white/10 rounded-[4rem]"></div>
               
-              <iframe
-                className="absolute inset-0 w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-opacity duration-700"
-                src={videoSrc}
-                title="SUPERSTARS Showreel"
-                allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
-                frameBorder="0"
-              ></iframe>
+              {/* PROTECTION OVERLAY : Empêche l'utilisateur de cliquer sur la vidéo et d'afficher l'UI YouTube */}
+              <div className="absolute inset-0 z-30 cursor-default"></div>
 
-              {/* Badges sur la vidéo */}
-              <div className="absolute top-8 left-8 z-20 flex items-center gap-3 px-5 py-2.5 rounded-full backdrop-blur-xl bg-brand-dark/30 border border-white/20">
+              {/* CLIPPING CONTAINER : On agrandit l'iframe pour cacher les bords (titre et logo) */}
+              <div className="absolute inset-0 z-10 w-full h-full overflow-hidden">
+                <iframe
+                  className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[115%] h-[115%] object-cover opacity-90 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"
+                  src={videoSrc}
+                  title="SUPERSTARS Showreel"
+                  allow="autoplay; encrypted-media"
+                  frameBorder="0"
+                ></iframe>
+              </div>
+
+              {/* EFFET DE VIGNETTAGE ET BORDURES INTERNES */}
+              <div className="absolute inset-0 z-20 pointer-events-none border-[1px] border-white/10 rounded-[4rem] shadow-[inset_0_0_100px_rgba(0,0,0,0.5)]"></div>
+              
+              {/* Badges sur la vidéo (Z-INDEX 40 pour être au-dessus de l'overlay de protection) */}
+              <div className="absolute top-8 left-8 z-40 flex items-center gap-3 px-5 py-2.5 rounded-full backdrop-blur-xl bg-brand-dark/30 border border-white/20">
                 <div className="relative flex items-center justify-center">
                    <div className="absolute inset-0 bg-brand-magenta rounded-full animate-ping opacity-75"></div>
                    <div className="relative w-2.5 h-2.5 rounded-full bg-brand-magenta"></div>
@@ -116,7 +120,7 @@ const NowPlaying: React.FC<NowPlayingProps> = ({ onNavigate }) => {
                 <span className="text-[10px] font-black uppercase tracking-widest text-white">Direct Scène</span>
               </div>
 
-              <div className="absolute bottom-8 right-8 z-20 flex items-center gap-3 px-5 py-2.5 rounded-full backdrop-blur-xl bg-white/10 border border-white/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+              <div className="absolute bottom-8 right-8 z-40 flex items-center gap-3 px-5 py-2.5 rounded-full backdrop-blur-xl bg-white/10 border border-white/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
                 <Play size={14} className="text-white fill-white" />
                 <span className="text-[10px] font-black uppercase tracking-widest text-white">Extraits du Show</span>
               </div>
