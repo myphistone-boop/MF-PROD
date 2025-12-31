@@ -2,7 +2,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { Button } from '../ui/Button';
 import { View } from '../../types';
-import { Sparkles, Zap, ArrowRight, Play } from 'lucide-react';
+import { Sparkles, Zap, ArrowRight, Music } from 'lucide-react';
 
 interface NowPlayingProps {
   onNavigate: (view: View) => void;
@@ -18,7 +18,6 @@ declare global {
 const NowPlaying: React.FC<NowPlayingProps> = ({ onNavigate }) => {
   const [mounted, setMounted] = useState(false);
   const playerRef = useRef<any>(null);
-  const containerRef = useRef<HTMLDivElement>(null);
 
   const videoId = "fgPhvsmNK3E";
   const startTime = 62; // 1min 02s
@@ -27,57 +26,63 @@ const NowPlaying: React.FC<NowPlayingProps> = ({ onNavigate }) => {
   useEffect(() => {
     setMounted(true);
 
-    // Chargement de l'API YouTube IFrame
-    if (!window.YT) {
-      const tag = document.createElement('script');
-      tag.src = "https://www.youtube.com/iframe_api";
-      const firstScriptTag = document.getElementsByTagName('script')[0];
-      firstScriptTag.parentNode?.insertBefore(tag, firstScriptTag);
+    const initPlayer = () => {
+      if (playerRef.current) return;
+      
+      // On s'assure que l'objet YT est disponible avant d'initialiser
+      if (window.YT && window.YT.Player) {
+        playerRef.current = new window.YT.Player('youtube-player-container', {
+          videoId: videoId,
+          playerVars: {
+            autoplay: 1,
+            mute: 1,
+            controls: 0,
+            modestbranding: 1,
+            rel: 0,
+            iv_load_policy: 3,
+            disablekb: 1,
+            playsinline: 1,
+            start: startTime,
+            end: endTime,
+            showinfo: 0,
+            fs: 0,
+          },
+          events: {
+            onReady: (event: any) => {
+              event.target.mute(); // Double sécurité pour l'autoplay
+              event.target.playVideo();
+            },
+            onStateChange: (event: any) => {
+              // État 0 = YT.PlayerState.ENDED (Atteint la fin définie par 'end')
+              if (event.data === 0) {
+                event.target.seekTo(startTime);
+                event.target.playVideo();
+              }
+            },
+          },
+        });
+      }
+    };
 
+    // Si l'API est déjà prête (chargée dans index.html)
+    if (window.YT && window.YT.Player) {
+      initPlayer();
+    } else {
+      // Sinon on attend le callback global de l'API YouTube
+      const originalCallback = window.onYouTubeIframeAPIReady;
       window.onYouTubeIframeAPIReady = () => {
+        if (originalCallback) originalCallback();
         initPlayer();
       };
-    } else {
-      initPlayer();
-    }
-
-    function initPlayer() {
-      if (playerRef.current) return;
-
-      playerRef.current = new window.YT.Player('youtube-player-container', {
-        videoId: videoId,
-        playerVars: {
-          autoplay: 1,
-          mute: 1,
-          controls: 0,
-          modestbranding: 1,
-          rel: 0,
-          iv_load_policy: 3,
-          disablekb: 1,
-          playsinline: 1,
-          start: startTime,
-          end: endTime,
-          showinfo: 0,
-          fs: 0,
-        },
-        events: {
-          onReady: (event: any) => {
-            event.target.playVideo();
-          },
-          onStateChange: (event: any) => {
-            // État 0 = YT.PlayerState.ENDED
-            if (event.data === 0) {
-              event.target.seekTo(startTime);
-              event.target.playVideo();
-            }
-          },
-        },
-      });
     }
 
     return () => {
       if (playerRef.current) {
-        playerRef.current.destroy();
+        try {
+          playerRef.current.destroy();
+        } catch (e) {
+          console.debug("Player already destroyed");
+        }
       }
     };
   }, []);
@@ -120,7 +125,7 @@ const NowPlaying: React.FC<NowPlayingProps> = ({ onNavigate }) => {
                       <div className="w-8 h-8 rounded-full bg-brand-magenta/10 flex items-center justify-center text-brand-magenta">
                         <Zap size={16} />
                       </div>
-                      <span className="text-xs font-black uppercase tracking-widest">Boucle Exclusive 15s</span>
+                      <span className="text-xs font-black uppercase tracking-widest">Scénographie Immersive</span>
                    </div>
                 </div>
 
@@ -146,16 +151,16 @@ const NowPlaying: React.FC<NowPlayingProps> = ({ onNavigate }) => {
             </div>
           </div>
 
-          {/* Vidéo YouTube Loop 15s */}
+          {/* Vidéo YouTube Loop */}
           <div className="w-full lg:w-3/5 order-2">
             <div className="relative group rounded-[4rem] overflow-hidden border-4 border-white dark:border-brand-dark-soft shadow-[0_40px_100px_rgba(0,0,0,0.3)] aspect-video bg-black transform transition-transform duration-700 hover:scale-[1.02]">
               
-              {/* Overlay d'interception des événements souris (Désactivé pour garder l'immersion) */}
+              {/* Overlay d'interception des événements souris */}
               <div className="absolute inset-0 z-30 cursor-default"></div>
 
               {/* Conteneur pour l'IFrame YouTube API */}
-              <div className="absolute inset-0 w-full h-full pointer-events-none">
-                <div id="youtube-player-container" className="w-full h-full scale-[1.01]"></div>
+              <div className="absolute inset-0 w-full h-full pointer-events-none bg-brand-dark">
+                <div id="youtube-player-container" className="w-full h-full scale-[1.05]"></div>
               </div>
 
               {/* Overlay Glass pour la profondeur */}
@@ -167,12 +172,12 @@ const NowPlaying: React.FC<NowPlayingProps> = ({ onNavigate }) => {
                    <div className="absolute inset-0 bg-brand-magenta rounded-full animate-ping opacity-75"></div>
                    <div className="relative w-2.5 h-2.5 rounded-full bg-brand-magenta"></div>
                 </div>
-                <span className="text-[10px] font-black uppercase tracking-widest text-white">Direct Scène (1:02)</span>
+                <span className="text-[10px] font-black uppercase tracking-widest text-white">Extrait SuperStar</span>
               </div>
 
               <div className="absolute bottom-8 right-8 z-20 flex items-center gap-3 px-5 py-2.5 rounded-full backdrop-blur-xl bg-white/10 border border-white/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                <Play size={14} className="text-white fill-white" />
-                <span className="text-[10px] font-black uppercase tracking-widest text-white">Boucle 15s active</span>
+                <Music size={14} className="text-white" />
+                <span className="text-[10px] font-black uppercase tracking-widest text-white">Performance Live</span>
               </div>
             </div>
           </div>
