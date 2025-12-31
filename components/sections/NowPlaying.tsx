@@ -1,5 +1,5 @@
 
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button } from '../ui/Button';
 import { View } from '../../types';
 import { Sparkles, Zap, ArrowRight, Music } from 'lucide-react';
@@ -8,79 +8,14 @@ interface NowPlayingProps {
   onNavigate: (view: View) => void;
 }
 
-declare global {
-  interface Window {
-    onYouTubeIframeAPIReady: () => void;
-    YT: any;
-  }
-}
-
 const NowPlaying: React.FC<NowPlayingProps> = ({ onNavigate }) => {
   const [mounted, setMounted] = useState(false);
-  const playerRef = useRef<any>(null);
 
-  const videoId = "fgPhvsmNK3E";
-  const startTime = 62; // 1min 02s
-  const endTime = 77;   // 1min 02s + 15s = 1min 17s
+  // URL de la vidéo hébergée sur Google Cloud Storage
+  const videoUrl = "https://storage.googleapis.com/novelec_assets/MF%20PROD/SUPERSTAR-VIDEO-ACCUEIL.mp4";
 
   useEffect(() => {
     setMounted(true);
-
-    const initPlayer = () => {
-      if (playerRef.current) return;
-      
-      if (window.YT && window.YT.Player) {
-        playerRef.current = new window.YT.Player('youtube-player-container', {
-          videoId: videoId,
-          playerVars: {
-            autoplay: 1,
-            mute: 1,
-            controls: 0,
-            modestbranding: 1,
-            rel: 0,
-            iv_load_policy: 3,
-            disablekb: 1,
-            playsinline: 1,
-            start: startTime,
-            end: endTime,
-            showinfo: 0,
-            fs: 0,
-          },
-          events: {
-            onReady: (event: any) => {
-              event.target.mute();
-              event.target.playVideo();
-            },
-            onStateChange: (event: any) => {
-              if (event.data === 0) {
-                event.target.seekTo(startTime);
-                event.target.playVideo();
-              }
-            },
-          },
-        });
-      }
-    };
-
-    if (window.YT && window.YT.Player) {
-      initPlayer();
-    } else {
-      const originalCallback = window.onYouTubeIframeAPIReady;
-      window.onYouTubeIframeAPIReady = () => {
-        if (originalCallback) originalCallback();
-        initPlayer();
-      };
-    }
-
-    return () => {
-      if (playerRef.current) {
-        try {
-          playerRef.current.destroy();
-        } catch (e) {
-          console.debug("Player already destroyed");
-        }
-      }
-    };
   }, []);
 
   return (
@@ -146,10 +81,6 @@ const NowPlaying: React.FC<NowPlayingProps> = ({ onNavigate }) => {
           </div>
 
           <div className="w-full lg:w-3/5 order-2">
-            {/* 
-              SUPPRESSION DES INTERACTIONS (pointer-events-none) ET DE L'EFFET HOVER
-              Cela règle définitivement le bug visuel des angles arrondis sur certains navigateurs.
-            */}
             <div 
               className="relative rounded-[4rem] overflow-hidden border-4 border-white dark:border-brand-dark-soft shadow-[0_40px_100px_rgba(0,0,0,0.3)] aspect-video bg-black transform-gpu pointer-events-none select-none"
               style={{
@@ -157,14 +88,20 @@ const NowPlaying: React.FC<NowPlayingProps> = ({ onNavigate }) => {
                 backfaceVisibility: 'hidden'
               }}
             >
-              <div className="absolute inset-0 w-full h-full bg-brand-dark">
-                <div id="youtube-player-container" className="w-full h-full scale-[1.05]"></div>
-              </div>
+              <video
+                autoPlay
+                muted
+                loop
+                playsInline
+                preload="auto"
+                className="w-full h-full object-cover scale-[1.02]"
+              >
+                <source src={videoUrl} type="video/mp4" />
+                Votre navigateur ne supporte pas la lecture de vidéos.
+              </video>
 
-              {/* Overlay Glass pour la profondeur */}
               <div className="absolute inset-0 z-10 border-[1px] border-white/10 rounded-[4rem]"></div>
               
-              {/* Badges sur la vidéo (Toujours visibles car les interactions sont bloquées) */}
               <div className="absolute top-8 left-8 z-20 flex items-center gap-3 px-5 py-2.5 rounded-full backdrop-blur-xl bg-brand-dark/30 border border-white/20">
                 <div className="relative flex items-center justify-center">
                    <div className="absolute inset-0 bg-brand-magenta rounded-full animate-ping opacity-75"></div>
