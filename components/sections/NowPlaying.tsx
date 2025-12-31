@@ -1,5 +1,5 @@
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { Button } from '../ui/Button';
 import { View } from '../../types';
 import { Sparkles, Zap, ArrowRight, Play } from 'lucide-react';
@@ -8,26 +8,79 @@ interface NowPlayingProps {
   onNavigate: (view: View) => void;
 }
 
+declare global {
+  interface Window {
+    onYouTubeIframeAPIReady: () => void;
+    YT: any;
+  }
+}
+
 const NowPlaying: React.FC<NowPlayingProps> = ({ onNavigate }) => {
   const [mounted, setMounted] = useState(false);
+  const playerRef = useRef<any>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  const videoId = "fgPhvsmNK3E";
+  const startTime = 62; // 1min 02s
+  const endTime = 77;   // 1min 02s + 15s = 1min 17s
 
   useEffect(() => {
     setMounted(true);
-  }, []);
 
-  // Identifiant de la vidéo : fgPhvsmNK3E
-  const videoId = "fgPhvsmNK3E";
-  
-  /**
-   * Configuration du lecteur :
-   * - youtube-nocookie.com : évite les erreurs de blocage de cookies/origine
-   * - autoplay=1 & mute=1 : nécessaire pour que le navigateur autorise la lecture auto
-   * - loop=1 & playlist=... : indispensable pour que la boucle fonctionne sur YouTube
-   * - playsinline=1 : vital pour la lecture automatique sur mobile
-   * - modestbranding=1 & controls=0 : épure l'interface
-   */
-  const videoParams = `autoplay=1&mute=1&loop=1&playlist=${videoId}&controls=0&modestbranding=1&rel=0&iv_load_policy=3&disablekb=1&playsinline=1&enablejsapi=1`;
-  const videoSrc = `https://www.youtube-nocookie.com/embed/${videoId}?${videoParams}`;
+    // Chargement de l'API YouTube IFrame
+    if (!window.YT) {
+      const tag = document.createElement('script');
+      tag.src = "https://www.youtube.com/iframe_api";
+      const firstScriptTag = document.getElementsByTagName('script')[0];
+      firstScriptTag.parentNode?.insertBefore(tag, firstScriptTag);
+
+      window.onYouTubeIframeAPIReady = () => {
+        initPlayer();
+      };
+    } else {
+      initPlayer();
+    }
+
+    function initPlayer() {
+      if (playerRef.current) return;
+
+      playerRef.current = new window.YT.Player('youtube-player-container', {
+        videoId: videoId,
+        playerVars: {
+          autoplay: 1,
+          mute: 1,
+          controls: 0,
+          modestbranding: 1,
+          rel: 0,
+          iv_load_policy: 3,
+          disablekb: 1,
+          playsinline: 1,
+          start: startTime,
+          end: endTime,
+          showinfo: 0,
+          fs: 0,
+        },
+        events: {
+          onReady: (event: any) => {
+            event.target.playVideo();
+          },
+          onStateChange: (event: any) => {
+            // État 0 = YT.PlayerState.ENDED
+            if (event.data === 0) {
+              event.target.seekTo(startTime);
+              event.target.playVideo();
+            }
+          },
+        },
+      });
+    }
+
+    return () => {
+      if (playerRef.current) {
+        playerRef.current.destroy();
+      }
+    };
+  }, []);
 
   return (
     <section className="relative py-24 lg:py-32 bg-brand-light dark:bg-brand-dark transition-colors duration-500 overflow-hidden">
@@ -37,7 +90,7 @@ const NowPlaying: React.FC<NowPlayingProps> = ({ onNavigate }) => {
       <div className="max-w-[1400px] mx-auto px-6 lg:px-12 relative z-10">
         <div className={`flex flex-col lg:flex-row gap-12 lg:gap-20 items-center transition-all duration-1000 transform ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
           
-          {/* Carte Descriptive (À GAUCHE) */}
+          {/* Carte Descriptive */}
           <div className="w-full lg:w-2/5 order-1">
             <div className="relative p-10 lg:p-14 bg-white dark:bg-brand-dark-soft border border-black/5 dark:border-white/10 rounded-[3.5rem] shadow-2xl transition-all duration-500 hover:border-brand-magenta/30 group">
               <div className="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-brand-cyan via-brand-magenta to-brand-orange rounded-t-full"></div>
@@ -53,7 +106,7 @@ const NowPlaying: React.FC<NowPlayingProps> = ({ onNavigate }) => {
                 </h2>
                 
                 <p className="text-lg lg:text-xl text-brand-dark/60 dark:text-brand-light/60 font-light leading-relaxed mb-10">
-                  Le spectacle événement qui redéfinit les codes de la scène. Une immersion totale rendant hommage aux plus grandes icônes mondiales, portée par une troupe d'exception et une mise en scène monumentale.
+                  Le spectacle événement qui redéfinit les codes de la scène. Une immersion totale rendant hommage aux plus grandes icônes mondiales.
                 </p>
                 
                 <div className="space-y-4 mb-12">
@@ -67,7 +120,7 @@ const NowPlaying: React.FC<NowPlayingProps> = ({ onNavigate }) => {
                       <div className="w-8 h-8 rounded-full bg-brand-magenta/10 flex items-center justify-center text-brand-magenta">
                         <Zap size={16} />
                       </div>
-                      <span className="text-xs font-black uppercase tracking-widest">Scénographie Immersive</span>
+                      <span className="text-xs font-black uppercase tracking-widest">Boucle Exclusive 15s</span>
                    </div>
                 </div>
 
@@ -93,36 +146,33 @@ const NowPlaying: React.FC<NowPlayingProps> = ({ onNavigate }) => {
             </div>
           </div>
 
-          {/* Vidéo YouTube (À DROITE) */}
+          {/* Vidéo YouTube Loop 15s */}
           <div className="w-full lg:w-3/5 order-2">
             <div className="relative group rounded-[4rem] overflow-hidden border-4 border-white dark:border-brand-dark-soft shadow-[0_40px_100px_rgba(0,0,0,0.3)] aspect-video bg-black transform transition-transform duration-700 hover:scale-[1.02]">
               
-              {/* Overlay d'interception des événements souris (Invisible mais bloque tout l'accès à l'iframe) */}
+              {/* Overlay d'interception des événements souris (Désactivé pour garder l'immersion) */}
               <div className="absolute inset-0 z-30 cursor-default"></div>
 
-              {/* Overlay Glass pour la profondeur (z-10) */}
+              {/* Conteneur pour l'IFrame YouTube API */}
+              <div className="absolute inset-0 w-full h-full pointer-events-none">
+                <div id="youtube-player-container" className="w-full h-full scale-[1.01]"></div>
+              </div>
+
+              {/* Overlay Glass pour la profondeur */}
               <div className="absolute inset-0 z-10 pointer-events-none border-[1px] border-white/10 rounded-[4rem]"></div>
               
-              <iframe
-                className="absolute inset-0 w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"
-                src={videoSrc}
-                title="SUPERSTARS Showreel"
-                allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
-                frameBorder="0"
-              ></iframe>
-
-              {/* Badges sur la vidéo (z-20) */}
+              {/* Badges sur la vidéo */}
               <div className="absolute top-8 left-8 z-20 flex items-center gap-3 px-5 py-2.5 rounded-full backdrop-blur-xl bg-brand-dark/30 border border-white/20">
                 <div className="relative flex items-center justify-center">
                    <div className="absolute inset-0 bg-brand-magenta rounded-full animate-ping opacity-75"></div>
                    <div className="relative w-2.5 h-2.5 rounded-full bg-brand-magenta"></div>
                 </div>
-                <span className="text-[10px] font-black uppercase tracking-widest text-white">Direct Scène</span>
+                <span className="text-[10px] font-black uppercase tracking-widest text-white">Direct Scène (1:02)</span>
               </div>
 
               <div className="absolute bottom-8 right-8 z-20 flex items-center gap-3 px-5 py-2.5 rounded-full backdrop-blur-xl bg-white/10 border border-white/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
                 <Play size={14} className="text-white fill-white" />
-                <span className="text-[10px] font-black uppercase tracking-widest text-white">Extraits du Show</span>
+                <span className="text-[10px] font-black uppercase tracking-widest text-white">Boucle 15s active</span>
               </div>
             </div>
           </div>
