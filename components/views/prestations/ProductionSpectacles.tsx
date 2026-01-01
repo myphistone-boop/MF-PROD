@@ -7,9 +7,8 @@ import {
   Zap, ArrowLeft, Star, Users, Clock, Youtube, Tv, 
   Camera, Instagram, Newspaper, Mic, PlayCircle, 
   Sparkles, ChevronRight, UserPlus, MapPin,
-  MousePointer2, ChevronLeft, Calendar, 
-  ImageIcon, Video, Layers, ExternalLink,
-  Plus
+  ExternalLink, MousePointer2, ChevronLeft, Calendar, 
+  Ticket, Info, History, Video, Image as ImageIcon
 } from 'lucide-react';
 
 interface Props { onNavigate: (view: View, context?: BookingContext) => void; }
@@ -20,14 +19,8 @@ const ProductionSpectacles: React.FC<Props> = ({ onNavigate }) => {
     
     useEffect(() => { setMounted(true); window.scrollTo(0, 0); }, []);
 
-    // Helper pour les assets spécifiques à la production
-    const SHOW_AS_BASE = "https://storage.googleapis.com/novelec_assets/MF%20PROD/SPETACLES/";
-    
-    const getShowAsset = (name: string) => {
-      if (!name) return "";
-      if (name.startsWith('http')) return name;
-      return `${SHOW_AS_BASE}${name.replace(/ /g, '%20')}`;
-    };
+    const SHOW_ASSET_BASE = "https://storage.googleapis.com/novelec_assets/MF%20PROD/SPETACLES/";
+    const getShowAsset = (name: string) => `${SHOW_ASSET_BASE}${encodeURIComponent(name)}`;
 
     const scrollToSection = (id: string) => {
         const element = document.getElementById(id);
@@ -66,7 +59,7 @@ const ProductionSpectacles: React.FC<Props> = ({ onNavigate }) => {
         }
     };
 
-    // --- DATA : SAISON 2026 (Prochainement) ---
+    // --- DATA : SAISON 2026 ---
     const upcomingShows = [
         {
             id: "pop",
@@ -78,12 +71,7 @@ const ProductionSpectacles: React.FC<Props> = ({ onNavigate }) => {
             details: "Scénographie LED immersive, 12 danseurs et 4 chanteurs lead. Une production qui repousse les limites du show live.",
             image: ASSETS.SHOWS_2026.find(s => s.id === "pop")?.url || "",
             tag: "PRODUCTION 2026",
-            color: "brand-cyan",
-            moodboard: [
-                "https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?auto=format&fit=crop&w=800&q=80",
-                "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&w=800&q=80",
-                "https://images.unsplash.com/photo-1493225255756-d9584f8606e9?auto=format&fit=crop&w=800&q=80"
-            ]
+            color: "brand-cyan"
         },
         {
             id: "girls",
@@ -95,11 +83,7 @@ const ProductionSpectacles: React.FC<Props> = ({ onNavigate }) => {
             details: "Un spectacle puissant, élégant et engagé, mettant en lumière l'excellence vocale féminine de notre troupe.",
             image: ASSETS.SHOWS_2026.find(s => s.id === "girls")?.url || "",
             tag: "PRODUCTION 2026",
-            color: "brand-magenta",
-            moodboard: [
-                "https://images.unsplash.com/photo-1516280440614-37939bbacd81?auto=format&fit=crop&w=800&q=80",
-                "https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?auto=format&fit=crop&w=800&q=80"
-            ]
+            color: "brand-magenta"
         },
         {
             id: "coco",
@@ -111,10 +95,7 @@ const ProductionSpectacles: React.FC<Props> = ({ onNavigate }) => {
             details: "Costumes traditionnels revisités, décors enchanteurs et une partition musicale qui touche le cœur.",
             image: ASSETS.SHOWS_2026.find(s => s.id === "coco")?.url || "",
             tag: "PRODUCTION 2026",
-            color: "brand-orange",
-            moodboard: [
-                "https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?auto=format&fit=crop&w=800&q=80"
-            ]
+            color: "brand-orange"
         },
         {
             id: "curie",
@@ -157,31 +138,6 @@ const ProductionSpectacles: React.FC<Props> = ({ onNavigate }) => {
     // --- DATA : HISTORIQUE (MF PROD ANTHOLOGY) ---
     const historicalShows = [
         {
-            id: "superstars",
-            title: "SUPERSTARS",
-            year: "2022 - 2023",
-            producer: "MF PROD",
-            duration: "2 H 30",
-            artists: "28 ARTISTES",
-            desc: "Show conçu à l’américaine qui rend hommage à 11 superstars d’hier et aujourd’hui allant d’Edith PIAF à Lady GAGA.",
-            details: "Une production monumentale réunissant 28 artistes sur scène pour une performance inoubliable avec des costumes de prestige et des arrangements symphoniques modernes.",
-            stats: "PLUS DE 20 000 SPECTATEURS",
-            locations: "France Entière",
-            image: getShowAsset("affiche__superstars-1-768x1086.webp"),
-            medias: ['tv', 'mic', 'youtube'],
-            tag: "PRODUCTION PHARE",
-            extraPhotos: [
-              getShowAsset("SUPERSTAR IMAGE 1.webp"),
-              getShowAsset("SUPERSTAR IMAGE 2.webp"),
-              getShowAsset("SUPERSTAR IMAGE 3.webp"),
-              getShowAsset("SUPERSTAR IMAGE 4.webp"),
-              getShowAsset("SUPERSTAR IMAGE 5.webp"),
-              getShowAsset("_spectacles__photo-superstars-1-1024x712.webp"),
-              getShowAsset("_spectacles__photo-superstars-site.webp"),
-              getShowAsset("_spectacles__superstars-1.webp")
-            ]
-        },
-        {
             id: "fever",
             title: "GROUPE FEVER",
             year: "2024",
@@ -189,20 +145,56 @@ const ProductionSpectacles: React.FC<Props> = ({ onNavigate }) => {
             duration: "2 H",
             artists: "12 ARTISTES",
             desc: "Plongez dans l’histoire des plus grands groupes anglo-saxons et français de la pop mais également du rock.",
-            details: "Spectacle vivant et dynamique qui aborde les plus grands tubes des années 80 à nos jours. Une énergie rock couplée à une précision vocale millimétrée.",
+            details: "Spectacle vivant et dynamique qui aborde les plus grands tubes des années 80 à nos jours.",
             stats: "SUCCÈS RÉGIONAL 2024",
-            locations: "Région Auvergne-Rhône-Alpes",
-            image: getShowAsset("_coaching-vocal-drome-ardeche__Affiche-groupe-fever-1.webp"),
+            locations: "Bourg-lès-Valence / Saint-Péray / Guilherand-Granges",
+            image: getShowAsset("_spectacles__groupe-fever-mf-prod-avril-2024-1-1024x683.webp"),
+            gallery: [
+                getShowAsset("_spectacles__groupe-fever-mf-prod-avril-2024-2-scaled-e1715109352682-1024x696.webp"),
+                getShowAsset("_spectacles__groupe-fever-mf-prod-avril-2024-3-scaled-e1715109260242-1024x668.webp"),
+                getShowAsset("_spectacles__groupe-fever-mf-prod-avril-2024-4-scaled-e1715108546748-1024x851.webp"),
+                getShowAsset("_spectacles__groupe-fever-mf-prod-avril-2024-5-1-scaled-e1715108864951-1024x688.webp"),
+                getShowAsset("_spectacles__groupe-fever-mf-prod-avril-2024-6-1024x683.webp")
+            ],
             medias: ['photo', 'tv'],
-            tag: "TOURNEE 2024",
-            extraPhotos: [
-              getShowAsset("_spectacles__groupe-fever-mf-prod-avril-2024-1-1024x683.webp"),
-              getShowAsset("_spectacles__groupe-fever-mf-prod-avril-2024-2-scaled-e1715109352682-1024x696.webp"),
-              getShowAsset("_spectacles__groupe-fever-mf-prod-avril-2024-3-scaled-e1715109260242-1024x668.webp"),
-              getShowAsset("_spectacles__groupe-fever-mf-prod-avril-2024-4-scaled-e1715108546748-1024x851.webp"),
-              getShowAsset("_spectacles__groupe-fever-mf-prod-avril-2024-5-1-scaled-e1715108864951-1024x688.webp"),
-              getShowAsset("_spectacles__groupe-fever-mf-prod-avril-2024-6-1024x683.webp")
-            ]
+            tag: "TOURNEE 2024"
+        },
+        {
+            id: "super60",
+            title: "SUPER 60 & TOP 90",
+            year: "2024",
+            producer: "MF PROD",
+            duration: "1 H 30",
+            artists: "TROUPE MF PROD",
+            desc: "Concept innovant : deux spectacles format court dans la même soirée. L'histoire d'un diner américain à Paris en 1962, suivi du meilleur des années 90.",
+            details: "10 serveuses hautes en couleur et des chorégraphies endiablées pour un voyage temporel musical.",
+            stats: "EXCLUSIVITÉ MF PROD",
+            locations: "Sud-Est France",
+            image: getShowAsset("_spectacles__Affiche_spectacle_super_60_TOP_90_MF_PROD-e1745354500563.webp"),
+            medias: ['photo'],
+            tag: "CONCEPT DOUBLE"
+        },
+        {
+            id: "superstars",
+            title: "SUPERSTARS",
+            year: "2022 - 2023",
+            producer: "MF PROD",
+            duration: "2 H 30",
+            artists: "28 ARTISTES",
+            desc: "Show conçu à l’américaine qui rend hommage à 11 superstars d’hier et aujourd’hui allant d’Edith PIAF à Lady GAGA.",
+            details: "Une production monumentale en association avec Accord D’Voix réunissant 28 artistes sur scène.",
+            stats: "PLUS DE 20 000 SPECTATEURS",
+            locations: "France Entière",
+            image: getShowAsset("_spectacles__photo-superstars-site.webp"),
+            gallery: [
+                getShowAsset("SUPERSTAR IMAGE 1.webp"),
+                getShowAsset("SUPERSTAR IMAGE 2.webp"),
+                getShowAsset("SUPERSTAR IMAGE 3.webp"),
+                getShowAsset("_spectacles__photo-superstars-1-1024x712.webp"),
+                getShowAsset("_spectacles__superstars-1.webp")
+            ],
+            medias: ['tv', 'mic', 'youtube'],
+            tag: "PRODUCTION PHARE"
         },
         {
             id: "lola-disco",
@@ -212,21 +204,20 @@ const ProductionSpectacles: React.FC<Props> = ({ onNavigate }) => {
             duration: "2 H",
             artists: "25 ARTISTES",
             desc: "Voyage de découverte de soi au cœur de la vibrante scène New-Yorkaise des années 1970.",
-            details: "À travers des chansons emblématiques, Lola Disco célèbre la résilience humaine, la fête et l'émancipation sous les boules à facettes du Studio 54.",
+            details: "À travers des chansons emblématiques, Lola Disco célèbre la résilience humaine.",
             stats: "ÉNERGIE COMMUNICATIVE",
             locations: "National",
             image: getShowAsset("_spectacles__Affiche-lola-disco-724x1024.webp"),
+            gallery: [
+                getShowAsset("_spectacles__lola-disco-1.webp"),
+                getShowAsset("_spectacles__lola-disco-2-e1738226995116.webp"),
+                getShowAsset("_spectacles__lola-disco-3-e1745355392788.webp"),
+                getShowAsset("_spectacles__lola-disco-4-e1738227070337.webp"),
+                getShowAsset("_spectacles__lola-disco-5-e1738226747622.webp"),
+                getShowAsset("_spectacles__lola-disco-7-e1738226856837.webp")
+            ],
             medias: ['instagram', 'news'],
-            tag: "DISCO SHOW",
-            extraPhotos: [
-              getShowAsset("_spectacles__lola-disco-1.webp"),
-              getShowAsset("_spectacles__lola-disco-2-e1738226995116.webp"),
-              getShowAsset("_spectacles__lola-disco-3-e1745355392788.webp"),
-              getShowAsset("_spectacles__lola-disco-4-e1738227070337.webp"),
-              getShowAsset("_spectacles__lola-disco-5-e1738226747622.webp"),
-              getShowAsset("_spectacles__lola-disco-6-e1738226798028.webp"),
-              getShowAsset("_spectacles__lola-disco-7-e1738226856837.webp")
-            ]
+            tag: "DISCO SHOW"
         },
         {
             id: "livre-brise",
@@ -236,21 +227,20 @@ const ProductionSpectacles: React.FC<Props> = ({ onNavigate }) => {
             duration: "1 H",
             artists: "16 ARTISTES",
             desc: "Comédie musicale où le Père Noël casse le livre magique des contes.",
-            details: "Cendrillon, Raiponce et Blanche Neige s'unissent dans une aventure épique pour sauver la magie de Noël et restaurer l'ordre des contes.",
+            details: "Cendrillon, Raiponce et Blanche Neige s'unissent pour sauver la fête de Noël.",
             stats: "JEUNE PUBLIC - SUCCÈS",
-            locations: "National",
+            locations: "Régional",
             image: getShowAsset("_spectacles__Affiche-livre-brise-de-noel-724x1024.webp"),
+            gallery: [
+                getShowAsset("_spectacles__le-livre-brise-de-Noel-photo-10.webp"),
+                getShowAsset("_spectacles__le-livre-brise-de-Noel-photo-11.webp"),
+                getShowAsset("_spectacles__le-livre-brise-de-Noel-photo-5-1024x910.webp"),
+                getShowAsset("_spectacles__le-livre-brise-de-Noel-photo-6.webp"),
+                getShowAsset("_spectacles__le-livre-brise-de-Noel-photo-7.webp"),
+                getShowAsset("_spectacles__le-livre-brise-de-Noel-photo-9.webp")
+            ],
             medias: ['photo', 'news'],
-            tag: "MAGIE DE NOËL",
-            extraPhotos: [
-              getShowAsset("_spectacles__le-livre-brise-de-Noel-photo-5-1024x910.webp"),
-              getShowAsset("_spectacles__le-livre-brise-de-Noel-photo-6.webp"),
-              getShowAsset("_spectacles__le-livre-brise-de-Noel-photo-7.webp"),
-              getShowAsset("_spectacles__le-livre-brise-de-Noel-photo-9.webp"),
-              getShowAsset("_spectacles__le-livre-brise-de-Noel-photo-10.webp"),
-              getShowAsset("_spectacles__le-livre-brise-de-Noel-photo-11.webp"),
-              getShowAsset("_spectacles__le-livre-brise-de-Noel-photo-12.webp")
-            ]
+            tag: "MAGIE DE NOËL"
         },
         {
             id: "magic-cabaret",
@@ -260,42 +250,19 @@ const ProductionSpectacles: React.FC<Props> = ({ onNavigate }) => {
             duration: "2 H",
             artists: "17 ARTISTES",
             desc: "Comédie musicale située dans un cirque itinérant des années 30.",
-            details: "Une immersion poétique dans l'univers forain d'autrefois. Entre numéros de prestidigitation et romance, une ode au spectacle vivant.",
+            details: "Une immersion poétique dans l'univers forain d'autrefois avec une romance centrale touchante.",
             stats: "AMBIANCE FORAINE",
-            locations: "Régional",
-            image: getShowAsset("_creation-spectacle__Affiche-Magic-Cabaret-.webp"),
+            locations: "Bourg-lès-Valence / Saint-Péray",
+            image: getShowAsset("_spectacles__Magic-cabaret-photo-8-1-1024x843.webp"),
+            gallery: [
+                getShowAsset("_spectacles__magic-cabaret-photo-1.webp"),
+                getShowAsset("_spectacles__magic-cabaret-photo-2.webp"),
+                getShowAsset("_spectacles__magic-cabaret-photo-4.webp"),
+                getShowAsset("_spectacles__magic-cabaret-photo-5.webp"),
+                getShowAsset("_spectacles__magic-cabaret-photo-6.webp")
+            ],
             medias: ['tv', 'photo'],
-            tag: "CABARET",
-            extraPhotos: [
-              getShowAsset("_spectacles__Magic-cabaret-photo-8-1-1024x843.webp"),
-              getShowAsset("_spectacles__magic-cabaret-photo-1.webp"),
-              getShowAsset("_spectacles__magic-cabaret-photo-2.webp"),
-              getShowAsset("_spectacles__magic-cabaret-photo-3.webp"),
-              getShowAsset("_spectacles__magic-cabaret-photo-4.webp"),
-              getShowAsset("_spectacles__magic-cabaret-photo-5.webp"),
-              getShowAsset("_spectacles__magic-cabaret-photo-6.webp")
-            ]
-        },
-        {
-            id: "musique-aime",
-            title: "MUSIQUE JE VOUS AIME",
-            year: "2023",
-            producer: "MF PROD",
-            duration: "1 H 45",
-            artists: "ENSEMBLE MF",
-            desc: "Une déclaration d'amour à la chanson française et internationale.",
-            details: "Une succession de tableaux thématiques portés par des arrangements vocaux originaux, des années 60 à nos jours.",
-            stats: "ÉMOTION PURE",
-            locations: "Sud-Est",
-            image: getShowAsset("_creation-spectacle__Affiche-Musique-je-vous-aime-2-.webp"),
-            medias: ['photo'],
-            tag: "RÉTRO-POP",
-            extraPhotos: [
-              getShowAsset("_spectacles__photo-musique-je-vous-aime-1-et-2-photo-1.webp"),
-              getShowAsset("_spectacles__photo-musique-je-vous-aime-1-et-2-photo-2-1024x542.webp"),
-              getShowAsset("_spectacles__photo-musique-je-vous-aime-1-et-2-photo-3-1024x669.webp"),
-              getShowAsset("_spectacles__photo-musique-je-vous-aime-1-et-2-photo-4.webp")
-            ]
+            tag: "CABARET"
         },
         {
             id: "super-heroines",
@@ -305,57 +272,81 @@ const ProductionSpectacles: React.FC<Props> = ({ onNavigate }) => {
             duration: "45 MIN",
             artists: "4 ARTISTES + NARRATEUR",
             desc: "Spectacle interactif (3-10 ans). Mélodia, Etoile, Super Glace et la Gardienne des rêves partent en quête des ingrédients magiques.",
-            details: "Un moment joyeux et totalement divertissant pour les parents et les enfants, favorisant la participation active du public.",
+            details: "Un moment joyeux et totalement divertissant pour les parents et les enfants.",
             stats: "TOTALEMENT INTERACTIF",
-            locations: "Régional",
+            locations: "Région Auvergne-Rhône-Alpes",
             image: getShowAsset("_spectacles__Affiche-les-supers-heroines-et-la-potion-de-noel-1-731x1024.webp"),
+            gallery: [
+                getShowAsset("_spectacles__photo-les-supers-heroines-et-la-potion-de-noel-1.webp"),
+                getShowAsset("_spectacles__photo-les-supers-heroines-et-la-potion-de-noel-2.webp"),
+                getShowAsset("_spectacles__super-heroine-et-la-potion-de-noel-3.webp")
+            ],
             medias: ['instagram', 'news'],
-            tag: "JEUNE PUBLIC",
-            extraPhotos: [
-              getShowAsset("_spectacles__photo-les-supers-heroines-et-la-potion-de-noel-1.webp"),
-              getShowAsset("_spectacles__photo-les-supers-heroines-et-la-potion-de-noel-2.webp"),
-              getShowAsset("_spectacles__super-heroine-et-la-potion-de-noel-3.webp"),
-              getShowAsset("_spectacles__super-heroine-et-la-potion-de-noel-4.webp")
-            ]
+            tag: "JEUNE PUBLIC"
         },
         {
-            id: "zapping-folies",
-            title: "ZAPPING FOLIES",
+            id: "magiciennes",
+            title: "LES MAGICIENNES DE NOËL",
+            year: "2024",
+            producer: "MF PROD",
+            duration: "1 H",
+            artists: "6 ARTISTES",
+            desc: "Comment les 5 magiciennes de Noël préparent la potion qui assure la magie des fêtes.",
+            details: "Un spectacle chanté et dansé, ludique et interactif pour clôturer l'année en beauté.",
+            stats: "NOUVEAUTÉ NOËL 2024",
+            locations: "Régional",
+            image: getShowAsset("_spectacles__Les-magiciennes-de-Noel-decembre2024.webp"),
+            medias: ['instagram', 'tv'],
+            tag: "MAGIE DE NOËL"
+        },
+        {
+            id: "musique-aime",
+            title: "MUSIQUE JE VOUS AIME",
             year: "2023",
             producer: "MF PROD",
             duration: "1 H 45",
             artists: "ENSEMBLE MF",
-            desc: "Un spectacle varié reprenant les meilleurs moments de la télévision française.",
-            details: "Des chorégraphies inspirées des plus grands plateaux TV et des medleys cultes qui font revivre l'âge d'or du petit écran.",
-            stats: "NOSTALGIE & SHOW",
-            locations: "Région PACA / AURA",
-            image: getShowAsset("_creation-spectacle__Affiche-Zapping-Folies.webp"),
-            medias: ['photo', 'tv'],
-            tag: "GRAND SHOW TV",
-            extraPhotos: [
-               getShowAsset("_spectacles__zapping-folies-1.webp"),
-               getShowAsset("_spectacles__zapping-folies-2.webp")
-            ]
+            desc: "Une déclaration d'amour à la chanson française et internationale.",
+            details: "Une succession de tableaux thématiques portés par des arrangements vocaux originaux.",
+            stats: "ÉMOTION PURE",
+            locations: "Sud-Est",
+            image: getShowAsset("_spectacles__photo-musique-je-vous-aime-1-et-2-photo-1.webp"),
+            gallery: [
+                getShowAsset("_spectacles__photo-musique-je-vous-aime-1-et-2-photo-2-1024x542.webp"),
+                getShowAsset("_spectacles__photo-musique-je-vous-aime-1-et-2-photo-3-1024x669.webp")
+            ],
+            medias: ['photo'],
+            tag: "RÉTRO-POP"
         },
         {
-            id: "schtroumpfs",
+            id: "enfants-hier",
+            title: "LES ENFANTS D'HIER ET AUJOURD'HUI",
+            year: "2024",
+            producer: "ATELIER SPECTACLE",
+            duration: "1 H 30",
+            artists: "TROUPE ATELIER",
+            desc: "Spectacle de fin d'année de l'Atelier Spectacle MF Prod.",
+            details: "Mise en scène dynamique explorant les liens entre les générations à travers la musique.",
+            stats: "CRÉATION ATELIER",
+            locations: "Cornas / Saint-Péray",
+            image: getShowAsset("_spectacles__atelier-spectacle-les-enfants-dhier-et-aujourdhui-MF-Prod-2024-724x1024.webp"),
+            medias: ['photo'],
+            tag: "CRÉATION LOCALE"
+        },
+        {
+            id: "schtroumphs",
             title: "LES SCHTROUMPFS",
-            year: "2025",
+            year: "2022",
             producer: "MF PROD",
-            duration: "1 H",
-            artists: "TROUPE MF",
-            desc: "Le village bleu s'anime en musique. Retrouvez vos personnages préférés dans une aventure chantée et dansée inédite.",
-            details: "Costumes officiels, décors géants et une immersion totale dans l'univers de Peyo. Idéal pour les festivals familiaux.",
+            duration: "50 MIN",
+            artists: "MASCOTTES & CHANT",
+            desc: "Spectacle officiel sous licence, avec mascottes géantes et chansons cultes.",
+            details: "Une aventure bleue inoubliable pour les plus petits avec une forte dose d'interactivité.",
             stats: "LICENCE OFFICIELLE",
-            locations: "France / Belgique / Suisse",
-            image: getShowAsset("SCHTROUMPH AFFICHE.webp"),
-            medias: ['photo', 'instagram'],
-            tag: "NOUVEAUTÉ JEUNE PUBLIC",
-            extraPhotos: [
-              getShowAsset("SCHTROUMPH 1.webp"),
-              getShowAsset("SCHTROUMPH 2.webp"),
-              getShowAsset("SCHTROUMPH 3.webp")
-            ]
+            locations: "Festivals / Arbres de Noël",
+            image: getShowAsset("SCHTROUMPH%20AFFICHE.webp"),
+            medias: ['photo', 'tv'],
+            tag: "OFFICIEL"
         }
     ];
 
@@ -411,21 +402,21 @@ const ProductionSpectacles: React.FC<Props> = ({ onNavigate }) => {
                             <div 
                                 key={i}
                                 onClick={() => scrollToSection(show.id)}
-                                className="flex-shrink-0 w-[320px] lg:w-[450px] snap-start flex flex-col items-center group cursor-pointer"
+                                className="flex-shrink-0 w-[280px] lg:w-[380px] snap-start flex flex-col items-center group cursor-pointer"
                             >
-                                <div className="mb-6 flex items-center gap-3 px-4 py-2 rounded-full border border-brand-magenta/30 bg-brand-magenta/5 dark:bg-brand-magenta/10 shadow-lg animate-breathe backdrop-blur-md">
+                                <div className="mb-6 flex items-center gap-3 px-4 py-2 rounded-full border border-brand-magenta/30 bg-brand-magenta/5 dark:bg-brand-magenta/10 shadow-lg animate-breathe">
                                    <Sparkles size={12} className="text-brand-magenta" />
                                    <span className="text-[10px] font-black text-brand-dark dark:text-white uppercase tracking-[0.2em]">Saison 2026</span>
                                 </div>
 
                                 <div className="relative w-full aspect-[2/3] rounded-[3rem] overflow-hidden border-2 border-black/5 dark:border-white/10 bg-white dark:bg-brand-dark-soft transition-all duration-500 hover:border-brand-magenta/50 shadow-xl group-hover:shadow-[0_30px_60px_-15px_rgba(255,0,122,0.3)]">
-                                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent z-10 opacity-80 transition-opacity group-hover:opacity-90"></div>
+                                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent z-10 opacity-60"></div>
                                     <img src={show.image} alt={show.title} className="w-full h-full object-cover transform scale-100 group-hover:scale-110 transition-transform duration-[2s] ease-out" />
-                                    <div className="absolute bottom-10 left-10 right-10 text-white z-20">
-                                        <h4 className="text-2xl lg:text-3xl font-black uppercase tracking-tighter leading-tight mb-2 drop-shadow-xl">{show.title}</h4>
-                                        <div className="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-y-2 group-hover:translate-y-0">
-                                            <span className="text-[10px] font-black uppercase tracking-[0.2em] text-brand-cyan">Détails de production</span>
-                                            <MousePointer2 size={12} className="text-brand-cyan" />
+                                    <div className="absolute bottom-8 left-8 right-8 text-white z-20">
+                                        <h4 className="text-xl font-black uppercase tracking-tighter leading-tight mb-2 drop-shadow-lg">{show.title}</h4>
+                                        <div className="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                                            <span className="text-[8px] font-black uppercase tracking-widest text-brand-cyan">Cliquer pour détails</span>
+                                            <MousePointer2 size={10} className="text-brand-cyan" />
                                         </div>
                                     </div>
                                 </div>
@@ -450,8 +441,8 @@ const ProductionSpectacles: React.FC<Props> = ({ onNavigate }) => {
                                     className="group cursor-pointer relative aspect-square rounded-[2rem] overflow-hidden border border-black/5 dark:border-white/10 shadow-lg hover:-translate-y-2 transition-all duration-500"
                                 >
                                     <img src={show.image} alt={show.title} className="w-full h-full object-cover transition-all duration-700" />
-                                    <div className="absolute inset-0 bg-brand-cyan/20 opacity-30 group-hover:opacity-0 transition-opacity"></div>
-                                    <div className="absolute bottom-4 left-4 right-4 text-white z-10">
+                                    <div className="absolute inset-0 bg-brand-cyan/10 opacity-30 group-hover:opacity-0 transition-opacity"></div>
+                                    <div className="absolute bottom-4 left-4 right-4 text-white">
                                         <h4 className="text-[9px] font-black uppercase tracking-widest leading-tight drop-shadow-lg">{show.title}</h4>
                                     </div>
                                 </div>
@@ -465,7 +456,7 @@ const ProductionSpectacles: React.FC<Props> = ({ onNavigate }) => {
                             <h2 className="text-xs font-black uppercase tracking-[0.6em] text-brand-magenta whitespace-nowrap">HISTORIQUE DES PRODUCTIONS</h2>
                             <div className="h-[1px] flex-1 bg-gradient-to-r from-brand-magenta/30 to-transparent"></div>
                         </div>
-                        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-6 lg:gap-8">
+                        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-6 lg:gap-8">
                             {historicalShows.map((show, i) => (
                                 <div 
                                     key={i} 
@@ -499,29 +490,15 @@ const ProductionSpectacles: React.FC<Props> = ({ onNavigate }) => {
                                 <span className="text-[10px] font-black uppercase tracking-[0.5em] text-brand-cyan">{show.tag}</span>
                             </div>
 
-                            <div className={`grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-start ${i % 2 !== 0 ? 'lg:flex-row-reverse' : ''}`}>
-                                <div className={`${i % 2 !== 0 ? 'lg:order-2' : ''}`}>
-                                    <div className="relative aspect-[4/5] rounded-[4rem] overflow-hidden shadow-2xl border-4 border-white dark:border-brand-dark-soft group-hover:scale-[1.02] transition-transform duration-700">
+                            <div className={`grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24 items-center ${i % 2 !== 0 ? 'lg:flex-row-reverse' : ''}`}>
+                                <div className={`lg:col-span-5 ${i % 2 !== 0 ? 'lg:order-2' : ''}`}>
+                                    <div className="relative rounded-[4rem] overflow-hidden shadow-2xl border-4 border-white dark:border-brand-dark-soft group-hover:scale-105 transition-transform duration-700">
                                         <img src={show.image} alt={show.title} className="w-full h-full object-cover" />
                                         <div className="absolute inset-0 bg-gradient-to-t from-brand-dark/40 to-transparent"></div>
                                     </div>
-                                    
-                                    {/* Moodboard / Pre-production shots - GRID layout */}
-                                    {show.moodboard && (
-                                        <div className="mt-12">
-                                            <h4 className="text-[10px] font-black uppercase tracking-[0.3em] text-brand-cyan mb-8">Moodboard & Pré-production</h4>
-                                            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                                                {show.moodboard.map((m, idx) => (
-                                                    <div key={idx} className="aspect-video rounded-3xl overflow-hidden border border-white/10 shadow-lg grayscale hover:grayscale-0 transition-all duration-700 hover:scale-105">
-                                                        <img src={m} alt="moodboard" className="w-full h-full object-cover" loading="lazy" />
-                                                    </div>
-                                                ))}
-                                            </div>
-                                        </div>
-                                    )}
                                 </div>
 
-                                <div className={`${i % 2 !== 0 ? 'lg:order-1' : ''}`}>
+                                <div className={`lg:col-span-7 ${i % 2 !== 0 ? 'lg:order-1' : ''}`}>
                                     <div className="flex flex-wrap gap-4 mb-10">
                                         <div className="px-5 py-2 rounded-full bg-brand-cyan text-brand-dark text-[9px] font-black uppercase tracking-widest">EXCLUSIVITÉ 2026</div>
                                         <div className="px-5 py-2 rounded-full bg-black/5 dark:bg-white/10 text-brand-dark dark:text-white text-[9px] font-black uppercase tracking-widest">DURÉE {show.duration}</div>
@@ -566,10 +543,10 @@ const ProductionSpectacles: React.FC<Props> = ({ onNavigate }) => {
                                 <span className="text-[10px] font-black uppercase tracking-[0.5em] text-brand-magenta">{show.tag}</span>
                             </div>
 
-                            <div className={`grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-start ${i % 2 !== 0 ? 'lg:flex-row-reverse' : ''}`}>
-                                <div className={`${i % 2 !== 0 ? 'lg:order-2' : ''}`}>
-                                    <div className="relative aspect-[4/5] rounded-[3rem] overflow-hidden shadow-2xl border-4 border-white dark:border-brand-dark-soft transition-transform duration-700">
-                                        <img src={show.image} alt={show.title} className="w-full h-full object-cover object-top" />
+                            <div className={`grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24 items-start ${i % 2 !== 0 ? 'lg:flex-row-reverse' : ''}`}>
+                                <div className={`lg:col-span-5 ${i % 2 !== 0 ? 'lg:order-2' : ''}`}>
+                                    <div className="relative rounded-[3rem] overflow-hidden shadow-2xl border-4 border-white dark:border-brand-dark-soft transition-transform duration-700">
+                                        <img src={show.image} alt={show.title} className="w-full h-full object-cover" />
                                         <div className="absolute inset-0 bg-gradient-to-t from-brand-dark/40 to-transparent"></div>
                                         <div className="absolute top-8 left-8 bg-brand-magenta text-white px-6 py-2 rounded-full text-[10px] font-black uppercase tracking-widest shadow-xl">{show.year}</div>
                                     </div>
@@ -584,7 +561,7 @@ const ProductionSpectacles: React.FC<Props> = ({ onNavigate }) => {
                                     </div>
                                 </div>
 
-                                <div className={`${i % 2 !== 0 ? 'lg:order-1' : ''}`}>
+                                <div className={`lg:col-span-7 ${i % 2 !== 0 ? 'lg:order-1' : ''}`}>
                                     <div className="flex flex-wrap gap-4 mb-10">
                                         <div className="px-5 py-2 rounded-full bg-brand-magenta text-white text-[9px] font-black uppercase tracking-widest">{show.producer}</div>
                                         <div className="px-5 py-2 rounded-full bg-black/5 dark:bg-white/10 text-brand-dark dark:text-white text-[9px] font-black uppercase tracking-widest">DURÉE {show.duration}</div>
@@ -599,40 +576,31 @@ const ProductionSpectacles: React.FC<Props> = ({ onNavigate }) => {
                                         <p className="text-xl lg:text-2xl font-light text-brand-dark/70 dark:text-brand-light/80 leading-relaxed mb-8 italic font-serif">
                                             "{show.desc}"
                                         </p>
-                                        <p className="text-brand-dark/40 dark:text-brand-light/40 font-light leading-relaxed text-sm">
+                                        <p className="text-brand-dark/40 dark:text-brand-light/40 font-light leading-relaxed text-sm mb-12">
                                             {show.details}
                                         </p>
-
-                                        {/* --- GALERIE PHOTOS DE SCÈNE - GRID layout instead of Carousel --- */}
-                                        {show.extraPhotos && show.extraPhotos.length > 0 && (
-                                          <div className="mt-16 pt-12 border-t border-black/5 dark:border-white/5">
-                                            <div className="flex items-center justify-between mb-10">
-                                                <div className="flex items-center gap-4">
-                                                    <Camera size={18} className="text-brand-magenta" />
-                                                    <h4 className="text-[10px] font-black uppercase tracking-[0.3em] text-brand-magenta">Galerie de Scène & Action ({show.extraPhotos.length} photos)</h4>
+                                        
+                                        {/* --- GALERIE D'IMAGES ASSOCIÉES --- */}
+                                        {show.gallery && show.gallery.length > 0 && (
+                                            <div className="mt-12">
+                                                <div className="flex items-center gap-3 mb-6 text-brand-cyan uppercase tracking-[0.2em] text-[10px] font-black">
+                                                    <ImageIcon size={14} /> Photos de scène
                                                 </div>
-                                                <div className="flex items-center gap-2">
-                                                    <Plus size={14} className="text-brand-magenta opacity-50" />
-                                                    <span className="text-[8px] font-black uppercase tracking-widest opacity-40">Toutes les images</span>
+                                                <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+                                                    {show.gallery.map((imgUrl, gIdx) => (
+                                                        <div 
+                                                            key={gIdx} 
+                                                            className="aspect-square rounded-2xl overflow-hidden border border-black/10 dark:border-white/10 group/img cursor-zoom-in"
+                                                        >
+                                                            <img 
+                                                                src={imgUrl} 
+                                                                alt={`${show.title} - photo ${gIdx + 1}`} 
+                                                                className="w-full h-full object-cover transform scale-100 group-hover/img:scale-110 transition-transform duration-500" 
+                                                            />
+                                                        </div>
+                                                    ))}
                                                 </div>
                                             </div>
-                                            
-                                            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                                              {show.extraPhotos.map((photo, pIdx) => (
-                                                <div 
-                                                  key={pIdx} 
-                                                  className="aspect-video rounded-[2rem] overflow-hidden border-2 border-black/10 dark:border-white/10 shadow-xl bg-brand-dark transition-all duration-500 hover:border-brand-magenta/50 hover:shadow-[0_20px_40px_-10px_rgba(255,0,122,0.2)] hover:scale-105"
-                                                >
-                                                  <img 
-                                                    src={photo} 
-                                                    alt={`${show.title} action ${pIdx}`} 
-                                                    className="w-full h-full object-cover object-center" 
-                                                    loading="lazy" 
-                                                  />
-                                                </div>
-                                              ))}
-                                            </div>
-                                        </div>
                                         )}
 
                                         {show.stats && (
@@ -650,7 +618,7 @@ const ProductionSpectacles: React.FC<Props> = ({ onNavigate }) => {
                                     </div>
 
                                     <div className="flex flex-col sm:flex-row gap-6">
-                                        <Button onClick={() => handleContact(show.title)} className="py-7 px-10 text-xs shadow-xl">Réserver pour ma saison culturelle</Button>
+                                        <Button onClick={() => handleContact(show.title)} className="py-7 px-10 text-xs shadow-xl">Commander pour ma commune</Button>
                                     </div>
                                 </div>
                             </div>
@@ -665,11 +633,11 @@ const ProductionSpectacles: React.FC<Props> = ({ onNavigate }) => {
                         <Sparkles className="mx-auto mb-10 text-brand-cyan animate-pulse" size={56} />
                         <h3 className="text-5xl lg:text-8xl font-black uppercase tracking-tighter mb-12 leading-tight">VOTRE TALENT <br/><span className="text-brand-magenta italic underline decoration-brand-magenta/30 underline-offset-8">AU COEUR DU SHOW</span></h3>
                         <p className="text-xl font-light text-white/60 max-w-4xl mx-auto mb-16 leading-relaxed">
-                            Nous recherchons en permanence de nouveaux profils (chanteurs, danseurs, comédiens, techniciens) pour enrichir nos troupes. Serez-vous le prochain visage de MF Prod ?
+                            Nous recherchons en permanence de nouveaux profils pour enrichir notre historique. Serez-vous le prochain visage de MF Prod ?
                         </p>
                         <div className="flex flex-col sm:flex-row gap-6 justify-center">
                             <Button className="py-8 px-20 text-xl shadow-[0_20px_40px_rgba(255,0,122,0.3)]" onClick={handleArtistApplication}>
-                                <UserPlus size={24} className="mr-3" /> Rejoindre le Casting
+                                <UserPlus size={24} className="mr-3" /> Postuler au Casting
                             </Button>
                         </div>
                     </div>
