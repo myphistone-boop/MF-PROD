@@ -4,11 +4,10 @@ import { Button } from '../../ui/Button';
 import { View, BookingContext } from '../../../types';
 import { ASSETS } from '../../../assets';
 import { 
-  Zap, ArrowLeft, Star, Users, Clock, Youtube, Tv, 
-  Camera, Instagram, Newspaper, Mic, PlayCircle, 
+  Zap, ArrowLeft, Star, Users, Clock, Camera, 
   Sparkles, ChevronRight, UserPlus, MapPin,
-  ExternalLink, MousePointer2, ChevronLeft, Calendar, 
-  Ticket, Info, History, Video, Image as ImageIcon
+  MousePointer2, ChevronLeft, Calendar, 
+  Image as ImageIcon, History
 } from 'lucide-react';
 
 interface Props { onNavigate: (view: View, context?: BookingContext) => void; }
@@ -140,29 +139,29 @@ const ProductionSpectacles: React.FC<Props> = ({ onNavigate }) => {
         {
             id: "fever",
             title: "GROUPE FEVER",
-            year: "2024",
+            year: "2025",
             producer: "MF PROD",
             duration: "2 H",
             artists: "12 ARTISTES",
             desc: "Plongez dans l’histoire des plus grands groupes anglo-saxons et français de la pop mais également du rock.",
             details: "Spectacle vivant et dynamique qui aborde les plus grands tubes des années 80 à nos jours.",
-            stats: "SUCCÈS RÉGIONAL 2024",
+            stats: "SUCCÈS RÉGIONAL 2025",
             locations: "Bourg-lès-Valence / Saint-Péray / Guilherand-Granges",
-            image: getShowAsset("_spectacles__groupe-fever-mf-prod-avril-2024-1-1024x683.webp"),
+            image: getShowAsset("_coaching-vocal-drome-ardeche__Affiche-groupe-fever-1.webp"),
             gallery: [
+                getShowAsset("_spectacles__groupe-fever-mf-prod-avril-2024-1-1024x683.webp"),
                 getShowAsset("_spectacles__groupe-fever-mf-prod-avril-2024-2-scaled-e1715109352682-1024x696.webp"),
                 getShowAsset("_spectacles__groupe-fever-mf-prod-avril-2024-3-scaled-e1715109260242-1024x668.webp"),
                 getShowAsset("_spectacles__groupe-fever-mf-prod-avril-2024-4-scaled-e1715108546748-1024x851.webp"),
                 getShowAsset("_spectacles__groupe-fever-mf-prod-avril-2024-5-1-scaled-e1715108864951-1024x688.webp"),
                 getShowAsset("_spectacles__groupe-fever-mf-prod-avril-2024-6-1024x683.webp")
             ],
-            medias: ['photo', 'tv'],
-            tag: "TOURNEE 2024"
+            tag: "TOURNEE 2025"
         },
         {
             id: "super60",
             title: "SUPER 60 & TOP 90",
-            year: "2024",
+            year: "2025",
             producer: "MF PROD",
             duration: "1 H 30",
             artists: "TROUPE MF PROD",
@@ -171,7 +170,6 @@ const ProductionSpectacles: React.FC<Props> = ({ onNavigate }) => {
             stats: "EXCLUSIVITÉ MF PROD",
             locations: "Sud-Est France",
             image: getShowAsset("_spectacles__Affiche_spectacle_super_60_TOP_90_MF_PROD-e1745354500563.webp"),
-            medias: ['photo'],
             tag: "CONCEPT DOUBLE"
         },
         {
@@ -185,7 +183,7 @@ const ProductionSpectacles: React.FC<Props> = ({ onNavigate }) => {
             details: "Une production monumentale en association avec Accord D’Voix réunissant 28 artistes sur scène.",
             stats: "PLUS DE 20 000 SPECTATEURS",
             locations: "France Entière",
-            image: getShowAsset("_spectacles__photo-superstars-site.webp"),
+            image: getShowAsset("affiche__superstars-1-768x1086.webp"),
             gallery: [
                 getShowAsset("SUPERSTAR IMAGE 1.webp"),
                 getShowAsset("SUPERSTAR IMAGE 2.webp"),
@@ -193,7 +191,6 @@ const ProductionSpectacles: React.FC<Props> = ({ onNavigate }) => {
                 getShowAsset("_spectacles__photo-superstars-1-1024x712.webp"),
                 getShowAsset("_spectacles__superstars-1.webp")
             ],
-            medias: ['tv', 'mic', 'youtube'],
             tag: "PRODUCTION PHARE"
         },
         {
@@ -216,7 +213,6 @@ const ProductionSpectacles: React.FC<Props> = ({ onNavigate }) => {
                 getShowAsset("_spectacles__lola-disco-5-e1738226747622.webp"),
                 getShowAsset("_spectacles__lola-disco-7-e1738226856837.webp")
             ],
-            medias: ['instagram', 'news'],
             tag: "DISCO SHOW"
         },
         {
@@ -239,7 +235,6 @@ const ProductionSpectacles: React.FC<Props> = ({ onNavigate }) => {
                 getShowAsset("_spectacles__le-livre-brise-de-Noel-photo-7.webp"),
                 getShowAsset("_spectacles__le-livre-brise-de-Noel-photo-9.webp")
             ],
-            medias: ['photo', 'news'],
             tag: "MAGIE DE NOËL"
         },
         {
@@ -253,7 +248,7 @@ const ProductionSpectacles: React.FC<Props> = ({ onNavigate }) => {
             details: "Une immersion poétique dans l'univers forain d'autrefois avec une romance centrale touchante.",
             stats: "AMBIANCE FORAINE",
             locations: "Bourg-lès-Valence / Saint-Péray",
-            image: getShowAsset("_spectacles__Magic-cabaret-photo-8-1-1024x843.webp"),
+            image: getShowAsset("_creation-spectacle__Affiche-Magic-Cabaret-.webp"),
             gallery: [
                 getShowAsset("_spectacles__magic-cabaret-photo-1.webp"),
                 getShowAsset("_spectacles__magic-cabaret-photo-2.webp"),
@@ -261,12 +256,11 @@ const ProductionSpectacles: React.FC<Props> = ({ onNavigate }) => {
                 getShowAsset("_spectacles__magic-cabaret-photo-5.webp"),
                 getShowAsset("_spectacles__magic-cabaret-photo-6.webp")
             ],
-            medias: ['tv', 'photo'],
             tag: "CABARET"
         },
         {
             id: "super-heroines",
-            title: "LES SUPERS HÉROÏNES",
+            title: "LES SUPERS HEROÏNES ET LA POTION DE NOËL",
             year: "2023",
             producer: "MF PROD",
             duration: "45 MIN",
@@ -281,28 +275,26 @@ const ProductionSpectacles: React.FC<Props> = ({ onNavigate }) => {
                 getShowAsset("_spectacles__photo-les-supers-heroines-et-la-potion-de-noel-2.webp"),
                 getShowAsset("_spectacles__super-heroine-et-la-potion-de-noel-3.webp")
             ],
-            medias: ['instagram', 'news'],
             tag: "JEUNE PUBLIC"
         },
         {
-            id: "magiciennes",
-            title: "LES MAGICIENNES DE NOËL",
+            id: "voleur-noel",
+            title: "LES MAGICIENNES ET LA POTION DE NOEL",
             year: "2024",
             producer: "MF PROD",
             duration: "1 H",
             artists: "6 ARTISTES",
-            desc: "Comment les 5 magiciennes de Noël préparent la potion qui assure la magie des fêtes.",
+            desc: "Une nouvelle aventure magique pour les fêtes de fin d'année.",
             details: "Un spectacle chanté et dansé, ludique et interactif pour clôturer l'année en beauté.",
             stats: "NOUVEAUTÉ NOËL 2024",
             locations: "Régional",
-            image: getShowAsset("_spectacles__Les-magiciennes-de-Noel-decembre2024.webp"),
-            medias: ['instagram', 'tv'],
+            image: getShowAsset("_spectacles__Affiche_Le_voleur_de_Noel_MF_PROD-724x1024.webp"),
             tag: "MAGIE DE NOËL"
         },
         {
             id: "musique-aime",
-            title: "MUSIQUE JE VOUS AIME",
-            year: "2023",
+            title: "MUSIQUES, JE VOUS AIME 1 & 2",
+            year: "2013 et 2015",
             producer: "MF PROD",
             duration: "1 H 45",
             artists: "ENSEMBLE MF",
@@ -310,57 +302,28 @@ const ProductionSpectacles: React.FC<Props> = ({ onNavigate }) => {
             details: "Une succession de tableaux thématiques portés par des arrangements vocaux originaux.",
             stats: "ÉMOTION PURE",
             locations: "Sud-Est",
-            image: getShowAsset("_spectacles__photo-musique-je-vous-aime-1-et-2-photo-1.webp"),
+            image: getShowAsset("_creation-spectacle__Affiche-Musique-je-vous-aime-2-.webp"),
             gallery: [
                 getShowAsset("_spectacles__photo-musique-je-vous-aime-1-et-2-photo-2-1024x542.webp"),
                 getShowAsset("_spectacles__photo-musique-je-vous-aime-1-et-2-photo-3-1024x669.webp")
             ],
-            medias: ['photo'],
             tag: "RÉTRO-POP"
         },
         {
-            id: "enfants-hier",
-            title: "LES ENFANTS D'HIER ET AUJOURD'HUI",
-            year: "2024",
-            producer: "ATELIER SPECTACLE",
-            duration: "1 H 30",
-            artists: "TROUPE ATELIER",
-            desc: "Spectacle de fin d'année de l'Atelier Spectacle MF Prod.",
-            details: "Mise en scène dynamique explorant les liens entre les générations à travers la musique.",
-            stats: "CRÉATION ATELIER",
-            locations: "Cornas / Saint-Péray",
-            image: getShowAsset("_spectacles__atelier-spectacle-les-enfants-dhier-et-aujourdhui-MF-Prod-2024-724x1024.webp"),
-            medias: ['photo'],
-            tag: "CRÉATION LOCALE"
-        },
-        {
-            id: "schtroumphs",
-            title: "LES SCHTROUMPFS",
-            year: "2022",
+            id: "zapping",
+            title: "ZAPPING FOLIES",
+            year: "2017",
             producer: "MF PROD",
-            duration: "50 MIN",
-            artists: "MASCOTTES & CHANT",
-            desc: "Spectacle officiel sous licence, avec mascottes géantes et chansons cultes.",
-            details: "Une aventure bleue inoubliable pour les plus petits avec une forte dose d'interactivité.",
-            stats: "LICENCE OFFICIELLE",
-            locations: "Festivals / Arbres de Noël",
-            image: getShowAsset("SCHTROUMPH%20AFFICHE.webp"),
-            medias: ['photo', 'tv'],
-            tag: "OFFICIEL"
+            duration: "2 H",
+            artists: "TROUPE MF",
+            desc: "Un spectacle varié reprenant les meilleurs moments de la télévision.",
+            details: "Humour, danse et chansons dans un format cabaret moderne.",
+            stats: "VARIÉTÉ & HUMOUR",
+            locations: "National",
+            image: getShowAsset("_creation-spectacle__Affiche-Zapping-Folies.webp"),
+            tag: "VARIÉTÉ"
         }
     ];
-
-    const MediaIcon = ({ type }: { type: string }) => {
-        switch(type) {
-            case 'youtube': return <div className="flex flex-col items-center gap-1"><Youtube size={16} /><span className="text-[8px] font-black uppercase">Youtube</span></div>;
-            case 'tv': return <div className="flex flex-col items-center gap-1"><Tv size={16} /><span className="text-[8px] font-black uppercase">TV</span></div>;
-            case 'photo': return <div className="flex flex-col items-center gap-1"><Camera size={16} /><span className="text-[8px] font-black uppercase">Photos</span></div>;
-            case 'instagram': return <div className="flex flex-col items-center gap-1"><Instagram size={16} /><span className="text-[8px] font-black uppercase">Insta</span></div>;
-            case 'news': return <div className="flex flex-col items-center gap-1"><Newspaper size={16} /><span className="text-[8px] font-black uppercase">Presse</span></div>;
-            case 'mic': return <div className="flex flex-col items-center gap-1"><Mic size={16} /><span className="text-[8px] font-black uppercase">Micro</span></div>;
-            default: return <PlayCircle size={16} />;
-        }
-    };
 
     return (
         <div className="w-full pt-32 lg:pt-48 pb-24 px-6 lg:px-12 bg-brand-light dark:bg-brand-dark transition-colors duration-500 min-h-screen">
@@ -426,24 +389,26 @@ const ProductionSpectacles: React.FC<Props> = ({ onNavigate }) => {
                 </section>
 
                 {/* --- SECTION 2: LE CATALOGUE COMPLET --- */}
-                <section className="mb-48 space-y-24">
+                <section className="mb-48 space-y-32">
                     {/* Index 2026 */}
                     <div>
                         <div className="flex items-center gap-6 mb-16 px-4">
                             <h2 className="text-xs font-black uppercase tracking-[0.6em] text-brand-cyan whitespace-nowrap">INDEX SAISON 2026</h2>
                             <div className="h-[1px] flex-1 bg-gradient-to-r from-brand-cyan/30 to-transparent"></div>
                         </div>
-                        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
+                        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-y-12 gap-x-6 lg:gap-x-10">
                             {upcomingShows.map((show, i) => (
                                 <div 
                                     key={i} 
                                     onClick={() => scrollToSection(show.id)}
-                                    className="group cursor-pointer relative aspect-square rounded-[2rem] overflow-hidden border border-black/5 dark:border-white/10 shadow-lg hover:-translate-y-2 transition-all duration-500"
+                                    className="group cursor-pointer flex flex-col transition-all duration-500 hover:-translate-y-2"
                                 >
-                                    <img src={show.image} alt={show.title} className="w-full h-full object-cover transition-all duration-700" />
-                                    <div className="absolute inset-0 bg-brand-cyan/10 opacity-30 group-hover:opacity-0 transition-opacity"></div>
-                                    <div className="absolute bottom-4 left-4 right-4 text-white">
-                                        <h4 className="text-[9px] font-black uppercase tracking-widest leading-tight drop-shadow-lg">{show.title}</h4>
+                                    <div className="mb-4 min-h-[50px] flex flex-col justify-end">
+                                        <h4 className="text-xs font-black uppercase tracking-widest leading-tight text-brand-dark dark:text-white group-hover:text-brand-cyan transition-colors">{show.title}</h4>
+                                    </div>
+                                    <div className="relative aspect-square rounded-[2rem] overflow-hidden border border-black/5 dark:border-white/10 shadow-lg bg-brand-dark-soft">
+                                        <img src={show.image} alt={show.title} className="w-full h-full object-cover transition-all duration-700 group-hover:scale-110" />
+                                        <div className="absolute inset-0 bg-brand-cyan/10 opacity-30 group-hover:opacity-0 transition-opacity"></div>
                                     </div>
                                 </div>
                             ))}
@@ -456,18 +421,20 @@ const ProductionSpectacles: React.FC<Props> = ({ onNavigate }) => {
                             <h2 className="text-xs font-black uppercase tracking-[0.6em] text-brand-magenta whitespace-nowrap">HISTORIQUE DES PRODUCTIONS</h2>
                             <div className="h-[1px] flex-1 bg-gradient-to-r from-brand-magenta/30 to-transparent"></div>
                         </div>
-                        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-6 lg:gap-8">
+                        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-y-16 gap-x-8 lg:gap-x-12">
                             {historicalShows.map((show, i) => (
                                 <div 
                                     key={i} 
                                     onClick={() => scrollToSection(show.id)}
-                                    className="group cursor-pointer relative aspect-square rounded-[2.5rem] overflow-hidden border border-black/5 dark:border-white/10 shadow-xl transition-all duration-500 hover:-translate-y-4 hover:border-brand-magenta/50"
+                                    className="group cursor-pointer flex flex-col transition-all duration-500 hover:-translate-y-3"
                                 >
-                                    <img src={show.image} alt={show.title} className="w-full h-full object-cover transition-all duration-700" />
-                                    <div className="absolute inset-0 bg-brand-dark/30 opacity-40 group-hover:opacity-10 transition-opacity"></div>
-                                    <div className="absolute bottom-6 left-6 right-6 text-white transform group-hover:-translate-y-2 transition-transform">
-                                        <span className="text-[9px] font-black uppercase tracking-widest text-brand-magenta mb-1 block">{show.year}</span>
-                                        <h4 className="text-xs font-black uppercase tracking-tighter leading-none">{show.title}</h4>
+                                    <div className="mb-5 min-h-[60px] flex flex-col justify-end">
+                                        <span className="text-[10px] font-black uppercase tracking-widest text-brand-magenta mb-1.5 block">{show.year}</span>
+                                        <h4 className="text-sm font-black uppercase tracking-tighter leading-tight text-brand-dark dark:text-white group-hover:text-brand-magenta transition-colors">{show.title}</h4>
+                                    </div>
+                                    <div className="relative aspect-square rounded-[2.5rem] overflow-hidden border border-black/5 dark:border-white/10 shadow-xl bg-brand-dark-soft">
+                                        <img src={show.image} alt={show.title} className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700" />
+                                        <div className="absolute inset-0 bg-brand-dark/20 opacity-0 group-hover:opacity-10 transition-opacity"></div>
                                     </div>
                                 </div>
                             ))}
@@ -492,9 +459,9 @@ const ProductionSpectacles: React.FC<Props> = ({ onNavigate }) => {
 
                             <div className={`grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24 items-center ${i % 2 !== 0 ? 'lg:flex-row-reverse' : ''}`}>
                                 <div className={`lg:col-span-5 ${i % 2 !== 0 ? 'lg:order-2' : ''}`}>
-                                    <div className="relative rounded-[4rem] overflow-hidden shadow-2xl border-4 border-white dark:border-brand-dark-soft group-hover:scale-105 transition-transform duration-700">
-                                        <img src={show.image} alt={show.title} className="w-full h-full object-cover" />
-                                        <div className="absolute inset-0 bg-gradient-to-t from-brand-dark/40 to-transparent"></div>
+                                    <div className="relative aspect-[2/3] rounded-[4rem] overflow-hidden shadow-2xl border-4 border-white dark:border-brand-dark-soft group-hover:scale-105 transition-transform duration-700 bg-brand-dark-soft">
+                                        <img src={show.image} alt={show.title} className="w-full h-full object-contain" />
+                                        <div className="absolute inset-0 bg-gradient-to-t from-brand-dark/20 to-transparent pointer-events-none"></div>
                                     </div>
                                 </div>
 
@@ -519,8 +486,8 @@ const ProductionSpectacles: React.FC<Props> = ({ onNavigate }) => {
                                     </div>
 
                                     <div className="flex flex-col sm:flex-row gap-6">
-                                        <Button onClick={() => handleContact(show.title)} className="py-7 px-14 text-sm shadow-xl">Pré-réserver pour ma commune</Button>
-                                        <Button variant="outline" onClick={() => handleArtistApplication()} className="py-7">Postuler au Casting</Button>
+                                        <button onClick={() => handleContact(show.title)} className="py-7 px-14 text-sm shadow-xl bg-white text-brand-dark rounded-full font-black uppercase tracking-widest">Pré-réserver pour ma commune</button>
+                                        <button onClick={() => handleArtistApplication()} className="py-7 px-10 border border-brand-cyan text-brand-cyan rounded-full font-black uppercase tracking-widest">Postuler au Casting</button>
                                     </div>
                                 </div>
                             </div>
@@ -545,19 +512,10 @@ const ProductionSpectacles: React.FC<Props> = ({ onNavigate }) => {
 
                             <div className={`grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24 items-start ${i % 2 !== 0 ? 'lg:flex-row-reverse' : ''}`}>
                                 <div className={`lg:col-span-5 ${i % 2 !== 0 ? 'lg:order-2' : ''}`}>
-                                    <div className="relative rounded-[3rem] overflow-hidden shadow-2xl border-4 border-white dark:border-brand-dark-soft transition-transform duration-700">
-                                        <img src={show.image} alt={show.title} className="w-full h-full object-cover" />
-                                        <div className="absolute inset-0 bg-gradient-to-t from-brand-dark/40 to-transparent"></div>
+                                    <div className="relative aspect-[2/3] rounded-[3rem] overflow-hidden shadow-2xl border-4 border-white dark:border-brand-dark-soft transition-transform duration-700 bg-brand-dark-soft">
+                                        <img src={show.image} alt={show.title} className="w-full h-full object-contain" />
+                                        <div className="absolute inset-0 bg-gradient-to-t from-brand-dark/20 to-transparent pointer-events-none"></div>
                                         <div className="absolute top-8 left-8 bg-brand-magenta text-white px-6 py-2 rounded-full text-[10px] font-black uppercase tracking-widest shadow-xl">{show.year}</div>
-                                    </div>
-                                    
-                                    {/* --- MEDIA ICONS --- */}
-                                    <div className="mt-12 flex gap-4 justify-center lg:justify-start">
-                                        {show.medias?.map((m, idx) => (
-                                            <div key={idx} className="w-14 h-14 rounded-2xl bg-white dark:bg-brand-dark border border-black/5 dark:border-white/10 flex items-center justify-center text-brand-dark/40 dark:text-white/40 hover:bg-brand-magenta hover:text-white transition-all cursor-pointer shadow-md">
-                                                <MediaIcon type={m} />
-                                            </div>
-                                        ))}
                                     </div>
                                 </div>
 
@@ -618,7 +576,7 @@ const ProductionSpectacles: React.FC<Props> = ({ onNavigate }) => {
                                     </div>
 
                                     <div className="flex flex-col sm:flex-row gap-6">
-                                        <Button onClick={() => handleContact(show.title)} className="py-7 px-10 text-xs shadow-xl">Commander pour ma commune</Button>
+                                        <button onClick={() => handleContact(show.title)} className="py-7 px-10 text-xs shadow-xl bg-brand-magenta text-white rounded-full font-black uppercase tracking-widest">Commander pour ma commune</button>
                                     </div>
                                 </div>
                             </div>
@@ -636,9 +594,9 @@ const ProductionSpectacles: React.FC<Props> = ({ onNavigate }) => {
                             Nous recherchons en permanence de nouveaux profils pour enrichir notre historique. Serez-vous le prochain visage de MF Prod ?
                         </p>
                         <div className="flex flex-col sm:flex-row gap-6 justify-center">
-                            <Button className="py-8 px-20 text-xl shadow-[0_20px_40px_rgba(255,0,122,0.3)]" onClick={handleArtistApplication}>
-                                <UserPlus size={24} className="mr-3" /> Postuler au Casting
-                            </Button>
+                            <button className="py-8 px-20 text-xl shadow-[0_20px_40px_rgba(255,138,0,0.3)] bg-brand-magenta text-white rounded-full font-black uppercase tracking-widest flex items-center gap-4" onClick={handleArtistApplication}>
+                                <UserPlus size={24} /> Postuler au Casting
+                            </button>
                         </div>
                     </div>
                 </section>

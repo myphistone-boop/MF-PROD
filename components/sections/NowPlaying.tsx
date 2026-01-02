@@ -5,7 +5,7 @@ import { View } from '../../types';
 import { Sparkles, Zap, ArrowRight, Music } from 'lucide-react';
 
 interface NowPlayingProps {
-  onNavigate: (view: View) => void;
+  onNavigate: (view: View, context?: any) => void;
 }
 
 const NowPlaying: React.FC<NowPlayingProps> = ({ onNavigate }) => {
@@ -59,7 +59,7 @@ const NowPlaying: React.FC<NowPlayingProps> = ({ onNavigate }) => {
                 </div>
 
                 <Button 
-                  onClick={() => onNavigate(View.SPECTACLES)} 
+                  onClick={() => onNavigate(View.PRODUCTION_SPECTACLES, { sectionId: 'superstars' })} 
                   className="w-full justify-between group/btn py-6 shadow-xl"
                 >
                   Découvrir le spectacle

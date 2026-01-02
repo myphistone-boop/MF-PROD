@@ -6,7 +6,7 @@ import { Menu, X, ChevronDown } from 'lucide-react';
 
 interface NavbarProps {
   currentView: View;
-  onNavigate: (view: View) => void;
+  onNavigate: (view: View, context?: any) => void;
 }
 
 const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate }) => {
@@ -29,20 +29,12 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate }) => {
     { label: 'Création de Spectacles', view: View.ATELIER_SPECTACLE },
     { label: 'Animation Télévisuelle', view: View.ANIMATION_TV },
     { label: 'Voix Off', view: View.VOIX_OFF },
-    { label: 'Stages Perfectionnement', view: View.STAGES_PERFECTIONNEMENT },
+    { label: 'Stages Perfectionnement', view: View.COACHING_VOCAL, sectionId: 'formations' },
   ];
 
   const handleNavClick = (item: NavItem) => {
     if (item.view !== currentView) {
-        onNavigate(item.view);
-        if (item.sectionId) {
-            setTimeout(() => {
-                const element = document.getElementById(item.sectionId!);
-                if (element) element.scrollIntoView({ behavior: 'smooth' });
-            }, 100);
-        } else {
-            window.scrollTo(0, 0);
-        }
+        onNavigate(item.view, item.sectionId ? { sectionId: item.sectionId } : undefined);
     } else {
         if (item.sectionId) {
             const element = document.getElementById(item.sectionId);
@@ -55,9 +47,8 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate }) => {
     setDropdownOpen(false);
   };
 
-  const handlePrestationClick = (view: View) => {
-    onNavigate(view);
-    window.scrollTo(0, 0);
+  const handlePrestationClick = (link: { label: string, view: View, sectionId?: string }) => {
+    onNavigate(link.view, link.sectionId ? { sectionId: link.sectionId } : undefined);
     setDropdownOpen(false);
     setMobileMenuOpen(false);
   };
@@ -140,7 +131,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate }) => {
                           {prestationsLinks.map((link) => (
                             <button
                               key={link.label}
-                              onClick={() => handlePrestationClick(link.view)}
+                              onClick={() => handlePrestationClick(link)}
                               className="text-left px-5 py-3.5 rounded-2xl hover:bg-white/5 text-[12px] uppercase tracking-[0.25em] font-black text-white hover:text-brand-magenta transition-all"
                             >
                               {link.label}
@@ -195,7 +186,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate }) => {
                         {prestationsLinks.map((link) => (
                           <button
                             key={link.label}
-                            onClick={() => handlePrestationClick(link.view)}
+                            onClick={() => handlePrestationClick(link)}
                             className="text-lg font-black text-white hover:text-brand-magenta uppercase tracking-widest text-center"
                           >
                             {link.label}

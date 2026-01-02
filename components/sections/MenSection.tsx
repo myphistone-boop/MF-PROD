@@ -5,7 +5,7 @@ import { Star, Music, Zap } from 'lucide-react';
 import { View } from '../../types';
 
 interface MenSectionProps {
-  onNavigate: (view: View) => void;
+  onNavigate: (view: View, context?: any) => void;
 }
 
 const MenSection: React.FC<MenSectionProps> = ({ onNavigate }) => {
@@ -54,7 +54,7 @@ const MenSection: React.FC<MenSectionProps> = ({ onNavigate }) => {
                                      ))}
                                 </div>
                                 <div className="mt-4">
-                                    <Button onClick={() => onNavigate(View.SPECTACLES)} className="w-full py-6 shadow-xl">Découvrir le Spectacle</Button>
+                                    <Button onClick={() => onNavigate(View.PRODUCTION_SPECTACLES, { sectionId: 'superstars' })} className="w-full py-6 shadow-xl">Découvrir le Spectacle</Button>
                                 </div>
                             </div>
                         </div>

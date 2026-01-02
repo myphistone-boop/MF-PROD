@@ -5,7 +5,7 @@ import { ASSETS } from '../../assets';
 import { Sparkles, ChevronRight, Zap, Music, Mic2, Star, Tv, Mic } from 'lucide-react';
 
 interface DiscoverProps {
-    onNavigate: (view: View) => void;
+    onNavigate: (view: View, context?: any) => void;
 }
 
 const Discover: React.FC<DiscoverProps> = ({ onNavigate }) => {
@@ -63,7 +63,8 @@ const Discover: React.FC<DiscoverProps> = ({ onNavigate }) => {
             color: "brand-cyan"
         },
         {
-            id: View.STAGES_PERFECTIONNEMENT,
+            id: View.COACHING_VOCAL,
+            sectionId: 'formations',
             icon: <Music className="w-8 h-8" />,
             image: ASSETS.PRESTATIONS.STAGES,
             title: "Stages Pro",
@@ -90,7 +91,7 @@ const Discover: React.FC<DiscoverProps> = ({ onNavigate }) => {
                     {categories.map((item, index) => (
                         <div 
                             key={index} 
-                            onClick={() => onNavigate(item.id)}
+                            onClick={() => onNavigate(item.id, item.sectionId ? { sectionId: item.sectionId } : undefined)}
                             className={`group cursor-pointer relative bg-white dark:bg-brand-dark-soft border-2 border-black/5 dark:border-white/5 rounded-[3.5rem] overflow-hidden transition-all duration-700 hover:border-brand-magenta/50 hover:-translate-y-4 shadow-xl dark:shadow-none hover:shadow-2xl dark:hover:shadow-[0_40px_80px_-20px_rgba(255,0,122,0.2)] ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'}`} 
                             style={{ transitionDelay: `${index * 150}ms` }}
                         >

@@ -27,12 +27,23 @@ const App: React.FC = () => {
     window.document.documentElement.classList.add('dark');
   }, []);
 
-  const navigate = (view: View, context?: BookingContext) => {
+  const navigate = (view: View, context?: BookingContext & { sectionId?: string }) => {
     if (context) {
       setBookingContext(context);
     }
     setCurrentView(view);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    
+    // Si une section est spécifiée, on attend le rendu du composant pour scroller
+    if (context?.sectionId) {
+      setTimeout(() => {
+        const element = document.getElementById(context.sectionId!);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }, 150);
+    } else {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
   };
 
   return (

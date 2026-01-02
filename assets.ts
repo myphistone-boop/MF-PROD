@@ -44,17 +44,18 @@ export const ASSETS = {
     getAsset("Partenaire%207.webp"),
   ],
 
-  // Historique des spectacles
+  // Historique des spectacles - Mises à jour avec les nouveaux liens directs
   HISTORY: {
-    FEVER: getAsset("shows/history/fever.webp"),
-    SUPER60: getAsset("shows/history/super60.webp"),
-    SUPERSTARS: getAsset("shows/history/superstars.webp"),
-    NOEL: getAsset("shows/history/noel_brise.webp"),
-    CABARET: getAsset("shows/history/magic_cabaret.webp"),
-    LOLA: getAsset("shows/history/lola_disco.webp"),
-    MAGICIENNES: getAsset("shows/history/magiciennes_noel.webp"),
-    HEROINES: getAsset("shows/history/super_heroines.webp"),
-    ZAPPING: getAsset("shows/history/zapping_folies.webp"),
+    FEVER: getAsset("SPETACLES/_coaching-vocal-drome-ardeche__Affiche-groupe-fever-1.webp"),
+    SUPER60: getAsset("SPETACLES/_spectacles__Affiche_spectacle_super_60_TOP_90_MF_PROD-e1745354500563.webp"),
+    SUPERSTARS: getAsset("SPETACLES/affiche__superstars-1-768x1086.webp"),
+    NOEL: getAsset("SPETACLES/_spectacles__Affiche-livre-brise-de-noel-724x1024.webp"),
+    CABARET: getAsset("SPETACLES/_creation-spectacle__Affiche-Magic-Cabaret-.webp"),
+    LOLA: getAsset("SPETACLES/_spectacles__Affiche-lola-disco-724x1024.webp"),
+    VOLEUR: getAsset("SPETACLES/_spectacles__Affiche_Le_voleur_de_Noel_MF_PROD-724x1024.webp"),
+    HEROINES: getAsset("SPETACLES/_spectacles__Affiche-les-supers-heroines-et-la-potion-de-noel-1-731x1024.webp"),
+    ZAPPING: getAsset("SPETACLES/_creation-spectacle__Affiche-Zapping-Folies.webp"),
+    MUSIQUE: getAsset("SPETACLES/_creation-spectacle__Affiche-Musique-je-vous-aime-2-.webp")
   },
 
   // Photos de Mikaël & Équipe

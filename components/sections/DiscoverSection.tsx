@@ -5,7 +5,7 @@ import { ASSETS } from '../../assets';
 import { Mic2, Music, Star, ChevronRight, Zap, Tv, Headphones } from 'lucide-react';
 
 interface DiscoverSectionProps {
-    onNavigate: (view: View) => void;
+    onNavigate: (view: View, context?: any) => void;
 }
 
 const DiscoverSection: React.FC<DiscoverSectionProps> = ({ onNavigate }) => {
@@ -62,7 +62,8 @@ const DiscoverSection: React.FC<DiscoverSectionProps> = ({ onNavigate }) => {
             accent: "brand-cyan"
         },
         {
-            id: View.STAGES_PERFECTIONNEMENT,
+            id: View.COACHING_VOCAL,
+            sectionId: 'formations',
             icon: <Music className="w-8 h-8" />,
             image: ASSETS.PRESTATIONS.STAGES,
             title: "Stages Pro",
@@ -93,7 +94,7 @@ const DiscoverSection: React.FC<DiscoverSectionProps> = ({ onNavigate }) => {
                     {approaches.map((item, index) => (
                         <div 
                             key={index}
-                            onClick={() => onNavigate(item.id)}
+                            onClick={() => onNavigate(item.id, item.sectionId ? { sectionId: item.sectionId } : undefined)}
                             className={`
                                 group relative h-[550px] lg:h-[700px] cursor-pointer rounded-[4rem] overflow-hidden transition-all duration-700 
                                 ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'} 
