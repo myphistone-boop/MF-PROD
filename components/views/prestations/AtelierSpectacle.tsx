@@ -6,7 +6,7 @@ import { ASSETS } from '../../../assets';
 import { 
   Star, ArrowLeft, Zap, Sparkles, CheckCircle2, 
   Layout, Palette, Users, Settings, Briefcase, 
-  ArrowRight, History, Calendar
+  ArrowRight, History, Calendar, MousePointer2
 } from 'lucide-react';
 
 interface Props { onNavigate: (view: View, context?: BookingContext) => void; }
@@ -30,17 +30,18 @@ const AtelierSpectacle: React.FC<Props> = ({ onNavigate }) => {
         onNavigate(View.PRODUCTION_SPECTACLES, { sectionId } as any);
     };
 
-    // --- DATA FILTERING ---
-    const shows2026 = ASSETS.SHOWS_2026;
+    // --- DATA ---
+    const shows2026 = ASSETS.SHOWS_2026; // Ces objets ont déjà un champ 'id' (pop, girls, coco, etc.)
+    
     const historicalCreations = [
-        { title: "GROUPE FEVER", url: getShowAsset("_coaching-vocal-drome-ardeche__Affiche-groupe-fever-1.webp") },
-        { title: "SUPER 60 & TOP 90", url: getShowAsset("_spectacles__Affiche_spectacle_super_60_TOP_90_MF_PROD-e1745354500563.webp") },
-        { title: "SUPERSTARS", url: getShowAsset("affiche__superstars-1-768x1086.webp") },
-        { title: "LOLA DISCO", url: getShowAsset("_spectacles__Affiche-lola-disco-724x1024.webp") },
-        { title: "LE LIVRE BRISÉ DE NOËL", url: getShowAsset("_spectacles__Affiche-livre-brise-de-noel-724x1024.webp") },
-        { title: "MAGIC CABARET", url: getShowAsset("_creation-spectacle__Affiche-Magic-Cabaret-.webp") },
-        { title: "LES SUPERS HEROÏNES", url: getShowAsset("_spectacles__Affiche-les-supers-heroines-et-la-potion-de-noel-1-731x1024.webp") },
-        { title: "LE VOLEUR DE NOËL", url: getShowAsset("_spectacles__Affiche_Le_voleur_de_Noel_MF_PROD-724x1024.webp") }
+        { title: "GROUPE FEVER", id: "fever", url: getShowAsset("_coaching-vocal-drome-ardeche__Affiche-groupe-fever-1.webp") },
+        { title: "SUPER 60 & TOP 90", id: "super60", url: getShowAsset("_spectacles__Affiche_spectacle_super_60_TOP_90_MF_PROD-e1745354500563.webp") },
+        { title: "SUPERSTARS", id: "superstars", url: getShowAsset("affiche__superstars-1-768x1086.webp") },
+        { title: "LOLA DISCO", id: "lola-disco", url: getShowAsset("_spectacles__Affiche-lola-disco-724x1024.webp") },
+        { title: "LE LIVRE BRISÉ DE NOËL", id: "livre-brise", url: getShowAsset("_spectacles__Affiche-livre-brise-de-noel-724x1024.webp") },
+        { title: "MAGIC CABARET", id: "magic-cabaret", url: getShowAsset("_creation-spectacle__Affiche-Magic-Cabaret-.webp") },
+        { title: "LES SUPERS HEROÏNES", id: "super-heroines", url: getShowAsset("_spectacles__Affiche-les-supers-heroines-et-la-potion-de-noel-1-731x1024.webp") },
+        { title: "LE VOLEUR DE NOËL", id: "voleur-noel", url: getShowAsset("_spectacles__Affiche_Le_voleur_de_Noel_MF_PROD-724x1024.webp") }
     ];
 
     const coDirectedShows = [
@@ -124,10 +125,12 @@ const AtelierSpectacle: React.FC<Props> = ({ onNavigate }) => {
                         </div>
                         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 lg:gap-8">
                             {shows2026.map((show, i) => (
-                                <div key={i} className="group cursor-pointer">
+                                <div key={i} onClick={() => navigateToShow(show.id)} className="group cursor-pointer">
                                     <div className="relative aspect-[2/3] rounded-[2rem] overflow-hidden border border-black/5 dark:border-white/10 bg-brand-dark-soft shadow-xl transition-all duration-500 hover:-translate-y-3 hover:shadow-cyan-900/20">
                                         <img src={show.url} alt={show.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
-                                        <div className="absolute inset-0 bg-brand-cyan/10 opacity-40 group-hover:opacity-0 transition-opacity"></div>
+                                        <div className="absolute inset-0 bg-brand-dark/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center backdrop-blur-[1px]">
+                                            <ArrowRight size={24} className="text-white" />
+                                        </div>
                                         <div className="absolute top-4 right-4"><Sparkles size={16} className="text-brand-cyan animate-pulse" /></div>
                                     </div>
                                     <p className="mt-4 text-[9px] font-black uppercase tracking-widest text-center opacity-40 group-hover:opacity-100 group-hover:text-brand-cyan transition-all">{show.title}</p>
@@ -144,10 +147,12 @@ const AtelierSpectacle: React.FC<Props> = ({ onNavigate }) => {
                         </div>
                         <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-6">
                             {historicalCreations.map((show, i) => (
-                                <div key={i} className="group cursor-pointer">
+                                <div key={i} onClick={() => navigateToShow(show.id)} className="group cursor-pointer">
                                     <div className="relative aspect-[2/3] rounded-3xl overflow-hidden border border-black/5 dark:border-white/10 bg-brand-dark-soft shadow-lg transition-all duration-500 hover:-translate-y-2">
                                         <img src={show.url} alt={show.title} className="w-full h-full object-cover transition-all duration-700 group-hover:scale-110" />
-                                        <div className="absolute inset-0 bg-brand-orange/10 opacity-20 group-hover:opacity-0 transition-opacity"></div>
+                                        <div className="absolute inset-0 bg-brand-dark/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center backdrop-blur-[1px]">
+                                            <ArrowRight size={20} className="text-white" />
+                                        </div>
                                     </div>
                                     <p className="mt-3 text-[8px] font-black uppercase tracking-tighter text-center opacity-30 group-hover:opacity-100 transition-all leading-tight">{show.title}</p>
                                 </div>
