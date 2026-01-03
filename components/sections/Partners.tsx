@@ -30,10 +30,9 @@ const Partners: React.FC = () => {
               key={index} 
               className={`
                 group relative w-full aspect-square max-w-[160px] flex items-center justify-center 
-                bg-white border border-black/10
+                bg-white border-2 border-white
                 rounded-[2.5rem] p-6 transition-all duration-700 hover:border-brand-magenta/40 
-                hover:shadow-2xl dark:hover:shadow-[0_20px_50px_rgba(255,255,255,0.1)] 
-                transform hover:-translate-y-2
+                shadow-xl hover:shadow-2xl transform hover:-translate-y-2
                 ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'}
               `}
               style={{ transitionDelay: `${index * 100}ms` }}
