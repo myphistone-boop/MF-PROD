@@ -11,25 +11,25 @@ const Partners: React.FC = () => {
   }, []);
 
   return (
-    <section className="py-24 lg:py-32 relative overflow-hidden bg-brand-light dark:bg-brand-dark transition-colors duration-500">
+    <section className="py-16 lg:py-20 relative overflow-hidden bg-brand-light dark:bg-brand-dark transition-colors duration-500">
       <div className="max-w-[1400px] mx-auto px-6 lg:px-12 relative z-10">
-        <div className={`text-center mb-20 transition-all duration-1000 transform ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-          <div className="inline-flex items-center gap-3 px-6 py-2 rounded-full border border-brand-cyan/30 bg-brand-cyan/10 mb-8">
+        <div className={`text-center mb-16 transition-all duration-1000 transform ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+          <div className="inline-flex items-center gap-3 px-6 py-2 rounded-full border border-brand-cyan/30 bg-brand-cyan/10 mb-6">
             <Handshake size={14} className="text-brand-cyan" />
             <span className="text-[10px] uppercase tracking-[0.4em] text-brand-cyan font-black">Réseau & Confiance</span>
           </div>
-          <h2 className="font-sans font-black text-4xl lg:text-6xl text-brand-dark dark:text-white tracking-tighter uppercase mb-6">
+          <h2 className="font-sans font-black text-4xl lg:text-6xl text-brand-dark dark:text-white tracking-tighter uppercase mb-4">
             NOS <span className="gradient-text italic">PARTENAIRES</span>
           </h2>
           <div className="h-1 w-24 bg-gradient-to-r from-brand-cyan via-brand-magenta to-brand-orange mx-auto rounded-full opacity-50"></div>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-8 lg:gap-12 items-center justify-items-center">
+        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-6 lg:gap-8 items-center justify-items-center">
           {ASSETS.PARTNERS.map((logoUrl, index) => (
             <div 
               key={index} 
               className={`
-                group relative w-full aspect-square max-w-[160px] flex items-center justify-center 
+                group relative w-full aspect-square max-w-[140px] flex items-center justify-center 
                 bg-white border-2 border-white
                 rounded-[2.5rem] p-6 transition-all duration-700 hover:border-brand-magenta/40 
                 shadow-xl hover:shadow-2xl transform hover:-translate-y-2

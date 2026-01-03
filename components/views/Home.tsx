@@ -40,7 +40,7 @@ const Home: React.FC<HomeProps> = ({ onNavigate }) => {
           <Contact onNavigate={onNavigate} />
       </div>
 
-      <footer className="border-t border-black/5 dark:border-white/10 bg-white dark:bg-brand-dark py-32 px-12 transition-colors duration-500">
+      <footer className="border-t border-black/5 dark:border-white/10 bg-white dark:bg-brand-dark py-16 px-12 transition-colors duration-500">
         <div className="max-w-[1400px] mx-auto flex flex-col lg:flex-row justify-between items-center gap-16">
            <div className="flex flex-col items-center lg:items-start gap-4">
              <div className="flex items-center gap-8">

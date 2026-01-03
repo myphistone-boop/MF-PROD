@@ -28,13 +28,13 @@ const UpcomingShows: React.FC = () => {
   };
 
   return (
-    <section className="py-24 lg:py-32 relative dark:bg-brand-dark transition-colors duration-500 overflow-hidden">
+    <section className="py-16 lg:py-24 relative dark:bg-brand-dark transition-colors duration-500 overflow-hidden">
       {/* Background Decor */}
       <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-brand-magenta/5 rounded-full blur-[120px] pointer-events-none" />
       <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-brand-cyan/5 rounded-full blur-[120px] pointer-events-none" />
 
       <div className="max-w-[1400px] mx-auto relative z-10">
-        <div className={`text-center mb-12 lg:mb-16 transition-all duration-1000 transform ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+        <div className={`text-center mb-10 lg:mb-12 transition-all duration-1000 transform ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
           <div className="inline-flex items-center gap-3 px-6 py-3 rounded-full border-2 border-brand-orange/50 bg-brand-orange/5 dark:bg-gradient-to-r dark:from-brand-magenta/20 dark:to-brand-orange/20 mb-8 shadow-xl dark:shadow-[0_0_30px_rgba(255,138,0,0.2)] animate-breathe">
             <Calendar size={18} className="text-brand-orange" />
             <span className="text-xs lg:text-sm uppercase tracking-[0.4em] text-brand-dark dark:text-white font-black">Saison 2026</span>
@@ -67,7 +67,7 @@ const UpcomingShows: React.FC = () => {
 
           <div 
             ref={scrollRef}
-            className="flex overflow-x-auto pb-12 pt-4 gap-8 lg:gap-10 no-scrollbar snap-x snap-mandatory items-start px-6 lg:px-12 scroll-px-6 lg:scroll-px-12"
+            className="flex overflow-x-auto pb-8 pt-4 gap-8 lg:gap-10 no-scrollbar snap-x snap-mandatory items-start px-6 lg:px-12 scroll-px-6 lg:scroll-px-12"
           >
             {shows.map((show, index) => (
               <div 

@@ -177,7 +177,7 @@ const Gallery: React.FC<GalleryProps> = ({ onNavigate }) => {
                                     </div>
                                 </div>
                                 
-                                {/* Etiquette Date - Enlarger size as requested */}
+                                {/* Etiquette Date */}
                                 <div className="mt-8 px-2">
                                     <div className="inline-block px-6 py-2 rounded-full bg-brand-magenta/10 border border-brand-magenta/20 text-[11px] font-black text-brand-magenta uppercase tracking-[0.2em] mb-4">
                                         {event.date.split(' 20')[0]}
@@ -197,46 +197,54 @@ const Gallery: React.FC<GalleryProps> = ({ onNavigate }) => {
         </div>
       </div>
 
-      {/* Lightbox */}
+      {/* Lightbox - Fixed Positioning and Scaling */}
       {selectedImg !== null && (
         <div 
-          className="fixed inset-0 z-[100] bg-brand-dark/98 backdrop-blur-2xl flex items-center justify-center p-4 lg:p-12 animate-fade-in-up"
+          className="fixed inset-0 z-[100] bg-brand-dark/98 backdrop-blur-2xl flex flex-col items-center justify-center p-4 lg:p-10 animate-fade-in-up"
           onClick={closeLightbox}
         >
           <button 
-            className="absolute top-8 right-8 w-14 h-14 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-brand-magenta transition-colors shadow-2xl"
+            className="absolute top-6 right-6 lg:top-10 lg:right-10 w-12 h-12 lg:w-14 lg:h-14 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-brand-magenta transition-all z-[110] shadow-2xl active:scale-90"
             onClick={closeLightbox}
           >
-            <X size={32} />
+            <X size={28} />
           </button>
 
           <button 
-            className="absolute left-8 top-1/2 -translate-y-1/2 w-16 h-16 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white hover:bg-brand-magenta transition-colors z-20 shadow-2xl"
+            className="absolute left-4 lg:left-8 top-1/2 -translate-y-1/2 w-12 h-12 lg:w-16 lg:h-16 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white hover:bg-brand-magenta transition-all z-[110] shadow-2xl active:scale-90"
             onClick={prevImg}
           >
-            <ChevronLeft size={40} />
+            <ChevronLeft size={32} />
           </button>
 
           <button 
-            className="absolute right-8 top-1/2 -translate-y-1/2 w-16 h-16 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white hover:bg-brand-magenta transition-colors z-20 shadow-2xl"
+            className="absolute right-4 lg:right-8 top-1/2 -translate-y-1/2 w-12 h-12 lg:w-16 lg:h-16 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white hover:bg-brand-magenta transition-all z-[110] shadow-2xl active:scale-90"
             onClick={nextImg}
           >
-            <ChevronRight size={40} />
+            <ChevronRight size={32} />
           </button>
 
-          <div className="relative max-w-5xl max-h-[85vh] group" onClick={e => e.stopPropagation()}>
-            <img 
-              src={historicalEvents[selectedImg].url} 
-              className="w-full h-full object-contain rounded-3xl shadow-[0_40px_100px_rgba(0,0,0,0.8)] border border-white/10"
-              alt="Fullscreen view"
-            />
+          <div 
+            className="relative w-full h-full flex flex-col items-center justify-center max-w-[90vw] max-h-[85vh] lg:max-h-[75vh]" 
+            onClick={e => e.stopPropagation()}
+          >
+            <div className="relative h-full w-full flex items-center justify-center">
+                <img 
+                  src={historicalEvents[selectedImg].url} 
+                  className="max-w-full max-h-full object-contain rounded-2xl shadow-[0_50px_100px_rgba(0,0,0,0.9)] border border-white/10"
+                  alt="Fullscreen view"
+                />
+            </div>
             
-            <div className="absolute -bottom-20 left-0 right-0 flex justify-between items-center text-white/60 text-xs font-black uppercase tracking-widest px-4">
-               <div className="flex flex-col gap-2">
-                <span className="text-brand-cyan text-sm tracking-[0.3em]">{historicalEvents[selectedImg].date}</span>
-                <span className="text-white text-2xl tracking-tighter uppercase">{historicalEvents[selectedImg].title}</span>
+            <div className="w-full max-w-4xl mt-8 lg:mt-12 px-6 flex flex-col lg:flex-row justify-between items-center lg:items-end gap-6">
+               <div className="flex flex-col items-center lg:items-start gap-2">
+                <span className="text-brand-cyan text-sm lg:text-base font-black tracking-[0.3em] uppercase">{historicalEvents[selectedImg].date}</span>
+                <span className="text-white text-3xl lg:text-5xl font-black tracking-tighter uppercase text-center lg:text-left leading-none">{historicalEvents[selectedImg].title}</span>
                </div>
-               <span className="bg-white/10 px-4 py-2 rounded-full">{selectedImg + 1} / {historicalEvents.length}</span>
+               <div className="flex items-center gap-6">
+                 <span className="text-brand-dark/40 dark:text-white/40 uppercase tracking-widest text-[10px] font-black">{historicalEvents[selectedImg].type}</span>
+                 <span className="bg-brand-magenta/20 text-brand-magenta border border-brand-magenta/30 px-6 py-2 rounded-full text-xs font-black">{selectedImg + 1} / {historicalEvents.length}</span>
+               </div>
             </div>
           </div>
         </div>

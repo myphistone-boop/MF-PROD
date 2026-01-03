@@ -19,31 +19,31 @@ const NowPlaying: React.FC<NowPlayingProps> = ({ onNavigate }) => {
   }, []);
 
   return (
-    <section className="relative py-24 lg:py-32 bg-brand-light dark:bg-brand-dark transition-colors duration-500 overflow-hidden">
+    <section className="relative pt-4 pb-12 lg:pt-6 lg:pb-20 bg-brand-light dark:bg-brand-dark transition-colors duration-500 overflow-hidden">
       <div className="absolute top-1/2 right-0 w-[600px] h-[600px] bg-brand-magenta/5 rounded-full blur-[120px] pointer-events-none -translate-y-1/2 opacity-50" />
       
       <div className="max-w-[1400px] mx-auto px-6 lg:px-12 relative z-10">
         <div className={`flex flex-col lg:flex-row gap-12 lg:gap-20 items-center transition-all duration-1000 transform ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
           
           <div className="w-full lg:w-2/5 order-1">
-            <div className="relative p-10 lg:p-14 bg-white dark:bg-brand-dark-soft border border-black/5 dark:border-white/10 rounded-[3.5rem] shadow-2xl transition-all duration-500 hover:border-brand-magenta/30 group">
+            <div className="relative p-8 lg:p-12 bg-white dark:bg-brand-dark-soft border border-black/5 dark:border-white/10 rounded-[3.5rem] shadow-2xl transition-all duration-500 hover:border-brand-magenta/30 group">
               <div className="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-brand-cyan via-brand-magenta to-brand-orange rounded-t-full"></div>
               
-              <div className="mb-10">
-                <div className="inline-flex items-center gap-3 px-5 py-2 rounded-full border border-brand-magenta/30 bg-brand-magenta/10 mb-8">
+              <div className="mb-8">
+                <div className="inline-flex items-center gap-3 px-5 py-2 rounded-full border border-brand-magenta/30 bg-brand-magenta/10 mb-6">
                   <Sparkles size={14} className="text-brand-magenta animate-pulse" />
                   <span className="text-[10px] uppercase tracking-[0.4em] text-brand-magenta font-black">Actuellement à l'affiche</span>
                 </div>
                 
-                <h2 className="font-sans font-black text-5xl lg:text-7xl text-brand-dark dark:text-white leading-[0.85] tracking-tighter mb-8 uppercase">
+                <h2 className="font-sans font-black text-5xl lg:text-7xl text-brand-dark dark:text-white leading-[0.85] tracking-tighter mb-6 uppercase">
                   SUPER<br/><span className="gradient-text italic">STARS</span>
                 </h2>
                 
-                <p className="text-lg lg:text-xl text-brand-dark/60 dark:text-brand-light/60 font-light leading-relaxed mb-10">
+                <p className="text-lg lg:text-xl text-brand-dark/60 dark:text-brand-light/60 font-light leading-relaxed mb-8">
                   Le spectacle événement qui redéfinit les codes de la scène. Une immersion totale rendant hommage aux plus grandes icônes mondiales.
                 </p>
                 
-                <div className="space-y-4 mb-12">
+                <div className="space-y-4 mb-10">
                    <div className="flex items-center gap-4 text-brand-dark/40 dark:text-white/40">
                       <div className="w-8 h-8 rounded-full bg-brand-cyan/10 flex items-center justify-center text-brand-cyan">
                         <Zap size={16} />
@@ -67,7 +67,7 @@ const NowPlaying: React.FC<NowPlayingProps> = ({ onNavigate }) => {
                 </Button>
               </div>
               
-              <div className="flex items-center justify-between pt-8 border-t border-black/5 dark:border-white/5">
+              <div className="flex items-center justify-between pt-6 border-t border-black/5 dark:border-white/5">
                 <span className="text-[9px] uppercase tracking-[0.4em] text-brand-dark/20 dark:text-white/20 font-black">
                   PROD EXCLUSIVE MF PROD
                 </span>
