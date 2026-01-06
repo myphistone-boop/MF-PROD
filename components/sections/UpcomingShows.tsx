@@ -2,9 +2,11 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { ASSETS } from '../../assets';
 import { Calendar, Sparkles, ChevronRight, ChevronLeft } from 'lucide-react';
+import { usePerformanceMode } from '../../hooks/usePerformanceMode';
 
 const UpcomingShows: React.FC = () => {
   const [mounted, setMounted] = useState(false);
+  const { isMobile } = usePerformanceMode();
   const scrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -16,7 +18,6 @@ const UpcomingShows: React.FC = () => {
   const scroll = (direction: 'left' | 'right') => {
     if (scrollRef.current) {
       const { scrollLeft, clientWidth } = scrollRef.current;
-      // On ajuste le pas de scroll pour correspondre approximativement à la largeur d'un item + gap
       const step = window.innerWidth < 1024 ? 284 : clientWidth * 0.6;
       const scrollTo = direction === 'left' 
         ? scrollLeft - step
@@ -29,6 +30,8 @@ const UpcomingShows: React.FC = () => {
     }
   };
 
+  const sectionVisibility = (isMobile || mounted) ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10';
+
   return (
     <section className="py-16 lg:py-24 relative dark:bg-brand-dark transition-colors duration-500 overflow-hidden">
       {/* Background Decor */}
@@ -36,7 +39,7 @@ const UpcomingShows: React.FC = () => {
       <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-brand-cyan/5 rounded-full blur-[120px] pointer-events-none" />
 
       <div className="max-w-[1400px] mx-auto relative z-10">
-        <div className={`text-center mb-10 lg:mb-12 transition-all duration-1000 transform ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+        <div className={`text-center mb-10 lg:mb-12 transition-all duration-1000 transform ${sectionVisibility}`}>
           <div className="inline-flex items-center gap-3 px-6 py-3 rounded-full border-2 border-brand-orange/50 bg-brand-orange/5 dark:bg-gradient-to-r dark:from-brand-magenta/20 dark:to-brand-orange/20 mb-8 shadow-xl dark:shadow-[0_0_30px_rgba(255,138,0,0.2)] animate-breathe">
             <Calendar size={18} className="text-brand-orange" />
             <span className="text-xs lg:text-sm uppercase tracking-[0.4em] text-brand-dark dark:text-white font-black">Saison 2026</span>
@@ -50,7 +53,6 @@ const UpcomingShows: React.FC = () => {
         {/* Slider Navigation & Container */}
         <div className="relative group/slider">
           
-          {/* Custom Arrows - Visible on mobile to guide user */}
           <button 
             onClick={() => scroll('left')}
             className="absolute left-2 md:left-4 top-[40%] -translate-y-1/2 z-30 w-10 h-10 md:w-14 md:h-14 rounded-full bg-white/80 dark:bg-brand-dark-soft/80 border border-black/10 dark:border-white/20 text-brand-dark dark:text-white flex items-center justify-center backdrop-blur-xl transition-all duration-300 hover:bg-brand-magenta hover:text-white hover:border-brand-magenta hover:scale-110 shadow-2xl flex"
@@ -74,8 +76,8 @@ const UpcomingShows: React.FC = () => {
             {shows.map((show, index) => (
               <div 
                 key={index}
-                className={`flex-shrink-0 w-[260px] sm:w-[300px] lg:w-[340px] snap-center flex flex-col items-center transition-all duration-700 ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'}`}
-                style={{ transitionDelay: `${index * 150}ms` }}
+                className={`flex-shrink-0 w-[260px] sm:w-[300px] lg:w-[340px] snap-center flex flex-col items-center transition-all duration-700 ${(isMobile || mounted) ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'}`}
+                style={{ transitionDelay: isMobile ? '0ms' : `${index * 150}ms` }}
               >
                 {/* 1. TOP BADGE - OUTSIDE IMAGE */}
                 <div className="mb-6 flex items-center gap-3 px-4 py-2 rounded-full border border-brand-magenta/30 bg-brand-magenta/5 dark:bg-brand-magenta/10 shadow-lg dark:shadow-[0_0_15px_rgba(255,0,122,0.1)]">
@@ -91,6 +93,7 @@ const UpcomingShows: React.FC = () => {
                     src={show.url} 
                     alt={show.title} 
                     className="w-full h-full object-cover transform scale-100 group-hover/card:scale-110 transition-transform duration-[2s] ease-out"
+                    loading={isMobile ? "eager" : "lazy"}
                   />
                 </div>
 

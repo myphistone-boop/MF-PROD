@@ -4,6 +4,7 @@ import Orrery from '../Orrery';
 import { Button } from '../ui/Button';
 import { Zap } from 'lucide-react';
 import { View } from '../../types';
+import { usePerformanceMode } from '../../hooks/usePerformanceMode';
 
 interface HeroProps {
   onNavigate: (view: View) => void;
@@ -11,6 +12,7 @@ interface HeroProps {
 
 const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
   const [mounted, setMounted] = useState(false);
+  const { isMobile } = usePerformanceMode();
 
   useEffect(() => {
     setMounted(true);
@@ -23,6 +25,8 @@ const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
     }
   };
 
+  const visibilityClass = (isMobile || mounted) ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-10';
+
   return (
     <section className="min-h-[50vh] lg:min-h-[75vh] w-full flex flex-col lg:flex-row items-center relative overflow-hidden pt-24 lg:pt-10 pb-12 lg:pb-0 px-6 md:px-12 lg:px-24">
         
@@ -30,7 +34,7 @@ const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
         <div className={`
             flex-1 w-full flex flex-col justify-start lg:justify-center items-start z-20 
             transition-all duration-1000 ease-out transform
-            ${mounted ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-10'}
+            ${visibilityClass}
           `}>
           
           <div className="inline-flex items-center gap-3 px-4 py-1.5 rounded-full border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 mb-3 lg:mb-6 shadow-xl">
@@ -62,7 +66,7 @@ const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
             hidden lg:flex lg:flex-1 w-full items-center justify-center relative z-10 
             lg:order-2
             transition-all duration-1000 delay-300 ease-out transform
-            ${mounted ? 'opacity-100 scale-100' : 'opacity-0 lg:scale-95'}
+            ${(isMobile || mounted) ? 'opacity-100 scale-100' : 'opacity-0 lg:scale-95'}
           `}>
           <div className="transform lg:scale-[0.8] xl:scale-[0.9] transition-transform duration-[2s] lg:hover:scale-95 flex items-center justify-center pointer-events-none">
              <Orrery />

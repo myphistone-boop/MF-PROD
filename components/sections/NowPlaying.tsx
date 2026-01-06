@@ -13,14 +13,16 @@ const NowPlaying: React.FC<NowPlayingProps> = ({ onNavigate }) => {
   const [mounted, setMounted] = useState(false);
   const { isLowPerf, isMobile } = usePerformanceMode();
   
+  // URL GCS Superstar pour l'affiche fixe
+  const posterUrl = "https://storage.googleapis.com/novelec_assets/MF%20PROD/SPETACLES/affiche__superstars-1-768x1086.webp";
   const videoUrl = "https://storage.googleapis.com/novelec_assets/MF%20PROD/SUPERSTAR-VIDEO-ACCUEIL.mp4";
-  const posterUrl = "https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?auto=format&fit=crop&w=1200&q=80";
 
   useEffect(() => {
     setMounted(true);
   }, []);
 
-  // On n'affiche la vidéo que si on n'est pas sur mobile ET que la connexion est bonne
+  // Sur mobile, on ne veut JAMAIS de délai d'apparition
+  const visibilityClass = (isMobile || mounted) ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10';
   const shouldShowVideo = !isMobile && !isLowPerf;
 
   return (
@@ -28,7 +30,7 @@ const NowPlaying: React.FC<NowPlayingProps> = ({ onNavigate }) => {
       <div className="absolute top-1/2 right-0 w-[600px] h-[600px] bg-brand-magenta/5 rounded-full blur-[120px] pointer-events-none -translate-y-1/2 opacity-50" />
       
       <div className="max-w-[1400px] mx-auto px-6 lg:px-12 relative z-10">
-        <div className={`flex flex-col lg:flex-row gap-8 lg:gap-20 items-center transition-all duration-1000 transform ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+        <div className={`flex flex-col lg:flex-row gap-8 lg:gap-20 items-center transition-all duration-1000 transform ${visibilityClass}`}>
           
           {/* Texte - Masqué sur Mobile */}
           <div className="w-full lg:w-2/5 order-2 lg:order-1 hidden lg:block">
@@ -78,7 +80,7 @@ const NowPlaying: React.FC<NowPlayingProps> = ({ onNavigate }) => {
           {/* Média : Vidéo (PC Haute Perf) ou Image (Mobile/Basse Perf) */}
           <div className="w-full lg:w-3/5 order-1 lg:order-2">
             <div 
-              onClick={() => window.innerWidth < 1024 && onNavigate(View.PRODUCTION_SPECTACLES, { sectionId: 'superstars' })}
+              onClick={() => isMobile && onNavigate(View.PRODUCTION_SPECTACLES, { sectionId: 'superstars' })}
               className="relative rounded-[2rem] lg:rounded-[4rem] overflow-hidden border-4 border-white dark:border-brand-dark-soft shadow-2xl aspect-video bg-black cursor-pointer lg:cursor-default"
             >
               {shouldShowVideo ? (
@@ -86,7 +88,7 @@ const NowPlaying: React.FC<NowPlayingProps> = ({ onNavigate }) => {
                   <source src={videoUrl} type="video/mp4" />
                 </video>
               ) : (
-                <img src={posterUrl} className="w-full h-full object-cover" alt="Superstars" />
+                <img src={posterUrl} className="w-full h-full object-cover" alt="Superstars" loading="eager" />
               )}
               
               <div className="absolute top-4 left-4 lg:top-8 lg:left-8 z-20 flex items-center gap-2 px-3 py-1.5 rounded-full backdrop-blur-xl bg-brand-dark/30 border border-white/20">
@@ -96,10 +98,12 @@ const NowPlaying: React.FC<NowPlayingProps> = ({ onNavigate }) => {
                 </span>
               </div>
               
-              <div className="lg:hidden absolute bottom-4 left-4 right-4 z-20 bg-brand-magenta/90 text-white p-3 rounded-xl flex items-center justify-between">
-                 <span className="text-[10px] font-black uppercase tracking-widest">En savoir plus</span>
-                 <ArrowRight size={14} />
-              </div>
+              {isMobile && (
+                <div className="absolute bottom-4 left-4 right-4 z-20 bg-brand-magenta/90 text-white p-3 rounded-xl flex items-center justify-between">
+                   <span className="text-[10px] font-black uppercase tracking-widest">En savoir plus</span>
+                   <ArrowRight size={14} />
+                </div>
+              )}
             </div>
           </div>
         </div>
