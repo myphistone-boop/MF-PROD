@@ -29,7 +29,7 @@ const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
         {/* Text Content */}
         <div className={`
             flex-1 w-full flex flex-col justify-center items-start z-20 
-            order-2 lg:order-1 mt-[-30px] lg:mt-0
+            order-2 lg:order-1 mt-[-20px] lg:mt-0
             transition-all duration-1000 ease-out transform
             ${mounted ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-10'}
           `}>
@@ -58,14 +58,14 @@ const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
           </div>
         </div>
 
-        {/* Visual Content (Orrery) - Slight zoom and margin adjustment on mobile */}
+        {/* Visual Content (Orrery) */}
         <div className={`
-            flex-none h-[25vh] lg:h-auto lg:flex-1 w-full flex items-center justify-center relative z-10 
-            order-1 lg:order-2 mt-8 lg:mt-0
+            flex-none h-[280px] lg:h-auto lg:flex-1 w-full flex items-center justify-center relative z-10 
+            order-1 lg:order-2 mt-4 lg:mt-0
             transition-all duration-1000 delay-300 ease-out transform
             ${mounted ? 'opacity-100 scale-100' : 'opacity-0 lg:scale-95'}
           `}>
-          <div className="transform scale-[0.22] lg:scale-[0.8] xl:scale-[0.9] transition-transform duration-[2s] lg:hover:scale-95 flex items-center justify-center pointer-events-none">
+          <div className="lg:scale-[0.8] xl:scale-[0.9] transition-transform duration-[2s] lg:hover:scale-95 flex items-center justify-center pointer-events-none">
              <Orrery />
           </div>
         </div>
