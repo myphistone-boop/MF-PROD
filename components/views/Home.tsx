@@ -16,7 +16,7 @@ interface HomeProps {
 
 const Home: React.FC<HomeProps> = ({ onNavigate }) => {
   return (
-    <div className="w-full relative bg-brand-light dark:bg-brand-dark transition-colors duration-500 will-change-transform">
+    <div className="w-full relative bg-brand-light dark:bg-brand-dark transition-colors duration-500">
       <Hero onNavigate={onNavigate} />
       
       {/* Section À l'affiche - Vidéo & Focus Superstar */}
@@ -40,25 +40,25 @@ const Home: React.FC<HomeProps> = ({ onNavigate }) => {
           <Contact onNavigate={onNavigate} />
       </div>
 
-      <footer className="border-t border-black/5 dark:border-white/10 bg-white dark:bg-brand-dark py-12 px-6 lg:py-16 lg:px-12 transition-colors duration-500">
-        <div className="max-w-[1400px] mx-auto flex flex-col lg:flex-row justify-between items-center gap-12 lg:gap-16">
+      <footer className="border-t border-black/5 dark:border-white/10 bg-white dark:bg-brand-dark py-16 px-12 transition-colors duration-500">
+        <div className="max-w-[1400px] mx-auto flex flex-col lg:flex-row justify-between items-center gap-16">
            <div className="flex flex-col items-center lg:items-start gap-4">
-             <div className="flex items-center gap-6 lg:gap-8">
-               <img src={LOGO_URL} className="w-12 h-12 lg:w-16 lg:h-16" alt="logo" />
-               <span className="font-sans font-black tracking-tighter text-brand-dark dark:text-white text-2xl lg:text-3xl uppercase">MF <span className="text-brand-cyan">PROD</span></span>
+             <div className="flex items-center gap-8">
+               <img src={LOGO_URL} className="w-16 h-16" alt="logo" />
+               <span className="font-sans font-black tracking-tighter text-brand-dark dark:text-white text-3xl uppercase">MF <span className="text-brand-cyan">PROD</span></span>
              </div>
-             <span className="text-[9px] lg:text-[10px] text-brand-dark/30 dark:text-white/30 uppercase tracking-[0.3em] font-black font-sans mt-2">© 2025 MF PROD – TOUS DROITS RÉSERVÉS</span>
+             <span className="text-[10px] text-brand-dark/30 dark:text-white/30 uppercase tracking-[0.3em] font-black font-sans mt-4">© 2025 MF PROD – TOUS DROITS RÉSERVÉS</span>
            </div>
            
-           <div className="flex flex-wrap justify-center gap-6 lg:gap-20">
-             <span onClick={() => onNavigate(View.SERVICES)} className="text-[10px] lg:text-xs uppercase tracking-[0.3em] text-brand-dark/50 dark:text-white/50 hover:text-brand-magenta cursor-pointer transition-colors font-black">Prestations</span>
-             <span onClick={() => onNavigate(View.SPECTACLES)} className="text-[10px] lg:text-xs uppercase tracking-[0.3em] text-brand-dark/50 dark:text-white/50 hover:text-brand-magenta cursor-pointer transition-colors font-black">Spectacles</span>
-             <span className="text-[10px] lg:text-xs uppercase tracking-[0.3em] text-brand-dark/50 dark:text-white/50 hover:text-brand-magenta cursor-pointer transition-colors font-black">Mentions Légales</span>
+           <div className="flex flex-wrap justify-center gap-10 lg:gap-20">
+             <span onClick={() => onNavigate(View.SERVICES)} className="text-xs uppercase tracking-[0.3em] text-brand-dark/50 dark:text-white/50 hover:text-brand-magenta cursor-pointer transition-colors font-black">Prestations</span>
+             <span onClick={() => onNavigate(View.SPECTACLES)} className="text-xs uppercase tracking-[0.3em] text-brand-dark/50 dark:text-white/50 hover:text-brand-magenta cursor-pointer transition-colors font-black">Spectacles</span>
+             <span className="text-xs uppercase tracking-[0.3em] text-brand-dark/50 dark:text-white/50 hover:text-brand-magenta cursor-pointer transition-colors font-black">Mentions Légales</span>
            </div>
 
            <div className="text-center lg:text-right">
-             <span className="text-[9px] uppercase tracking-widest text-brand-dark/20 dark:text-white/20 block mb-1 font-black">WEBDESIGNER</span>
-             <span className="text-xs lg:text-sm text-brand-cyan/60 font-black tracking-tight">Damien Devaux – devauxdamien@orange.fr</span>
+             <span className="text-[10px] uppercase tracking-widest text-brand-dark/20 dark:text-white/20 block mb-2 font-black">WEBDESIGNER</span>
+             <span className="text-sm text-brand-cyan/60 font-black tracking-tight">Damien Devaux – devauxdamien@orange.fr</span>
            </div>
         </div>
       </footer>
