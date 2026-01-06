@@ -55,9 +55,10 @@ const ProductionSpectacles: React.FC<Props> = ({ onNavigate }) => {
     const scroll = (direction: 'left' | 'right') => {
         if (scrollRef.current) {
             const { scrollLeft, clientWidth } = scrollRef.current;
+            const step = window.innerWidth < 1024 ? 304 : clientWidth * 0.6;
             const scrollTo = direction === 'left' 
-                ? scrollLeft - clientWidth * 0.6 
-                : scrollLeft + clientWidth * 0.6;
+                ? scrollLeft - step
+                : scrollLeft + step;
             
             scrollRef.current.scrollTo({
                 left: scrollTo,
@@ -123,7 +124,7 @@ const ProductionSpectacles: React.FC<Props> = ({ onNavigate }) => {
             duration: "2 H 15",
             artists: "Troupe Disco MF",
             desc: "Le retour du Disco. Boules à facettes, pattes d'éph' et rythmes endiablés pour une soirée 100% paillettes et énergie communicative.",
-            details: "Interactivité maximale avec le public. Les plus grands hits Earth, Wind & Fire, Chic et bien d'autres.",
+            details: "Interactivité maximale avec le public. Les plus grands hits Earth, Wind & Fire, Chic et bien d'others.",
             image: ASSETS.SHOWS_2026.find(s => s.id === "boogie")?.url || "",
             tag: "PRODUCTION 2026",
             color: "brand-magenta"
@@ -381,13 +382,13 @@ const ProductionSpectacles: React.FC<Props> = ({ onNavigate }) => {
 
                         <div 
                             ref={scrollRef}
-                            className="flex overflow-x-auto pb-12 pt-4 gap-8 lg:gap-10 no-scrollbar snap-x snap-mandatory scroll-smooth px-2"
+                            className="flex overflow-x-auto pb-12 pt-4 gap-6 lg:gap-10 no-scrollbar snap-x snap-mandatory scroll-smooth px-[calc(50%-140px)] lg:px-2 scroll-px-[calc(50%-140px)] lg:scroll-px-2"
                         >
                             {upcomingShows.map((show, i) => (
                                 <div 
                                     key={i}
                                     onClick={() => scrollToSection(show.id)}
-                                    className="flex-shrink-0 w-[280px] lg:w-[380px] snap-start flex flex-col items-center group cursor-pointer"
+                                    className="flex-shrink-0 w-[280px] lg:w-[380px] snap-center lg:snap-start flex flex-col items-center group cursor-pointer"
                                 >
                                     <div className="mb-6 flex items-center gap-3 px-4 py-2 rounded-full border border-brand-magenta/30 bg-brand-magenta/5 dark:bg-brand-magenta/10 shadow-lg animate-breathe">
                                     <Sparkles size={12} className="text-brand-magenta" />

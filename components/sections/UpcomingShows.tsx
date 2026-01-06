@@ -16,9 +16,11 @@ const UpcomingShows: React.FC = () => {
   const scroll = (direction: 'left' | 'right') => {
     if (scrollRef.current) {
       const { scrollLeft, clientWidth } = scrollRef.current;
+      // On ajuste le pas de scroll pour correspondre approximativement à la largeur d'un item + gap
+      const step = window.innerWidth < 1024 ? 284 : clientWidth * 0.6;
       const scrollTo = direction === 'left' 
-        ? scrollLeft - clientWidth * 0.6 
-        : scrollLeft + clientWidth * 0.6;
+        ? scrollLeft - step
+        : scrollLeft + step;
       
       scrollRef.current.scrollTo({
         left: scrollTo,
@@ -67,12 +69,12 @@ const UpcomingShows: React.FC = () => {
 
           <div 
             ref={scrollRef}
-            className="flex overflow-x-auto pb-8 pt-4 gap-8 lg:gap-10 no-scrollbar snap-x snap-mandatory items-start px-6 lg:px-12 scroll-px-6 lg:scroll-px-12"
+            className="flex overflow-x-auto pb-8 pt-4 gap-6 lg:gap-10 no-scrollbar snap-x snap-mandatory items-start px-[calc(50%-130px)] lg:px-12 scroll-px-[calc(50%-130px)] lg:scroll-px-12"
           >
             {shows.map((show, index) => (
               <div 
                 key={index}
-                className={`flex-shrink-0 w-[260px] sm:w-[300px] lg:w-[340px] snap-start flex flex-col items-center transition-all duration-700 ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'}`}
+                className={`flex-shrink-0 w-[260px] sm:w-[300px] lg:w-[340px] snap-center flex flex-col items-center transition-all duration-700 ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'}`}
                 style={{ transitionDelay: `${index * 150}ms` }}
               >
                 {/* 1. TOP BADGE - OUTSIDE IMAGE */}
