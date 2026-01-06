@@ -7,16 +7,24 @@ import {
   Zap, ArrowLeft, Star, Users, Clock, Camera, 
   Sparkles, ChevronRight, UserPlus, MapPin,
   MousePointer2, ChevronLeft, Calendar, 
-  Image as ImageIcon, History
+  ImageIcon, History, ChevronDown
 } from 'lucide-react';
 
 interface Props { onNavigate: (view: View, context?: BookingContext) => void; }
 
 const ProductionSpectacles: React.FC<Props> = ({ onNavigate }) => {
     const [mounted, setMounted] = useState(false);
+    const [expandedShows, setExpandedShows] = useState<Set<string>>(new Set());
     const scrollRef = useRef<HTMLDivElement>(null);
     
     useEffect(() => { setMounted(true); window.scrollTo(0, 0); }, []);
+
+    const toggleExpand = (id: string) => {
+        const next = new Set(expandedShows);
+        if (next.has(id)) next.delete(id);
+        else next.add(id);
+        setExpandedShows(next);
+    };
 
     const SHOW_ASSET_BASE = "https://storage.googleapis.com/novelec_assets/MF%20PROD/SPETACLES/";
     const getShowAsset = (name: string) => `${SHOW_ASSET_BASE}${encodeURIComponent(name)}`;
@@ -345,46 +353,61 @@ const ProductionSpectacles: React.FC<Props> = ({ onNavigate }) => {
                 </div>
 
                 {/* --- SECTION 1: LE CARROUSSEL 2026 --- */}
-                <section className="mb-48">
-                    <div className="flex items-center justify-between mb-16 px-4">
+                <section className="mb-48 relative">
+                    <div className="flex items-center justify-between mb-8 lg:mb-16 px-4">
                         <div className="flex items-center gap-6">
-                            <h2 className="text-xs font-black uppercase tracking-[0.6em] text-brand-cyan">SAISON 2026 - LES PROCHAINES PRODUCTIONS</h2>
+                            <h2 className="text-xs font-black uppercase tracking-[0.3em] lg:tracking-[0.6em] text-brand-cyan">SAISON 2026 - LES PROCHAINES PRODUCTIONS</h2>
                             <div className="h-px w-32 bg-brand-cyan/30 hidden md:block"></div>
-                        </div>
-                        <div className="flex gap-4">
-                            <button onClick={() => scroll('left')} className="w-12 h-12 rounded-full bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/10 flex items-center justify-center hover:bg-brand-magenta hover:text-white transition-all shadow-lg"><ChevronLeft size={20} /></button>
-                            <button onClick={() => scroll('right')} className="w-12 h-12 rounded-full bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/10 flex items-center justify-center hover:bg-brand-magenta hover:text-white transition-all shadow-lg"><ChevronRight size={20} /></button>
                         </div>
                     </div>
 
-                    <div 
-                        ref={scrollRef}
-                        className="flex overflow-x-auto pb-12 pt-4 gap-8 lg:gap-10 no-scrollbar snap-x snap-mandatory scroll-smooth"
-                    >
-                        {upcomingShows.map((show, i) => (
-                            <div 
-                                key={i}
-                                onClick={() => scrollToSection(show.id)}
-                                className="flex-shrink-0 w-[280px] lg:w-[380px] snap-start flex flex-col items-center group cursor-pointer"
-                            >
-                                <div className="mb-6 flex items-center gap-3 px-4 py-2 rounded-full border border-brand-magenta/30 bg-brand-magenta/5 dark:bg-brand-magenta/10 shadow-lg animate-breathe">
-                                   <Sparkles size={12} className="text-brand-magenta" />
-                                   <span className="text-[10px] font-black text-brand-dark dark:text-white uppercase tracking-[0.2em]">Saison 2026</span>
-                                </div>
+                    <div className="relative group/carousel">
+                        {/* Mobile Arrows - Positioned at sides of carousel */}
+                        <button 
+                            onClick={() => scroll('left')} 
+                            className="absolute left-2 top-1/2 -translate-y-1/2 z-30 w-12 h-12 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white flex items-center justify-center hover:bg-brand-magenta hover:text-white transition-all shadow-2xl active:scale-90"
+                            aria-label="Spectacle précédent"
+                        >
+                            <ChevronLeft size={24} />
+                        </button>
+                        
+                        <button 
+                            onClick={() => scroll('right')} 
+                            className="absolute right-2 top-1/2 -translate-y-1/2 z-30 w-12 h-12 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white flex items-center justify-center hover:bg-brand-magenta hover:text-white transition-all shadow-2xl active:scale-90"
+                            aria-label="Spectacle suivant"
+                        >
+                            <ChevronRight size={24} />
+                        </button>
 
-                                <div className="relative w-full aspect-[2/3] rounded-[3rem] overflow-hidden border-2 border-black/5 dark:border-white/10 bg-white dark:bg-brand-dark-soft transition-all duration-500 hover:border-brand-magenta/50 shadow-xl group-hover:shadow-[0_30px_60px_-15px_rgba(255,0,122,0.3)]">
-                                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent z-10 opacity-60"></div>
-                                    <img src={show.image} alt={show.title} className="w-full h-full object-cover transform scale-100 group-hover:scale-110 transition-transform duration-[2s] ease-out" />
-                                    <div className="absolute bottom-8 left-8 right-8 text-white z-20">
-                                        <h4 className="text-xl font-black uppercase tracking-tighter leading-tight mb-2 drop-shadow-lg">{show.title}</h4>
-                                        <div className="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                                            <span className="text-[8px] font-black uppercase tracking-widest text-brand-cyan">Cliquer pour détails</span>
-                                            <MousePointer2 size={10} className="text-brand-cyan" />
+                        <div 
+                            ref={scrollRef}
+                            className="flex overflow-x-auto pb-12 pt-4 gap-8 lg:gap-10 no-scrollbar snap-x snap-mandatory scroll-smooth px-2"
+                        >
+                            {upcomingShows.map((show, i) => (
+                                <div 
+                                    key={i}
+                                    onClick={() => scrollToSection(show.id)}
+                                    className="flex-shrink-0 w-[280px] lg:w-[380px] snap-start flex flex-col items-center group cursor-pointer"
+                                >
+                                    <div className="mb-6 flex items-center gap-3 px-4 py-2 rounded-full border border-brand-magenta/30 bg-brand-magenta/5 dark:bg-brand-magenta/10 shadow-lg animate-breathe">
+                                    <Sparkles size={12} className="text-brand-magenta" />
+                                    <span className="text-[10px] font-black text-brand-dark dark:text-white uppercase tracking-[0.2em]">Saison 2026</span>
+                                    </div>
+
+                                    <div className="relative w-full aspect-[2/3] rounded-[3rem] overflow-hidden border-2 border-black/5 dark:border-white/10 bg-white dark:bg-brand-dark-soft transition-all duration-500 hover:border-brand-magenta/50 shadow-xl group-hover:shadow-[0_30px_60px_-15px_rgba(255,0,122,0.3)]">
+                                        <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent z-10 opacity-60"></div>
+                                        <img src={show.image} alt={show.title} className="w-full h-full object-cover transform scale-100 group-hover:scale-110 transition-transform duration-[2s] ease-out" />
+                                        <div className="absolute bottom-8 left-8 right-8 text-white z-20">
+                                            <h4 className="text-xl font-black uppercase tracking-tighter leading-tight mb-2 drop-shadow-lg">{show.title}</h4>
+                                            <div className="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                                                <span className="text-[8px] font-black uppercase tracking-widest text-brand-cyan">Cliquer pour détails</span>
+                                                <MousePointer2 size={10} className="text-brand-cyan" />
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        ))}
+                            ))}
+                        </div>
                     </div>
                 </section>
 
@@ -449,157 +472,171 @@ const ProductionSpectacles: React.FC<Props> = ({ onNavigate }) => {
                         <h2 className="text-xs font-black uppercase tracking-[1em] text-brand-cyan">FOCUS SAISON 2026</h2>
                     </div>
 
-                    {upcomingShows.map((show, i) => (
-                        <div key={i} id={show.id} className="relative scroll-mt-48 group">
-                            <div className="flex items-center gap-6 mb-16">
-                                <span className="text-8xl lg:text-9xl font-black opacity-5 dark:opacity-10 select-none">0{i + 1}</span>
-                                <div className="h-px flex-1 bg-brand-cyan/20"></div>
-                                <span className="text-[10px] font-black uppercase tracking-[0.5em] text-brand-cyan">{show.tag}</span>
-                            </div>
-
-                            <div className={`grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24 items-center ${i % 2 !== 0 ? 'lg:flex-row-reverse' : ''}`}>
-                                <div className={`lg:col-span-5 ${i % 2 !== 0 ? 'lg:order-2' : ''}`}>
-                                    <div className="relative aspect-[2/3] rounded-[4rem] overflow-hidden shadow-2xl border-4 border-white dark:border-brand-dark-soft group-hover:scale-105 transition-transform duration-700 bg-brand-dark-soft">
-                                        <img src={show.image} alt={show.title} className="w-full h-full object-contain" />
-                                        <div className="absolute inset-0 bg-gradient-to-t from-brand-dark/20 to-transparent pointer-events-none"></div>
-                                    </div>
+                    {upcomingShows.map((show, i) => {
+                        const isExpanded = expandedShows.has(show.id);
+                        return (
+                            <div key={i} id={show.id} className="relative scroll-mt-48 group">
+                                <div className="flex items-center gap-6 mb-16">
+                                    <span className="text-8xl lg:text-9xl font-black opacity-5 dark:opacity-10 select-none">0{i + 1}</span>
+                                    <div className="h-px flex-1 bg-brand-cyan/20"></div>
+                                    <span className="text-[10px] font-black uppercase tracking-[0.5em] text-brand-cyan">{show.tag}</span>
                                 </div>
 
-                                <div className={`lg:col-span-7 ${i % 2 !== 0 ? 'lg:order-1' : ''}`}>
-                                    <div className="flex flex-wrap gap-4 mb-10">
-                                        <div className="px-5 py-2 rounded-full bg-brand-cyan text-brand-dark text-[9px] font-black uppercase tracking-widest">EXCLUSIVITÉ 2026</div>
-                                        <div className="px-5 py-2 rounded-full bg-black/5 dark:bg-white/10 text-brand-dark dark:text-white text-[9px] font-black uppercase tracking-widest">DURÉE {show.duration}</div>
-                                        <div className="px-5 py-2 rounded-full bg-black/5 dark:bg-white/10 text-brand-dark dark:text-white text-[9px] font-black uppercase tracking-widest">{show.artists}</div>
+                                <div className={`grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24 items-center ${i % 2 !== 0 ? 'lg:flex-row-reverse' : ''}`}>
+                                    <div className={`lg:col-span-5 ${i % 2 !== 0 ? 'lg:order-2' : ''}`}>
+                                        <div className="relative aspect-[2/3] rounded-[4rem] overflow-hidden shadow-2xl border-4 border-white dark:border-brand-dark-soft group-hover:scale-105 transition-transform duration-700 bg-brand-dark-soft">
+                                            <img src={show.image} alt={show.title} className="w-full h-full object-contain" />
+                                            <div className="absolute inset-0 bg-gradient-to-t from-brand-dark/20 to-transparent pointer-events-none"></div>
+                                        </div>
                                     </div>
 
-                                    <h3 className="text-5xl lg:text-8xl font-black text-brand-dark dark:text-white uppercase tracking-tighter mb-10 leading-none">
-                                        {show.title}
-                                    </h3>
+                                    <div className={`lg:col-span-7 ${i % 2 !== 0 ? 'lg:order-1' : ''}`}>
+                                        <div className="flex flex-wrap gap-4 mb-10">
+                                            <div className="px-5 py-2 rounded-full bg-brand-cyan text-brand-dark text-[9px] font-black uppercase tracking-widest">EXCLUSIVITÉ 2026</div>
+                                            <div className="px-5 py-2 rounded-full bg-black/5 dark:bg-white/10 text-brand-dark dark:text-white text-[9px] font-black uppercase tracking-widest">DURÉE {show.duration}</div>
+                                            <div className="px-5 py-2 rounded-full bg-black/5 dark:bg-white/10 text-brand-dark dark:text-white text-[9px] font-black uppercase tracking-widest">{show.artists}</div>
+                                        </div>
 
-                                    <div className="p-10 lg:p-14 bg-white dark:bg-brand-dark-soft rounded-[3.5rem] border border-black/5 dark:border-white/10 shadow-2xl mb-12">
-                                        <p className="text-xl lg:text-3xl font-light text-brand-dark/70 dark:text-brand-light/80 leading-relaxed mb-8 italic font-serif">
-                                            "{show.desc}"
-                                        </p>
-                                        <p className="text-brand-dark/40 dark:text-brand-light/40 font-light leading-relaxed">
-                                            {show.details}
-                                        </p>
-                                    </div>
+                                        <h3 className="text-5xl lg:text-8xl font-black text-brand-dark dark:text-white uppercase tracking-tighter mb-10 leading-none">
+                                            {show.title}
+                                        </h3>
 
-                                    <div className="flex flex-col sm:flex-row gap-6">
-                                        <button onClick={() => handleContact(show.title)} className="py-7 px-14 text-sm shadow-xl bg-white text-brand-dark rounded-full font-black uppercase tracking-widest">Pré-réserver pour ma commune</button>
-                                        <button onClick={() => handleArtistApplication()} className="py-7 px-10 border border-brand-cyan text-brand-cyan rounded-full font-black uppercase tracking-widest">Postuler au Casting</button>
+                                        {/* Mobile Expander Logic */}
+                                        <div className={`lg:block ${isExpanded ? 'block' : 'hidden lg:block'} transition-all duration-500 overflow-hidden`}>
+                                            <div className="p-10 lg:p-14 bg-white dark:bg-brand-dark-soft rounded-[3.5rem] border border-black/5 dark:border-white/10 shadow-2xl mb-12 animate-fade-in-up">
+                                                <p className="text-xl lg:text-3xl font-light text-brand-dark/70 dark:text-brand-light/80 leading-relaxed mb-8 italic font-serif">
+                                                    "{show.desc}"
+                                                </p>
+                                                <p className="text-brand-dark/40 dark:text-brand-light/40 font-light leading-relaxed">
+                                                    {show.details}
+                                                </p>
+                                            </div>
+
+                                            <div className="flex flex-col sm:flex-row gap-6 mb-12">
+                                                <button onClick={() => handleContact(show.title)} className="py-7 px-14 text-sm shadow-xl bg-white text-brand-dark rounded-full font-black uppercase tracking-widest">Pré-réserver pour ma commune</button>
+                                                <button onClick={() => handleArtistApplication()} className="py-7 px-10 border border-brand-cyan text-brand-cyan rounded-full font-black uppercase tracking-widest">Postuler au Casting</button>
+                                            </div>
+                                        </div>
+
+                                        <div className="lg:hidden flex flex-col gap-4">
+                                            <button 
+                                                onClick={() => toggleExpand(show.id)} 
+                                                className="w-full py-6 bg-brand-magenta text-white rounded-full font-black uppercase tracking-[0.2em] flex items-center justify-center gap-3 shadow-lg"
+                                            >
+                                                {isExpanded ? 'Réduire' : 'En savoir plus'}
+                                                <ChevronDown size={20} className={`transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`} />
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    ))}
+                        );
+                    })}
                 </div>
 
                 {/* --- SECTION 4: MF PROD ANTHOLOGY --- */}
-                <div className="space-y-64">
+                <div className="space-y-64 mb-32">
                     <div className="flex flex-col items-center gap-4 mb-32">
                         <div className="h-20 w-px bg-gradient-to-b from-transparent to-brand-magenta"></div>
                         <h2 className="text-xs font-black uppercase tracking-[1em] text-brand-magenta text-center">MF PROD ANTHOLOGY<br/><span className="text-[10px] opacity-40">HISTORIQUE DES RÉALISATIONS</span></h2>
                     </div>
 
-                    {historicalShows.map((show, i) => (
-                        <div key={i} id={show.id} className="relative scroll-mt-48 group">
-                            <div className="flex items-center gap-6 mb-16">
-                                <span className="text-8xl lg:text-9xl font-black opacity-5 dark:opacity-10 select-none">{String(upcomingShows.length + i + 1).padStart(2, '0')}</span>
-                                <div className="h-px flex-1 bg-brand-magenta/20"></div>
-                                <span className="text-[10px] font-black uppercase tracking-[0.5em] text-brand-magenta">{show.tag}</span>
-                            </div>
-
-                            <div className={`grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24 items-start ${i % 2 !== 0 ? 'lg:flex-row-reverse' : ''}`}>
-                                <div className={`lg:col-span-5 ${i % 2 !== 0 ? 'lg:order-2' : ''}`}>
-                                    <div className="relative aspect-[2/3] rounded-[3rem] overflow-hidden shadow-2xl border-4 border-white dark:border-brand-dark-soft transition-transform duration-700 bg-brand-dark-soft">
-                                        <img src={show.image} alt={show.title} className="w-full h-full object-contain" />
-                                        <div className="absolute inset-0 bg-gradient-to-t from-brand-dark/20 to-transparent pointer-events-none"></div>
-                                        <div className="absolute top-8 left-8 bg-brand-magenta text-white px-6 py-2 rounded-full text-[10px] font-black uppercase tracking-widest shadow-xl">{show.year}</div>
-                                    </div>
+                    {historicalShows.map((show, i) => {
+                        const isExpanded = expandedShows.has(show.id);
+                        return (
+                            <div key={i} id={show.id} className="relative scroll-mt-48 group">
+                                <div className="flex items-center gap-6 mb-16">
+                                    <span className="text-8xl lg:text-9xl font-black opacity-5 dark:opacity-10 select-none">{String(upcomingShows.length + i + 1).padStart(2, '0')}</span>
+                                    <div className="h-px flex-1 bg-brand-magenta/20"></div>
+                                    <span className="text-[10px] font-black uppercase tracking-[0.5em] text-brand-magenta">{show.tag}</span>
                                 </div>
 
-                                <div className={`lg:col-span-7 ${i % 2 !== 0 ? 'lg:order-1' : ''}`}>
-                                    <div className="flex flex-wrap gap-4 mb-10">
-                                        <div className="px-5 py-2 rounded-full bg-brand-magenta text-white text-[9px] font-black uppercase tracking-widest">{show.producer}</div>
-                                        <div className="px-5 py-2 rounded-full bg-black/5 dark:bg-white/10 text-brand-dark dark:text-white text-[9px] font-black uppercase tracking-widest">DURÉE {show.duration}</div>
-                                        <div className="px-5 py-2 rounded-full bg-black/5 dark:bg-white/10 text-brand-dark dark:text-white text-[9px] font-black uppercase tracking-widest">{show.artists}</div>
+                                <div className={`grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24 items-start ${i % 2 !== 0 ? 'lg:flex-row-reverse' : ''}`}>
+                                    <div className={`lg:col-span-5 ${i % 2 !== 0 ? 'lg:order-2' : ''}`}>
+                                        <div className="relative aspect-[2/3] rounded-[3rem] overflow-hidden shadow-2xl border-4 border-white dark:border-brand-dark-soft transition-transform duration-700 bg-brand-dark-soft">
+                                            <img src={show.image} alt={show.title} className="w-full h-full object-contain" />
+                                            <div className="absolute inset-0 bg-gradient-to-t from-brand-dark/20 to-transparent pointer-events-none"></div>
+                                            <div className="absolute top-8 left-8 bg-brand-magenta text-white px-6 py-2 rounded-full text-[10px] font-black uppercase tracking-widest shadow-xl">{show.year}</div>
+                                        </div>
                                     </div>
 
-                                    <h3 className="text-5xl lg:text-7xl font-black text-brand-dark dark:text-white uppercase tracking-tighter mb-10 leading-none">
-                                        {show.title}
-                                    </h3>
+                                    <div className={`lg:col-span-7 ${i % 2 !== 0 ? 'lg:order-1' : ''}`}>
+                                        <div className="flex flex-wrap gap-4 mb-10">
+                                            <div className="px-5 py-2 rounded-full bg-brand-magenta text-white text-[9px] font-black uppercase tracking-widest">{show.producer}</div>
+                                            <div className="px-5 py-2 rounded-full bg-black/5 dark:bg-white/10 text-brand-dark dark:text-white text-[9px] font-black uppercase tracking-widest">DURÉE {show.duration}</div>
+                                            <div className="px-5 py-2 rounded-full bg-black/5 dark:bg-white/10 text-brand-dark dark:text-white text-[9px] font-black uppercase tracking-widest">{show.artists}</div>
+                                        </div>
 
-                                    <div className="p-10 lg:p-14 bg-white dark:bg-brand-dark-soft rounded-[3.5rem] border border-black/5 dark:border-white/10 shadow-2xl mb-12">
-                                        <p className="text-xl lg:text-2xl font-light text-brand-dark/70 dark:text-brand-light/80 leading-relaxed mb-8 italic font-serif">
-                                            "{show.desc}"
-                                        </p>
-                                        <p className="text-brand-dark/40 dark:text-brand-light/40 font-light leading-relaxed text-sm mb-12">
-                                            {show.details}
-                                        </p>
-                                        
-                                        {/* --- GALERIE D'IMAGES ASSOCIÉES --- */}
-                                        {show.gallery && show.gallery.length > 0 && (
-                                            <div className="mt-12">
-                                                <div className="flex items-center gap-3 mb-6 text-brand-cyan uppercase tracking-[0.2em] text-[10px] font-black">
-                                                    <ImageIcon size={14} /> Photos de scène
-                                                </div>
-                                                <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-                                                    {show.gallery.map((imgUrl, gIdx) => (
-                                                        <div 
-                                                            key={gIdx} 
-                                                            className="aspect-square rounded-2xl overflow-hidden border border-black/10 dark:border-white/10 group/img cursor-zoom-in"
-                                                        >
-                                                            <img 
-                                                                src={imgUrl} 
-                                                                alt={`${show.title} - photo ${gIdx + 1}`} 
-                                                                className="w-full h-full object-cover transform scale-100 group-hover/img:scale-110 transition-transform duration-500" 
-                                                            />
+                                        <h3 className="text-5xl lg:text-7xl font-black text-brand-dark dark:text-white uppercase tracking-tighter mb-10 leading-none">
+                                            {show.title}
+                                        </h3>
+
+                                        <div className={`lg:block ${isExpanded ? 'block' : 'hidden lg:block'} transition-all duration-500 overflow-hidden`}>
+                                            <div className="p-10 lg:p-14 bg-white dark:bg-brand-dark-soft rounded-[3.5rem] border border-black/5 dark:border-white/10 shadow-2xl mb-12 animate-fade-in-up">
+                                                <p className="text-xl lg:text-2xl font-light text-brand-dark/70 dark:text-brand-light/80 leading-relaxed mb-8 italic font-serif">
+                                                    "{show.desc}"
+                                                </p>
+                                                <p className="text-brand-dark/40 dark:text-brand-light/40 font-light leading-relaxed text-sm mb-12">
+                                                    {show.details}
+                                                </p>
+                                                
+                                                {/* --- GALERIE D'IMAGES ASSOCIÉES --- */}
+                                                {show.gallery && show.gallery.length > 0 && (
+                                                    <div className="mt-12">
+                                                        <div className="flex items-center gap-3 mb-6 text-brand-cyan uppercase tracking-[0.2em] text-[10px] font-black">
+                                                            <ImageIcon size={14} /> Photos de scène
                                                         </div>
-                                                    ))}
-                                                </div>
-                                            </div>
-                                        )}
+                                                        <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+                                                            {show.gallery.map((imgUrl, gIdx) => (
+                                                                <div 
+                                                                    key={gIdx} 
+                                                                    className="aspect-square rounded-2xl overflow-hidden border border-black/10 dark:border-white/10 group/img cursor-zoom-in"
+                                                                >
+                                                                    <img 
+                                                                        src={imgUrl} 
+                                                                        alt={`${show.title} - photo ${gIdx + 1}`} 
+                                                                        className="w-full h-full object-cover transform scale-100 group-hover/img:scale-110 transition-transform duration-500" 
+                                                                    />
+                                                                </div>
+                                                            ))}
+                                                        </div>
+                                                    </div>
+                                                )}
 
-                                        {show.stats && (
-                                            <div className="mt-12 pt-8 border-t border-black/5 dark:border-white/10 flex flex-col gap-4">
-                                                <div className="flex items-center gap-4 text-brand-orange">
-                                                    <Star size={20} className="animate-pulse" />
-                                                    <span className="text-xs font-black uppercase tracking-widest">{show.stats}</span>
-                                                </div>
-                                                <div className="flex items-center gap-4 text-brand-dark/40 dark:text-white/40">
-                                                    <MapPin size={16} className="text-brand-magenta" />
-                                                    <span className="text-[10px] font-bold uppercase tracking-[0.2em]">{show.locations}</span>
-                                                </div>
+                                                {show.stats && (
+                                                    <div className="mt-12 pt-8 border-t border-black/5 dark:border-white/10 flex flex-col gap-4">
+                                                        <div className="flex items-center gap-4 text-brand-orange">
+                                                            <Star size={20} className="animate-pulse" />
+                                                            <span className="text-xs font-black uppercase tracking-widest">{show.stats}</span>
+                                                        </div>
+                                                        <div className="flex items-center gap-4 text-brand-dark/40 dark:text-white/40">
+                                                            <MapPin size={16} className="text-brand-magenta" />
+                                                            <span className="text-[10px] font-bold uppercase tracking-[0.2em]">{show.locations}</span>
+                                                        </div>
+                                                    </div>
+                                                )}
                                             </div>
-                                        )}
-                                    </div>
 
-                                    <div className="flex flex-col sm:flex-row gap-6">
-                                        <button onClick={() => handleContact(show.title)} className="py-7 px-10 text-xs shadow-xl bg-brand-magenta text-white rounded-full font-black uppercase tracking-widest">Commander pour ma commune</button>
+                                            <div className="flex flex-col sm:flex-row gap-6 mb-12">
+                                                <button onClick={() => handleContact(show.title)} className="py-7 px-10 text-xs shadow-xl bg-brand-magenta text-white rounded-full font-black uppercase tracking-widest">Commander pour ma commune</button>
+                                            </div>
+                                        </div>
+
+                                        <div className="lg:hidden flex flex-col gap-4">
+                                            <button 
+                                                onClick={() => toggleExpand(show.id)} 
+                                                className="w-full py-6 bg-brand-magenta text-white rounded-full font-black uppercase tracking-[0.2em] flex items-center justify-center gap-3 shadow-lg"
+                                            >
+                                                {isExpanded ? 'Réduire' : 'En savoir plus'}
+                                                <ChevronDown size={20} className={`transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`} />
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    ))}
+                        );
+                    })}
                 </div>
-
-                {/* --- ARTISTE CASTING CTA --- */}
-                <section className="mt-64">
-                    <div className="p-16 lg:p-24 rounded-[5rem] bg-brand-dark text-white border-2 border-white/10 relative overflow-hidden shadow-2xl text-center group">
-                        <div className="absolute inset-0 bg-gradient-to-br from-brand-cyan/10 to-brand-magenta/10 pointer-events-none" />
-                        <Sparkles className="mx-auto mb-10 text-brand-cyan animate-pulse" size={56} />
-                        <h3 className="text-5xl lg:text-8xl font-black uppercase tracking-tighter mb-12 leading-tight">VOTRE TALENT <br/><span className="text-brand-magenta italic underline decoration-brand-magenta/30 underline-offset-8">AU COEUR DU SHOW</span></h3>
-                        <p className="text-xl font-light text-white/60 max-w-4xl mx-auto mb-16 leading-relaxed">
-                            Nous recherchons en permanence de nouveaux profils pour enrichir notre historique. Serez-vous le prochain visage de MF Prod ?
-                        </p>
-                        <div className="flex flex-col sm:flex-row gap-6 justify-center">
-                            <button className="py-8 px-20 text-xl shadow-[0_20px_40px_rgba(255,138,0,0.3)] bg-brand-magenta text-white rounded-full font-black uppercase tracking-widest flex items-center gap-4" onClick={handleArtistApplication}>
-                                <UserPlus size={24} /> Postuler au Casting
-                            </button>
-                        </div>
-                    </div>
-                </section>
             </div>
 
             <style dangerouslySetInnerHTML={{ __html: `

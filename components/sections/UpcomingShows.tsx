@@ -48,21 +48,21 @@ const UpcomingShows: React.FC = () => {
         {/* Slider Navigation & Container */}
         <div className="relative group/slider">
           
-          {/* Custom Arrows */}
+          {/* Custom Arrows - Visible on mobile to guide user */}
           <button 
             onClick={() => scroll('left')}
-            className="absolute left-4 top-[40%] -translate-y-1/2 z-30 w-14 h-14 rounded-full bg-white/80 dark:bg-brand-dark-soft/80 border border-black/10 dark:border-white/20 text-brand-dark dark:text-white flex items-center justify-center backdrop-blur-xl transition-all duration-300 hover:bg-brand-magenta hover:text-white hover:border-brand-magenta hover:scale-110 opacity-0 group-hover/slider:opacity-100 shadow-2xl hidden md:flex"
+            className="absolute left-2 md:left-4 top-[40%] -translate-y-1/2 z-30 w-10 h-10 md:w-14 md:h-14 rounded-full bg-white/80 dark:bg-brand-dark-soft/80 border border-black/10 dark:border-white/20 text-brand-dark dark:text-white flex items-center justify-center backdrop-blur-xl transition-all duration-300 hover:bg-brand-magenta hover:text-white hover:border-brand-magenta hover:scale-110 shadow-2xl flex"
             aria-label="Previous"
           >
-            <ChevronLeft size={28} />
+            <ChevronLeft size={24} className="md:w-7 md:h-7" />
           </button>
           
           <button 
             onClick={() => scroll('right')}
-            className="absolute right-4 top-[40%] -translate-y-1/2 z-30 w-14 h-14 rounded-full bg-white/80 dark:bg-brand-dark-soft/80 border border-black/10 dark:border-white/20 text-brand-dark dark:text-white flex items-center justify-center backdrop-blur-xl transition-all duration-300 hover:bg-brand-magenta hover:text-white hover:border-brand-magenta hover:scale-110 opacity-0 group-hover/slider:opacity-100 shadow-2xl hidden md:flex"
+            className="absolute right-2 md:right-4 top-[40%] -translate-y-1/2 z-30 w-10 h-10 md:w-14 md:h-14 rounded-full bg-white/80 dark:bg-brand-dark-soft/80 border border-black/10 dark:border-white/20 text-brand-dark dark:text-white flex items-center justify-center backdrop-blur-xl transition-all duration-300 hover:bg-brand-magenta hover:text-white hover:border-brand-magenta hover:scale-110 shadow-2xl flex"
             aria-label="Next"
           >
-            <ChevronRight size={28} />
+            <ChevronRight size={24} className="md:w-7 md:h-7" />
           </button>
 
           <div 

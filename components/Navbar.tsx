@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, NavItem } from '../types';
 import { NAV_ITEMS, LOGO_URL } from '../constants';
-import { Menu, X, ChevronDown } from 'lucide-react';
+import { Menu, X, ChevronDown, ChevronUp } from 'lucide-react';
 
 interface NavbarProps {
   currentView: View;
@@ -45,12 +45,14 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate }) => {
     }
     setMobileMenuOpen(false);
     setDropdownOpen(false);
+    setMobilePrestationsOpen(false);
   };
 
   const handlePrestationClick = (link: { label: string, view: View, sectionId?: string }) => {
     onNavigate(link.view, link.sectionId ? { sectionId: link.sectionId } : undefined);
     setDropdownOpen(false);
     setMobileMenuOpen(false);
+    setMobilePrestationsOpen(false);
   };
 
   return (
@@ -160,15 +162,16 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate }) => {
 
       {/* Mobile Menu */}
       {mobileMenuOpen && (
-        <div className="fixed inset-0 z-[60] bg-brand-dark/98 backdrop-blur-3xl flex flex-col items-center justify-center p-12 lg:hidden animate-fade-in-up overflow-y-auto">
+        <div className="fixed inset-0 z-[60] bg-brand-dark/98 backdrop-blur-3xl flex flex-col items-center justify-center lg:hidden animate-fade-in-up overflow-y-auto">
+           {/* Close Button - More subtle and higher up */}
            <button 
                 onClick={() => setMobileMenuOpen(false)}
-                className="absolute top-10 right-10 w-20 h-20 rounded-full bg-white/5 flex items-center justify-center text-white shadow-lg"
+                className="absolute top-10 right-8 w-12 h-12 rounded-full bg-white/5 flex items-center justify-center text-white border border-white/10 shadow-lg active:scale-90 transition-all"
             >
-                <X size={40} />
+                <X size={24} />
             </button>
 
-           <div className="flex flex-col items-center gap-10 w-full py-10">
+           <div className="flex flex-col items-center gap-8 w-full max-w-sm px-8">
             {NAV_ITEMS.map((item) => {
                 const isPrestations = item.label === 'Prestations';
                 
@@ -176,18 +179,23 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate }) => {
                   <div key={item.label} className="w-full flex flex-col items-center">
                     <button
                       onClick={() => !isPrestations ? handleNavClick(item) : setMobilePrestationsOpen(!mobilePrestationsOpen)}
-                      className={`text-5xl sm:text-6xl font-sans font-black uppercase tracking-tighter transition-colors ${currentView === item.view ? 'text-brand-cyan' : 'text-white'}`}
+                      className={`text-2xl sm:text-3xl font-sans font-black uppercase tracking-tighter transition-all flex items-center justify-center gap-4 py-1 ${currentView === item.view && !isPrestations ? 'text-brand-cyan' : 'text-white'}`}
                     >
                       {item.label}
+                      {isPrestations && (
+                        <div className={`w-8 h-8 rounded-full border border-white/10 flex items-center justify-center transition-colors ${mobilePrestationsOpen ? 'bg-brand-magenta text-white border-brand-magenta' : 'bg-white/5'}`}>
+                           {mobilePrestationsOpen ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
+                        </div>
+                      )}
                     </button>
                     
                     {isPrestations && mobilePrestationsOpen && (
-                      <div className="flex flex-col items-center gap-6 mt-8 animate-fade-in-up bg-white/5 rounded-[3rem] p-10 w-full max-w-md">
+                      <div className="flex flex-col items-center gap-4 mt-4 animate-fade-in-up bg-white/5 rounded-[1.5rem] p-5 w-full border border-white/10 shadow-xl">
                         {prestationsLinks.map((link) => (
                           <button
                             key={link.label}
                             onClick={() => handlePrestationClick(link)}
-                            className="text-lg font-black text-white hover:text-brand-magenta uppercase tracking-widest text-center"
+                            className="text-[11px] font-black text-white/70 hover:text-brand-magenta uppercase tracking-[0.15em] text-center w-full py-2.5 border-b border-white/5 last:border-0"
                           >
                             {link.label}
                           </button>

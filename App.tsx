@@ -7,7 +7,6 @@ import Men from './components/views/Men';
 import Discover from './components/views/Discover';
 import Gallery from './components/views/Gallery';
 import BookingView from './components/views/BookingView';
-import WhatsAppButton from './components/ui/WhatsAppButton';
 import ProductionSpectacles from './components/views/prestations/ProductionSpectacles';
 import StagesPerfectionnement from './components/views/prestations/StagesPerfectionnement';
 import CoachingVocal from './components/views/prestations/CoachingVocal';
@@ -74,8 +73,6 @@ const App: React.FC = () => {
           />
         )}
       </main>
-
-      <WhatsAppButton />
     </div>
   );
 };

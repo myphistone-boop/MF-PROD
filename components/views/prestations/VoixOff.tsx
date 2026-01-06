@@ -136,7 +136,8 @@ const VoixOff: React.FC<Props> = ({ onNavigate }) => {
                                 "Donner vie à votre projet audio ou vidéo avec une voix off professionnelle captivante, Mikael Ferreira."
                             </p>
                             
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-16">
+                            {/* Copywriting grid - Hidden on mobile to save scroll space */}
+                            <div className="hidden lg:grid grid-cols-1 md:grid-cols-2 gap-8 mt-16">
                                 {knowHow.map((item, i) => (
                                     <div key={i} className="group flex flex-col gap-4 p-8 rounded-3xl bg-white dark:bg-brand-dark-soft border border-black/5 dark:border-white/10 hover:border-brand-cyan/50 transition-all duration-500">
                                         <div className="w-12 h-12 rounded-2xl bg-black/5 dark:bg-white/5 flex items-center justify-center group-hover:scale-110 transition-transform">

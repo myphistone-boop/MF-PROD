@@ -120,14 +120,22 @@ const Gallery: React.FC<GalleryProps> = ({ onNavigate }) => {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8">
+          {/* Grille Mobile: 3 colonnes (ligne 1) puis 2 colonnes (ligne 2) via grid-cols-6 et col-span conditionnel */}
+          <div className="grid grid-cols-6 sm:grid-cols-2 lg:grid-cols-5 gap-3 sm:gap-8">
             {upcomingEvents.map((event, index) => (
-              <div key={index} className="group relative aspect-[3/4] rounded-[3rem] overflow-hidden border border-black/10 dark:border-white/10 shadow-2xl transition-all duration-500 hover:-translate-y-4 hover:border-brand-magenta/50">
+              <div 
+                key={index} 
+                className={`
+                  group relative aspect-[3/4] rounded-2xl sm:rounded-[3rem] overflow-hidden border border-black/10 dark:border-white/10 shadow-2xl transition-all duration-500 hover:-translate-y-4 hover:border-brand-magenta/50
+                  ${index < 3 ? 'col-span-2' : 'col-span-3'}
+                  sm:col-span-1
+                `}
+              >
                 <img src={event.img} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-[2s]" alt={event.title} />
-                <div className="absolute inset-0 bg-gradient-to-t from-brand-dark via-brand-dark/40 to-transparent flex flex-col justify-end p-8">
-                  <span className="text-[10px] font-black text-brand-cyan uppercase tracking-widest mb-2">{event.date}</span>
-                  <h3 className="text-xl font-black text-white uppercase leading-tight mb-6">{event.title}</h3>
-                  <Button variant="primary" className="w-full py-4 text-[10px]" onClick={() => onNavigate(View.BOOKING)}>S'inscrire</Button>
+                <div className="absolute inset-0 bg-gradient-to-t from-brand-dark via-brand-dark/40 to-transparent flex flex-col justify-end p-4 sm:p-8">
+                  <span className="text-[8px] sm:text-[10px] font-black text-brand-cyan uppercase tracking-widest mb-1 sm:mb-2">{event.date}</span>
+                  <h3 className="text-xs sm:text-xl font-black text-white uppercase leading-tight mb-3 sm:mb-6 line-clamp-2">{event.title}</h3>
+                  <Button variant="primary" className="w-full py-2 sm:py-4 text-[8px] sm:text-[10px] min-h-0" onClick={() => onNavigate(View.BOOKING)}>S'inscrire</Button>
                 </div>
               </div>
             ))}

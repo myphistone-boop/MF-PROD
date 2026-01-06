@@ -31,7 +31,7 @@ const AtelierSpectacle: React.FC<Props> = ({ onNavigate }) => {
     };
 
     // --- DATA ---
-    const shows2026 = ASSETS.SHOWS_2026; // Ces objets ont déjà un champ 'id' (pop, girls, coco, etc.)
+    const shows2026 = ASSETS.SHOWS_2026; 
     
     const historicalCreations = [
         { title: "GROUPE FEVER", id: "fever", url: getShowAsset("_coaching-vocal-drome-ardeche__Affiche-groupe-fever-1.webp") },
@@ -59,7 +59,7 @@ const AtelierSpectacle: React.FC<Props> = ({ onNavigate }) => {
                 </button>
 
                 {/* --- SECTION 1: CRÉATION SUR MESURE --- */}
-                <section className={`mb-64 transition-all duration-1000 ${mounted ? 'opacity-100' : 'opacity-0 translate-y-10'}`}>
+                <section className={`mb-20 lg:mb-64 transition-all duration-1000 ${mounted ? 'opacity-100' : 'opacity-0 translate-y-10'}`}>
                     <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24 items-center mb-32">
                         <div className="lg:col-span-7">
                             <div className="inline-flex items-center gap-3 px-6 py-2 rounded-full border border-brand-orange/30 bg-brand-orange/10 mb-8">
@@ -76,7 +76,18 @@ const AtelierSpectacle: React.FC<Props> = ({ onNavigate }) => {
                                     "MF Prod vous apporte une vision artistique unique à sa création, imaginant l’ensemble de l’expérience, y comprenant la mise en scène, la scénographie, l’éclairage, le son et tout autre élément."
                                 </p>
                                 
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-6">
+                                {/* MOBILE ONLY IMAGE PLACEMENT */}
+                                <div className="lg:hidden my-8">
+                                    <div className="relative aspect-[4/5] rounded-[2.5rem] overflow-hidden border-4 border-white dark:border-brand-dark-soft shadow-xl">
+                                        <img 
+                                            src="https://storage.googleapis.com/novelec_assets/MF%20PROD/SPETACLES/_creation-spectacle__A46944A0-B734-4A0F-94F9-1DD6CA57F91E-e1704213502250-795x1024.webp" 
+                                            className="w-full h-full object-cover" 
+                                            alt="Création de Spectacle"
+                                        />
+                                    </div>
+                                </div>
+
+                                <div className="hidden lg:grid grid-cols-1 md:grid-cols-2 gap-6 pt-6">
                                     {[
                                         { icon: Layout, title: "Conception Artistique", desc: "Vision distinctive, scénographie, narration et style." },
                                         { icon: Palette, title: "Créativité", desc: "Concepts originaux, scénarios captivants et ambiances uniques." },
@@ -100,12 +111,13 @@ const AtelierSpectacle: React.FC<Props> = ({ onNavigate }) => {
                                 </p>
                             </div>
 
-                            <Button onClick={() => handleContact("Création de Spectacle sur mesure")} className="px-12 py-6 text-lg shadow-[0_20px_40px_rgba(255,138,0,0.2)]">
+                            <Button onClick={() => handleContact("Création de Spectacle sur mesure")} className="w-full lg:w-auto py-3 lg:py-6 px-12 text-lg shadow-[0_20px_40px_rgba(255,138,0,0.2)]">
                                 Nous contacter <ArrowRight className="ml-2" />
                             </Button>
                         </div>
 
-                        <div className="lg:col-span-5">
+                        {/* DESKTOP ONLY IMAGE PLACEMENT */}
+                        <div className="hidden lg:block lg:col-span-5">
                             <div className="relative aspect-[4/5] rounded-[4rem] overflow-hidden border-4 border-white dark:border-brand-dark-soft shadow-2xl group">
                                 <img 
                                     src="https://storage.googleapis.com/novelec_assets/MF%20PROD/SPETACLES/_creation-spectacle__A46944A0-B734-4A0F-94F9-1DD6CA57F91E-e1704213502250-795x1024.webp" 
@@ -167,7 +179,7 @@ const AtelierSpectacle: React.FC<Props> = ({ onNavigate }) => {
                         {/* LEFT COLUMN: ALL CONTENT PULLED UP */}
                         <div className="lg:col-span-5 lg:order-2 flex flex-col justify-between self-stretch">
                             <div>
-                                <h2 className="font-sans font-black text-4xl md:text-5xl lg:text-7xl text-brand-dark dark:text-white mb-6 tracking-tighter leading-[0.85] uppercase">
+                                <h2 className="font-sans font-black text-5xl md:text-5xl lg:text-7xl text-brand-dark dark:text-white mb-6 tracking-tighter leading-[0.85] uppercase">
                                     SPECTACLE <br/><span className="gradient-text italic text-brand-magenta">EXISTANT</span>
                                 </h2>
 
@@ -223,7 +235,7 @@ const AtelierSpectacle: React.FC<Props> = ({ onNavigate }) => {
                                 </div>
                             </div>
 
-                            <Button variant="secondary" onClick={() => handleContact("Direction Artistique Spectacle Existant")} className="w-full lg:w-max px-12 py-5 text-base shadow-xl border-brand-magenta/30">
+                            <Button variant="secondary" onClick={() => handleContact("Direction Artistique Spectacle Existant")} className="w-full lg:w-max py-3 lg:py-5 px-12 text-base shadow-xl border-brand-magenta/30">
                                 Nous contacter <ArrowRight className="ml-2" size={18} />
                             </Button>
                         </div>
@@ -245,8 +257,8 @@ const AtelierSpectacle: React.FC<Props> = ({ onNavigate }) => {
                     </div>
                 </section>
 
-                {/* FINAL CTA */}
-                <div className="p-20 lg:p-32 rounded-[5rem] bg-brand-dark text-white border-2 border-white/10 relative overflow-hidden shadow-2xl text-center group mt-64">
+                {/* FINAL CTA - HIDDEN ON MOBILE */}
+                <div className="hidden lg:block p-20 lg:p-32 rounded-[5rem] bg-brand-dark text-white border-2 border-white/10 relative overflow-hidden shadow-2xl text-center group mt-64">
                     <div className="absolute inset-0 bg-gradient-to-br from-brand-orange/5 via-transparent to-brand-magenta/5 pointer-events-none" />
                     <Star className="mx-auto mb-12 text-brand-orange animate-pulse" size={56} />
                     <h3 className="text-5xl lg:text-8xl font-black uppercase tracking-tighter mb-12 leading-tight">VOTRE VISION <br/><span className="text-brand-magenta italic underline decoration-brand-magenta/30 underline-offset-8">NOTRE RÉALITÉ</span></h3>
