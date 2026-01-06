@@ -5,9 +5,8 @@ import { View, BookingContext } from '../../../types';
 import { ASSETS } from '../../../assets';
 import { 
   Check, ArrowLeft, Clock, MapPin, Sparkles, 
-  User, Guitar, GraduationCap, Target, Calendar,
-  Phone, Mail, History, ChevronRight, Star, Compass,
-  Music, Mic2, ChevronLeft, ChevronDown
+  User, Calendar, ChevronRight, Star,
+  Mic2, ChevronLeft, ChevronDown
 } from 'lucide-react';
 
 interface Props { onNavigate: (view: View, context?: BookingContext) => void; }
@@ -52,7 +51,7 @@ const CoachingVocal: React.FC<Props> = ({ onNavigate }) => {
     const scrollManual = (direction: 'left' | 'right') => {
         if (scrollContainerRef.current) {
             const container = scrollContainerRef.current;
-            const scrollAmount = container.clientWidth * 0.85;
+            const scrollAmount = container.clientWidth; // Utilise la largeur totale pour un passage propre
             container.scrollBy({
                 left: direction === 'left' ? -scrollAmount : scrollAmount,
                 behavior: 'smooth'
@@ -90,25 +89,25 @@ const CoachingVocal: React.FC<Props> = ({ onNavigate }) => {
     ];
 
     const ActivityTitle = ({ prefix, suffix, color }: { prefix: string, suffix: string, color: string }) => (
-        <div className="flex items-center justify-between lg:block mb-8 lg:mb-10 w-full">
+        <div className="flex items-center justify-between lg:block mb-8 lg:mb-10 w-full px-2">
             <button 
                 onClick={() => scrollManual('left')}
-                className="lg:hidden p-2 -ml-2 text-brand-magenta active:scale-90 transition-transform"
+                className="lg:hidden p-3 -ml-4 text-brand-magenta active:scale-90 transition-all bg-white/5 backdrop-blur-md rounded-full border border-white/10 shadow-lg"
                 aria-label="Activité précédente"
             >
-                <ChevronLeft size={32} strokeWidth={3} />
+                <ChevronLeft size={24} strokeWidth={3} />
             </button>
             
-            <h2 className="text-3xl sm:text-4xl lg:text-7xl font-black text-brand-dark dark:text-white uppercase tracking-tighter leading-tight text-center lg:text-left flex-1 lg:flex-none">
+            <h2 className="text-2xl sm:text-4xl lg:text-7xl font-black text-brand-dark dark:text-white uppercase tracking-tighter leading-tight text-center lg:text-left flex-1 lg:flex-none mx-2">
                 {prefix} <br/><span className={`text-${color} italic`}>{suffix}</span>
             </h2>
 
             <button 
                 onClick={() => scrollManual('right')}
-                className="lg:hidden p-2 -mr-2 text-brand-magenta active:scale-90 transition-transform"
+                className="lg:hidden p-3 -mr-4 text-brand-magenta active:scale-90 transition-all bg-white/5 backdrop-blur-md rounded-full border border-white/10 shadow-lg"
                 aria-label="Activité suivante"
             >
-                <ChevronRight size={32} strokeWidth={3} />
+                <ChevronRight size={24} strokeWidth={3} />
             </button>
         </div>
     );
@@ -176,10 +175,10 @@ const CoachingVocal: React.FC<Props> = ({ onNavigate }) => {
                 <div className="relative group">
                     <div 
                         ref={scrollContainerRef}
-                        className="flex lg:flex-col overflow-x-auto lg:overflow-visible snap-x snap-mandatory lg:snap-none no-scrollbar gap-12 lg:gap-64 pb-12"
+                        className="flex lg:flex-col overflow-x-auto lg:overflow-visible snap-x snap-mandatory lg:snap-none no-scrollbar gap-12 lg:gap-64 pb-12 scroll-smooth"
                     >
                         {/* --- SECTION 1: COURS PARTICULIERS --- */}
-                        <section id="particuliers" className="min-w-full lg:min-w-0 snap-center scroll-mt-48 px-2 lg:px-0 flex flex-col">
+                        <section id="particuliers" className="min-w-full lg:min-w-0 snap-center snap-always scroll-mt-48 px-2 lg:px-0 flex flex-col">
                             <div className="lg:hidden flex flex-col items-center mb-6">
                                 <ActivityTitle prefix="COURS" suffix="PARTICULIERS" color="brand-cyan" />
                                 <div className="-mt-4"><SectionTag label="Pour tous niveaux" color="brand-cyan" /></div>
@@ -196,13 +195,13 @@ const CoachingVocal: React.FC<Props> = ({ onNavigate }) => {
                                         Imaginez-vous avec une attention personnalisée, offrant un accompagnement sur mesure pour perfectionner votre voix.
                                     </p>
                                     
-                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 mb-12">
-                                        <DetailItem icon={Clock} label="Format" value="Cours Mensuels (2H à 4H)" />
-                                        <DetailItem icon={User} label="Professeur" value="Mikaël FERREIRA" />
+                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 mb-12 text-center lg:text-left">
+                                        <div className="flex flex-col items-center lg:items-start"><DetailItem icon={Clock} label="Format" value="Cours Mensuels (2H à 4H)" /></div>
+                                        <div className="flex flex-col items-center lg:items-start"><DetailItem icon={User} label="Professeur" value="Mikaël FERREIRA" /></div>
                                     </div>
 
                                     <div className="p-10 rounded-[3rem] bg-brand-cyan/5 border border-brand-cyan/20 mb-12">
-                                        <h4 className="text-xs font-black uppercase tracking-widest text-brand-cyan mb-6">Tarif Annuel</h4>
+                                        <h4 className="text-xs font-black uppercase tracking-widest text-brand-cyan mb-6 text-center lg:text-left">Tarif Annuel</h4>
                                         <div className="space-y-4">
                                             <div className="flex justify-between items-center border-b border-brand-cyan/10 pb-3">
                                                 <span className="text-sm font-bold opacity-60 uppercase">2 H par mois</span>
@@ -225,7 +224,7 @@ const CoachingVocal: React.FC<Props> = ({ onNavigate }) => {
                         </section>
 
                         {/* --- SECTION 2: COURS COLLECTIFS --- */}
-                        <section id="collectifs" className="min-w-full lg:min-w-0 snap-center scroll-mt-48 px-2 lg:px-0 flex flex-col">
+                        <section id="collectifs" className="min-w-full lg:min-w-0 snap-center snap-always scroll-mt-48 px-2 lg:px-0 flex flex-col">
                             <div className="lg:hidden flex flex-col items-center mb-6">
                                 <ActivityTitle prefix="COURS" suffix="COLLECTIFS" color="brand-magenta" />
                                 <div className="-mt-4"><SectionTag label="Pour tous niveaux" color="brand-magenta" /></div>
@@ -242,9 +241,9 @@ const CoachingVocal: React.FC<Props> = ({ onNavigate }) => {
                                         Conçus pour créer une expérience immersive, ces cours permettent de développer votre voix en groupe.
                                     </p>
 
-                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 mb-12">
-                                        <DetailItem icon={Calendar} label="Jours" value="Mardis ou Mercredis" />
-                                        <DetailItem icon={Clock} label="Durée" value="1H00 Hebdomadaire" />
+                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 mb-12 text-center lg:text-left">
+                                        <div className="flex flex-col items-center lg:items-start"><DetailItem icon={Calendar} label="Jours" value="Mardis ou Mercredis" /></div>
+                                        <div className="flex flex-col items-center lg:items-start"><DetailItem icon={Clock} label="Durée" value="1H00 Hebdomadaire" /></div>
                                     </div>
 
                                     <div className="flex items-center justify-between p-8 rounded-[2.5rem] bg-brand-magenta/5 border border-brand-magenta/20 mb-12">
@@ -262,7 +261,7 @@ const CoachingVocal: React.FC<Props> = ({ onNavigate }) => {
                         </section>
 
                         {/* --- SECTION 3: CHORALE --- */}
-                        <section id="chorale" className="min-w-full lg:min-w-0 snap-center scroll-mt-48 px-2 lg:px-0 flex flex-col">
+                        <section id="chorale" className="min-w-full lg:min-w-0 snap-center snap-always scroll-mt-48 px-2 lg:px-0 flex flex-col">
                             <div className="lg:hidden flex flex-col items-center mb-6">
                                 <ActivityTitle prefix="LA" suffix="CHORALE" color="brand-cyan" />
                                 <div className="-mt-4"><SectionTag label="Puissance Collective" color="brand-cyan" /></div>
@@ -279,9 +278,9 @@ const CoachingVocal: React.FC<Props> = ({ onNavigate }) => {
                                         Rejoignez notre ensemble vocal pour une année riche en harmonies et en émotions.
                                     </p>
 
-                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 mb-12">
-                                        <DetailItem icon={Calendar} label="Rendez-vous" value="Mercredis à 20H30" />
-                                        <DetailItem icon={MapPin} label="Lieu" value="L'Atelier – CORNAS (07)" />
+                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 mb-12 text-center lg:text-left">
+                                        <div className="flex flex-col items-center lg:items-start"><DetailItem icon={Calendar} label="Rendez-vous" value="Mercredis à 20H30" /></div>
+                                        <div className="flex flex-col items-center lg:items-start"><DetailItem icon={MapPin} label="Lieu" value="L'Atelier – CORNAS (07)" /></div>
                                     </div>
 
                                     <div className="flex items-center justify-between p-8 rounded-[2.5rem] bg-brand-cyan/5 border border-brand-cyan/20 mb-12">
@@ -299,7 +298,7 @@ const CoachingVocal: React.FC<Props> = ({ onNavigate }) => {
                         </section>
 
                         {/* --- SECTION 4: ATELIER SPECTACLE --- */}
-                        <section id="atelier" className="min-w-full lg:min-w-0 snap-center scroll-mt-48 px-2 lg:px-0 flex flex-col">
+                        <section id="atelier" className="min-w-full lg:min-w-0 snap-center snap-always scroll-mt-48 px-2 lg:px-0 flex flex-col">
                             <div className="lg:hidden flex flex-col items-center mb-6">
                                 <ActivityTitle prefix="ATELIER" suffix="SPECTACLE" color="brand-orange" />
                                 <div className="-mt-4"><SectionTag label="Adultes & Enfants" color="brand-orange" /></div>
@@ -316,7 +315,7 @@ const CoachingVocal: React.FC<Props> = ({ onNavigate }) => {
                                         Montez sur scène dans le cadre d'une création sur mesure. Chanter, danser et jouer.
                                     </p>
 
-                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 mb-12">
+                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 mb-12 text-center lg:text-left">
                                         <div className="space-y-4">
                                             <h4 className="text-[10px] font-black text-brand-orange uppercase tracking-widest">Adultes (1H15)</h4>
                                             <p className="text-sm font-bold opacity-70 leading-relaxed">Jeudis ou Vendredis</p>
@@ -344,7 +343,7 @@ const CoachingVocal: React.FC<Props> = ({ onNavigate }) => {
                         </section>
 
                         {/* --- SECTION 5: DANSE --- */}
-                        <section id="danse" className="min-w-full lg:min-w-0 snap-center scroll-mt-48 px-2 lg:px-0 flex flex-col">
+                        <section id="danse" className="min-w-full lg:min-w-0 snap-center snap-always scroll-mt-48 px-2 lg:px-0 flex flex-col">
                             <div className="lg:hidden flex flex-col items-center mb-6">
                                 <ActivityTitle prefix="COURS DE" suffix="DANSE" color="brand-magenta" />
                                 <div className="-mt-4"><SectionTag label="Tous niveaux" color="brand-magenta" /></div>
@@ -360,9 +359,9 @@ const CoachingVocal: React.FC<Props> = ({ onNavigate }) => {
                                     <p className="text-xl lg:text-2xl font-light text-brand-dark/70 dark:text-brand-light/70 mb-10 leading-relaxed text-center lg:text-left">
                                         Plongez dans un univers de rythmes envoûtants et de mouvements fluides.
                                     </p>
-                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 mb-12">
-                                        <DetailItem icon={Calendar} label="Rendez-vous" value="Mardis à 20H00" />
-                                        <DetailItem icon={Clock} label="Durée" value="1H30 Hebdomadaire" />
+                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 mb-12 text-center lg:text-left">
+                                        <div className="flex flex-col items-center lg:items-start"><DetailItem icon={Calendar} label="Rendez-vous" value="Mardis à 20H00" /></div>
+                                        <div className="flex flex-col items-center lg:items-start"><DetailItem icon={Clock} label="Durée" value="1H30 Hebdomadaire" /></div>
                                     </div>
                                     
                                     <div className="flex items-center justify-between p-8 rounded-[2.5rem] bg-brand-magenta/5 border border-brand-magenta/20 mb-12">
@@ -381,7 +380,7 @@ const CoachingVocal: React.FC<Props> = ({ onNavigate }) => {
                         </section>
 
                         {/* --- SECTION 6: INSTRUMENTS --- */}
-                        <section id="instruments" className="min-w-full lg:min-w-0 snap-center scroll-mt-48 px-2 lg:px-0 flex flex-col">
+                        <section id="instruments" className="min-w-full lg:min-w-0 snap-center snap-always scroll-mt-48 px-2 lg:px-0 flex flex-col">
                             <div className="lg:hidden flex flex-col items-center mb-6">
                                 <ActivityTitle prefix="PIANO OU" suffix="GUITARE" color="brand-cyan" />
                                 <div className="-mt-4"><SectionTag label="Tous âges" color="brand-cyan" /></div>
@@ -397,11 +396,11 @@ const CoachingVocal: React.FC<Props> = ({ onNavigate }) => {
                                     <p className="text-xl lg:text-2xl font-light text-brand-dark/70 dark:text-brand-light/70 mb-10 leading-relaxed text-center lg:text-left">
                                         Maitrisez votre instrument avec plaisir et confiance grâce à un accompagnement expert.
                                     </p>
-                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 mb-12">
-                                        <DetailItem icon={Calendar} label="Disponibilité" value="Les Lundis" />
-                                        <DetailItem icon={User} label="Professeur" value="David SOUCLIER" />
+                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 mb-12 text-center lg:text-left">
+                                        <div className="flex flex-col items-center lg:items-start"><DetailItem icon={Calendar} label="Disponibilité" value="Les Lundis" /></div>
+                                        <div className="flex flex-col items-center lg:items-start"><DetailItem icon={User} label="Professeur" value="David SOUCLIER" /></div>
                                     </div>
-                                    <div className="p-8 rounded-[2.5rem] bg-brand-cyan/5 border border-brand-cyan/20 mb-8">
+                                    <div className="p-8 rounded-[2.5rem] bg-brand-cyan/5 border border-brand-cyan/20 mb-8 text-center lg:text-left">
                                         <span className="text-4xl font-black">30 € <span className="text-xs opacity-40">/ HEURE</span></span>
                                     </div>
                                 </div>
@@ -414,7 +413,7 @@ const CoachingVocal: React.FC<Props> = ({ onNavigate }) => {
                         </section>
 
                         {/* --- SECTION 7: FORMATION & STAGE --- */}
-                        <section id="formations" className="min-w-full lg:min-w-0 snap-center scroll-mt-48 pb-20 px-2 lg:px-0 flex flex-col">
+                        <section id="formations" className="min-w-full lg:min-w-0 snap-center snap-always scroll-mt-48 pb-20 px-2 lg:px-0 flex flex-col">
                             <div className="lg:hidden flex flex-col items-center mb-6">
                                 <ActivityTitle prefix="VOIX &" suffix="COMMUNICATION" color="brand-orange" />
                                 <div className="-mt-4"><SectionTag label="Entreprise & Particulier" color="brand-orange" /></div>
@@ -452,7 +451,7 @@ const CoachingVocal: React.FC<Props> = ({ onNavigate }) => {
                         <div className="lg:block hidden"><SectionTag label="Fondateur & Coach" color="brand-magenta" /></div>
                         <div className="lg:hidden flex justify-center"><SectionTag label="Fondateur & Coach" color="brand-magenta" /></div>
                         <h3 className="text-4xl lg:text-5xl font-black text-brand-dark dark:text-white uppercase tracking-tighter mb-4 leading-none text-center lg:text-left">MIKAËL <br/><span className="text-brand-magenta italic">FERREIRA</span></h3>
-                        <p className="text-lg lg:text-xl font-light text-brand-dark/60 dark:text-brand-light/60 max-w-2xl leading-relaxed italic border-l-4 border-brand-magenta/30 pl-8">
+                        <p className="text-lg lg:text-xl font-light text-brand-dark/60 dark:text-brand-light/60 max-w-2xl leading-relaxed italic border-l-4 border-brand-magenta/30 pl-8 text-center lg:text-left">
                             "La voix est le miroir de l'âme. Mon rôle est de vous donner les clés techniques pour que votre émotion s'exprime enfin librement."
                         </p>
                     </div>
