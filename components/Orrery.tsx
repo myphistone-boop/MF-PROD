@@ -2,9 +2,17 @@
 import React from 'react';
 import { LOGO_URL } from '../constants';
 import { Music, Music2, Music3, Music4, Mic2, Star } from 'lucide-react';
+import { usePerformanceMode } from '../hooks/usePerformanceMode';
 
 const Orrery: React.FC = () => {
-  // Anneau 2 : Notes moyennes et éléments de studio (Taille augmentée)
+  const { isLowPerf } = usePerformanceMode();
+
+  // On désactive les animations si Low Perf
+  const spinSlow = isLowPerf ? '' : 'animate-spin-slow';
+  const spinReverseSlow = isLowPerf ? '' : 'animate-spin-reverse-slow';
+  const spinSuperSlow = isLowPerf ? '' : 'animate-spin-super-slow';
+
+  // Anneau 2 : Notes moyennes et éléments de studio
   const ring2Items = [
     { icon: <Music size={36} className="text-brand-cyan" />, angle: 0 },
     { icon: <Music2 size={30} className="text-brand-dark dark:text-white" />, angle: 45 },
@@ -14,7 +22,7 @@ const Orrery: React.FC = () => {
     { icon: <Music2 size={28} className="text-brand-dark dark:text-white" />, angle: 300 },
   ];
 
-  // Anneau 3 : Grandes notes et accents colorés (Taille augmentée)
+  // Anneau 3 : Grandes notes et accents colorés
   const ring3Items = [
     { icon: <Music3 size={32} className="text-brand-magenta" />, angle: 20 },
     { icon: <Music4 size={38} className="text-brand-orange" />, angle: 60 },
@@ -27,17 +35,17 @@ const Orrery: React.FC = () => {
   return (
     <div className="relative w-[1100px] h-[1100px] flex items-center justify-center pointer-events-none select-none">
       
-      {/* Halo central dynamique */}
-      <div className="absolute w-[500px] h-[500px] bg-brand-magenta rounded-full blur-[150px] opacity-10 dark:opacity-20 animate-pulse-glow" />
+      {/* Halo central dynamique - Pulsation réduite si low perf */}
+      <div className={`absolute w-[500px] h-[500px] bg-brand-magenta rounded-full blur-[150px] opacity-10 dark:opacity-20 ${!isLowPerf ? 'animate-pulse-glow' : ''}`} />
 
       {/* Conteneur Logo Central */}
-      <div className="relative z-20 w-[420px] h-[420px] rounded-full bg-white dark:bg-brand-dark border-2 border-black/5 dark:border-white/5 flex items-center justify-center shadow-xl dark:shadow-[0_0_100px_rgba(255,0,122,0.15)] animate-float">
-        <div className="absolute inset-4 rounded-full border border-brand-cyan/20 animate-spin-slow"></div>
+      <div className={`relative z-20 w-[420px] h-[420px] rounded-full bg-white dark:bg-brand-dark border-2 border-black/5 dark:border-white/5 flex items-center justify-center shadow-xl dark:shadow-[0_0_100px_rgba(255,0,122,0.15)] ${!isLowPerf ? 'animate-float' : ''}`}>
+        <div className={`absolute inset-4 rounded-full border border-brand-cyan/20 ${spinSlow}`}></div>
         <img src={LOGO_URL} alt="MF Prod" className="w-[300px] h-[300px] object-contain relative z-30" />
       </div>
 
-      {/* Orbite 1 (Intérieure) : Notes rapides (Taille augmentée) */}
-      <div className="absolute border border-black/5 dark:border-white/5 w-[550px] h-[550px] rounded-full animate-spin-slow duration-[40s]">
+      {/* Orbite 1 (Intérieure) */}
+      <div className={`absolute border border-black/5 dark:border-white/5 w-[550px] h-[550px] rounded-full ${spinSlow} duration-[40s]`}>
          {[
            <Music size={44} />, 
            <Music2 size={40} />, 
@@ -55,7 +63,7 @@ const Orrery: React.FC = () => {
       </div>
 
       {/* Orbite 2 (Milieu) */}
-      <div className="absolute border border-black/10 dark:border-white/10 w-[800px] h-[800px] rounded-full animate-spin-reverse-slow duration-[80s]">
+      <div className={`absolute border border-black/10 dark:border-white/10 w-[800px] h-[800px] rounded-full ${spinReverseSlow} duration-[80s]`}>
         {ring2Items.map((item, i) => (
              <div 
                 key={i} 
@@ -68,7 +76,7 @@ const Orrery: React.FC = () => {
       </div>
 
       {/* Orbite 3 (Extérieure) */}
-      <div className="absolute border border-black/5 dark:border-white/5 w-[1050px] h-[1050px] rounded-full animate-spin-super-slow duration-[160s]">
+      <div className={`absolute border border-black/5 dark:border-white/5 w-[1050px] h-[1050px] rounded-full ${spinSuperSlow} duration-[160s]`}>
          {ring3Items.map((item, i) => (
              <div 
                 key={i} 

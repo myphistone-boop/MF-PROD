@@ -1,5 +1,6 @@
 
 import React, { useEffect, useRef } from 'react';
+import { usePerformanceMode } from '../hooks/usePerformanceMode';
 
 interface Particle {
   x: number;
@@ -25,6 +26,7 @@ const BackgroundCanvas: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const particlesRef = useRef<Particle[]>([]);
   const orbsRef = useRef<Orb[]>([]);
+  const { isLowPerf } = usePerformanceMode();
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -43,16 +45,26 @@ const BackgroundCanvas: React.FC = () => {
     ];
 
     const initOrbs = () => {
+      // Moins d'orbes en mode dégradé
+      const count = isLowPerf ? 2 : 4;
       orbsRef.current = [
         { x: width * 0.1, y: height * 0.2, radius: width * 0.5, color: brandColors[0], angle: Math.random() * Math.PI, speed: 0.001, range: 100 },
         { x: width * 0.8, y: height * 0.7, radius: width * 0.6, color: brandColors[1], angle: Math.random() * Math.PI, speed: 0.0008, range: 150 },
-        { x: width * 0.4, y: height * 0.5, radius: width * 0.4, color: brandColors[2], angle: Math.random() * Math.PI, speed: 0.0012, range: 80 },
-        { x: width * 0.9, y: height * 0.1, radius: width * 0.3, color: brandColors[0], angle: Math.random() * Math.PI, speed: 0.0015, range: 50 },
-      ];
+      ].slice(0, count);
+      
+      if (!isLowPerf) {
+        orbsRef.current.push(
+            { x: width * 0.4, y: height * 0.5, radius: width * 0.4, color: brandColors[2], angle: Math.random() * Math.PI, speed: 0.0012, range: 80 },
+            { x: width * 0.9, y: height * 0.1, radius: width * 0.3, color: brandColors[0], angle: Math.random() * Math.PI, speed: 0.0015, range: 50 },
+        );
+      }
     };
 
     const initParticles = () => {
-      const count = Math.floor((width * height) / 12000);
+      // Divise le nombre de particules par 5 en mode Low Perf
+      const density = isLowPerf ? 60000 : 12000;
+      const count = Math.floor((width * height) / density);
+      
       particlesRef.current = Array.from({ length: count }, () => ({
         x: Math.random() * width,
         y: Math.random() * height,
@@ -84,7 +96,10 @@ const BackgroundCanvas: React.FC = () => {
 
       ctx.globalCompositeOperation = 'screen';
       orbsRef.current.forEach(orb => {
-        orb.angle += orb.speed;
+        // Ralentissement ou arrêt des orbes
+        if (!isLowPerf) {
+            orb.angle += orb.speed;
+        }
         const currentX = orb.x + Math.sin(orb.angle) * orb.range;
         const currentY = orb.y + Math.cos(orb.angle * 0.8) * orb.range;
         
@@ -100,15 +115,17 @@ const BackgroundCanvas: React.FC = () => {
 
       ctx.globalCompositeOperation = 'source-over';
       particlesRef.current.forEach(p => {
-        p.x += p.vx;
-        p.y += p.vy;
+        if (!isLowPerf) {
+            p.x += p.vx;
+            p.y += p.vy;
+        }
 
         if (p.x < 0) p.x = width;
         if (p.x > width) p.x = 0;
         if (p.y < 0) p.y = height;
         if (p.y > height) p.y = 0;
 
-        const twinkle = Math.sin(time + p.x * 0.1) * 0.5 + 0.5;
+        const twinkle = isLowPerf ? 1 : Math.sin(time + p.x * 0.1) * 0.5 + 0.5;
         ctx.globalAlpha = p.opacity * twinkle;
         ctx.fillStyle = p.color;
         ctx.beginPath();
@@ -116,15 +133,17 @@ const BackgroundCanvas: React.FC = () => {
         ctx.fill();
       });
 
-      ctx.globalAlpha = 0.02;
-      ctx.strokeStyle = '#FFFFFF';
-      ctx.lineWidth = 1;
-      for (let i = 0; i < 3; i++) {
-          const xOffset = Math.sin(time * 0.1 + i) * 100;
-          ctx.beginPath();
-          ctx.moveTo(width * (0.2 + i * 0.3) + xOffset, 0);
-          ctx.lineTo(width * (0.1 + i * 0.3) + xOffset, height);
-          ctx.stroke();
+      if (!isLowPerf) {
+          ctx.globalAlpha = 0.02;
+          ctx.strokeStyle = '#FFFFFF';
+          ctx.lineWidth = 1;
+          for (let i = 0; i < 3; i++) {
+              const xOffset = Math.sin(time * 0.1 + i) * 100;
+              ctx.beginPath();
+              ctx.moveTo(width * (0.2 + i * 0.3) + xOffset, 0);
+              ctx.lineTo(width * (0.1 + i * 0.3) + xOffset, height);
+              ctx.stroke();
+          }
       }
 
       ctx.globalAlpha = 1.0;
@@ -136,7 +155,7 @@ const BackgroundCanvas: React.FC = () => {
         window.removeEventListener('resize', resize);
         cancelAnimationFrame(animationId);
     };
-  }, []);
+  }, [isLowPerf]);
 
   return <canvas ref={canvasRef} className="fixed top-0 left-0 w-full h-full -z-10 pointer-events-none" />;
 };

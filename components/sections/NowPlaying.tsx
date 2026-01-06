@@ -2,7 +2,8 @@
 import React, { useEffect, useState } from 'react';
 import { Button } from '../ui/Button';
 import { View } from '../../types';
-import { Sparkles, Zap, ArrowRight, Music } from 'lucide-react';
+import { Sparkles, Zap, ArrowRight } from 'lucide-react';
+import { usePerformanceMode } from '../../hooks/usePerformanceMode';
 
 interface NowPlayingProps {
   onNavigate: (view: View, context?: any) => void;
@@ -10,11 +11,17 @@ interface NowPlayingProps {
 
 const NowPlaying: React.FC<NowPlayingProps> = ({ onNavigate }) => {
   const [mounted, setMounted] = useState(false);
+  const { isLowPerf, isMobile } = usePerformanceMode();
+  
   const videoUrl = "https://storage.googleapis.com/novelec_assets/MF%20PROD/SUPERSTAR-VIDEO-ACCUEIL.mp4";
+  const posterUrl = "https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?auto=format&fit=crop&w=1200&q=80";
 
   useEffect(() => {
     setMounted(true);
   }, []);
+
+  // On n'affiche la vidéo que si on n'est pas sur mobile ET que la connexion est bonne
+  const shouldShowVideo = !isMobile && !isLowPerf;
 
   return (
     <section className="relative pt-4 pb-12 lg:pt-6 lg:pb-20 bg-brand-light dark:bg-brand-dark transition-colors duration-500 overflow-hidden">
@@ -68,19 +75,27 @@ const NowPlaying: React.FC<NowPlayingProps> = ({ onNavigate }) => {
             </div>
           </div>
 
-          {/* Vidéo - Plein écran sur Mobile */}
+          {/* Média : Vidéo (PC Haute Perf) ou Image (Mobile/Basse Perf) */}
           <div className="w-full lg:w-3/5 order-1 lg:order-2">
             <div 
               onClick={() => window.innerWidth < 1024 && onNavigate(View.PRODUCTION_SPECTACLES, { sectionId: 'superstars' })}
               className="relative rounded-[2rem] lg:rounded-[4rem] overflow-hidden border-4 border-white dark:border-brand-dark-soft shadow-2xl aspect-video bg-black cursor-pointer lg:cursor-default"
             >
-              <video autoPlay muted loop playsInline preload="auto" className="w-full h-full object-cover">
-                <source src={videoUrl} type="video/mp4" />
-              </video>
+              {shouldShowVideo ? (
+                <video autoPlay muted loop playsInline preload="auto" className="w-full h-full object-cover">
+                  <source src={videoUrl} type="video/mp4" />
+                </video>
+              ) : (
+                <img src={posterUrl} className="w-full h-full object-cover" alt="Superstars" />
+              )}
+              
               <div className="absolute top-4 left-4 lg:top-8 lg:left-8 z-20 flex items-center gap-2 px-3 py-1.5 rounded-full backdrop-blur-xl bg-brand-dark/30 border border-white/20">
                 <div className="relative w-2 h-2 rounded-full bg-brand-magenta animate-pulse"></div>
-                <span className="text-[8px] lg:text-[10px] font-black uppercase tracking-widest text-white">À l'affiche : SuperStar</span>
+                <span className="text-[8px] lg:text-[10px] font-black uppercase tracking-widest text-white">
+                    {shouldShowVideo ? "À l'affiche : SuperStar" : "Focus : SuperStars"}
+                </span>
               </div>
+              
               <div className="lg:hidden absolute bottom-4 left-4 right-4 z-20 bg-brand-magenta/90 text-white p-3 rounded-xl flex items-center justify-between">
                  <span className="text-[10px] font-black uppercase tracking-widest">En savoir plus</span>
                  <ArrowRight size={14} />
