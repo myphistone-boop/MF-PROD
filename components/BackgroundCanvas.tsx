@@ -29,20 +29,30 @@ const BackgroundCanvas: React.FC = () => {
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-    const ctx = canvas.getContext('2d');
+    const ctx = canvas.getContext('2d', { alpha: false }); // Optimisation : pas besoin d'alpha sur le canvas principal
     if (!ctx) return;
 
     let width = window.innerWidth;
     let height = window.innerHeight;
+    const isMobile = width < 768;
 
-    // Couleurs du logo optimisées pour fond sombre
+    // Couleurs du logo optimisées
     const brandColors = [
-      'rgba(0, 210, 255, 0.12)',   // Cyan
-      'rgba(255, 0, 122, 0.12)',   // Magenta
-      'rgba(255, 138, 0, 0.08)',   // Orange
+      'rgba(0, 210, 255, 0.1)',   // Cyan
+      'rgba(255, 0, 122, 0.1)',   // Magenta
+      'rgba(255, 138, 0, 0.05)',  // Orange
     ];
 
     const initOrbs = () => {
+      // Sur mobile, on réduit à 2 orbs statiques ou très lents pour économiser le GPU
+      if (isMobile) {
+        orbsRef.current = [
+          { x: width * 0.2, y: height * 0.2, radius: width * 0.8, color: brandColors[0], angle: 0, speed: 0.0002, range: 20 },
+          { x: width * 0.8, y: height * 0.8, radius: width * 0.9, color: brandColors[1], angle: Math.PI, speed: 0.0002, range: 20 },
+        ];
+        return;
+      }
+
       orbsRef.current = [
         { x: width * 0.1, y: height * 0.2, radius: width * 0.5, color: brandColors[0], angle: Math.random() * Math.PI, speed: 0.001, range: 100 },
         { x: width * 0.8, y: height * 0.7, radius: width * 0.6, color: brandColors[1], angle: Math.random() * Math.PI, speed: 0.0008, range: 150 },
@@ -52,15 +62,18 @@ const BackgroundCanvas: React.FC = () => {
     };
 
     const initParticles = () => {
-      const count = Math.floor((width * height) / 12000);
+      // Moins de particules sur mobile
+      const density = isMobile ? 30000 : 12000;
+      const count = Math.floor((width * height) / density);
+      
       particlesRef.current = Array.from({ length: count }, () => ({
         x: Math.random() * width,
         y: Math.random() * height,
-        vx: (Math.random() - 0.5) * 0.15,
-        vy: (Math.random() - 0.5) * 0.15,
-        size: Math.random() * 2 + 0.5,
+        vx: (Math.random() - 0.5) * (isMobile ? 0.05 : 0.15),
+        vy: (Math.random() - 0.5) * (isMobile ? 0.05 : 0.15),
+        size: Math.random() * (isMobile ? 1.5 : 2) + 0.5,
         color: '#FFFFFF',
-        opacity: Math.random() * 0.3 + 0.05
+        opacity: Math.random() * 0.2 + 0.05
       }));
     };
 
@@ -76,12 +89,16 @@ const BackgroundCanvas: React.FC = () => {
     window.addEventListener('resize', resize);
     resize();
 
-    const animate = () => {
-      const time = Date.now() * 0.001;
-      
+    let lastTime = 0;
+    const animate = (time: number) => {
+      // Throttle sur mobile si nécessaire (optionnel, ici on garde 60fps mais plus léger)
+      const deltaTime = time - lastTime;
+      lastTime = time;
+
       ctx.fillStyle = '#020617';
       ctx.fillRect(0, 0, width, height);
 
+      // Rendu des Orbs (Dégradés Radiaux - Coûteux)
       ctx.globalCompositeOperation = 'screen';
       orbsRef.current.forEach(orb => {
         orb.angle += orb.speed;
@@ -98,7 +115,10 @@ const BackgroundCanvas: React.FC = () => {
         ctx.fill();
       });
 
+      // Rendu des Particules (Simples Cercles - Moins coûteux)
       ctx.globalCompositeOperation = 'source-over';
+      const timeSec = time * 0.001;
+      
       particlesRef.current.forEach(p => {
         p.x += p.vx;
         p.y += p.vy;
@@ -108,7 +128,8 @@ const BackgroundCanvas: React.FC = () => {
         if (p.y < 0) p.y = height;
         if (p.y > height) p.y = 0;
 
-        const twinkle = Math.sin(time + p.x * 0.1) * 0.5 + 0.5;
+        // Twinkle simplifié sur mobile
+        const twinkle = isMobile ? 0.5 : Math.sin(timeSec + p.x * 0.1) * 0.5 + 0.5;
         ctx.globalAlpha = p.opacity * twinkle;
         ctx.fillStyle = p.color;
         ctx.beginPath();
@@ -116,15 +137,18 @@ const BackgroundCanvas: React.FC = () => {
         ctx.fill();
       });
 
-      ctx.globalAlpha = 0.02;
-      ctx.strokeStyle = '#FFFFFF';
-      ctx.lineWidth = 1;
-      for (let i = 0; i < 3; i++) {
-          const xOffset = Math.sin(time * 0.1 + i) * 100;
-          ctx.beginPath();
-          ctx.moveTo(width * (0.2 + i * 0.3) + xOffset, 0);
-          ctx.lineTo(width * (0.1 + i * 0.3) + xOffset, height);
-          ctx.stroke();
+      // Lignes décoratives (Désactivées sur mobile)
+      if (!isMobile) {
+        ctx.globalAlpha = 0.02;
+        ctx.strokeStyle = '#FFFFFF';
+        ctx.lineWidth = 1;
+        for (let i = 0; i < 3; i++) {
+            const xOffset = Math.sin(timeSec * 0.1 + i) * 100;
+            ctx.beginPath();
+            ctx.moveTo(width * (0.2 + i * 0.3) + xOffset, 0);
+            ctx.lineTo(width * (0.1 + i * 0.3) + xOffset, height);
+            ctx.stroke();
+        }
       }
 
       ctx.globalAlpha = 1.0;

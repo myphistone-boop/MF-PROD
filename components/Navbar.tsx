@@ -16,10 +16,17 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate }) => {
   const [mobilePrestationsOpen, setMobilePrestationsOpen] = useState(false);
 
   useEffect(() => {
+    let ticking = false;
     const handleScroll = () => {
-      setScrolled(window.scrollY > 30);
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          setScrolled(window.scrollY > 30);
+          ticking = false;
+        });
+        ticking = true;
+      }
     };
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -58,25 +65,24 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate }) => {
   return (
     <>
       <nav 
-        className={`fixed top-4 md:top-6 left-1/2 transform -translate-x-1/2 z-50 transition-all duration-700 ease-in-out
-          ${scrolled ? 'w-[95%] max-w-[1500px] py-2' : 'w-[98%] max-w-[1800px] py-4'}
+        className={`fixed top-4 md:top-6 left-1/2 transform -translate-x-1/2 z-50 transition-all duration-500 ease-in-out will-change-transform
+          ${scrolled ? 'w-[95%] max-w-[1500px] py-1' : 'w-[98%] max-w-[1800px] py-4'}
         `}
       >
         <div className={`
-          relative w-full h-full rounded-full flex items-center justify-between px-8 lg:px-14 transition-all duration-700
-          backdrop-blur-2xl border border-white/10 shadow-2xl
-          ${scrolled ? 'bg-brand-dark-soft/95' : 'bg-brand-dark/60'}
+          relative w-full rounded-full flex items-center justify-between px-6 lg:px-14 transition-all duration-500
+          backdrop-blur-xl lg:backdrop-blur-2xl border border-white/10 shadow-2xl
+          ${scrolled ? 'bg-brand-dark-soft/95 py-2' : 'bg-brand-dark/60 py-2'}
         `}>
           
-          {/* Logo Section */}
           <div 
-            className="flex items-center gap-4 lg:gap-6 cursor-pointer group flex-shrink-0"
+            className="flex items-center gap-3 lg:gap-6 cursor-pointer group flex-shrink-0"
             onClick={() => onNavigate(View.HOME)}
           >
             <div className={`
                 relative z-50 flex items-center justify-center bg-brand-dark rounded-full 
-                border-2 border-white/10 shadow-lg transition-all duration-500 group-hover:border-brand-magenta
-                ${scrolled ? 'w-12 h-12 lg:w-14 lg:h-14' : 'w-14 h-14 lg:w-20 lg:h-20'}
+                border border-white/10 shadow-lg transition-all duration-500 group-hover:border-brand-magenta
+                ${scrolled ? 'w-10 h-10 lg:w-14 lg:h-14' : 'w-12 h-12 lg:w-20 lg:h-20'}
             `}>
               <img 
                 src={LOGO_URL} 
@@ -84,12 +90,11 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate }) => {
                 className="w-full h-full object-contain p-2" 
               />
             </div>
-            <span className="font-sans font-black tracking-tighter text-white text-lg lg:text-xl xl:text-2xl hidden sm:block uppercase">
+            <span className="font-sans font-black tracking-tighter text-white text-base lg:text-xl xl:text-2xl hidden sm:block uppercase">
               MF <span className="text-brand-cyan">PROD</span>
             </span>
           </div>
 
-          {/* Desktop Navigation */}
           <div className="hidden lg:flex items-center gap-6 xl:gap-12 flex-grow justify-center">
             {NAV_ITEMS.map((item) => {
               const isPrestations = item.label === 'Prestations';
@@ -148,30 +153,29 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate }) => {
             })}
           </div>
 
-          {/* Right Section */}
           <div className="flex items-center gap-5 flex-shrink-0">
             <button 
               className="lg:hidden text-white p-2"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              aria-label="Menu"
             >
-              {mobileMenuOpen ? <X size={32} /> : <Menu size={32} />}
+              {mobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
             </button>
           </div>
         </div>
       </nav>
 
-      {/* Mobile Menu */}
+      {/* Mobile Menu - Opacité renforcée et moins de flou sur mobile */}
       {mobileMenuOpen && (
-        <div className="fixed inset-0 z-[60] bg-brand-dark/98 backdrop-blur-3xl flex flex-col items-center justify-center lg:hidden animate-fade-in-up overflow-y-auto">
-           {/* Close Button - More subtle and higher up */}
+        <div className="fixed inset-0 z-[60] bg-brand-dark/98 flex flex-col items-center justify-center lg:hidden overflow-y-auto will-change-transform">
            <button 
                 onClick={() => setMobileMenuOpen(false)}
-                className="absolute top-10 right-8 w-12 h-12 rounded-full bg-white/5 flex items-center justify-center text-white border border-white/10 shadow-lg active:scale-90 transition-all"
+                className="absolute top-8 right-8 w-12 h-12 rounded-full bg-white/5 flex items-center justify-center text-white border border-white/10 shadow-lg active:scale-90 transition-all"
             >
                 <X size={24} />
             </button>
 
-           <div className="flex flex-col items-center gap-8 w-full max-w-sm px-8">
+           <div className="flex flex-col items-center gap-6 w-full max-w-sm px-8 py-20">
             {NAV_ITEMS.map((item) => {
                 const isPrestations = item.label === 'Prestations';
                 
@@ -179,7 +183,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate }) => {
                   <div key={item.label} className="w-full flex flex-col items-center">
                     <button
                       onClick={() => !isPrestations ? handleNavClick(item) : setMobilePrestationsOpen(!mobilePrestationsOpen)}
-                      className={`text-2xl sm:text-3xl font-sans font-black uppercase tracking-tighter transition-all flex items-center justify-center gap-4 py-1 ${currentView === item.view && !isPrestations ? 'text-brand-cyan' : 'text-white'}`}
+                      className={`text-2xl font-black uppercase tracking-tighter transition-all flex items-center justify-center gap-4 py-2 ${currentView === item.view && !isPrestations ? 'text-brand-cyan' : 'text-white'}`}
                     >
                       {item.label}
                       {isPrestations && (
@@ -190,12 +194,12 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate }) => {
                     </button>
                     
                     {isPrestations && mobilePrestationsOpen && (
-                      <div className="flex flex-col items-center gap-4 mt-4 animate-fade-in-up bg-white/5 rounded-[1.5rem] p-5 w-full border border-white/10 shadow-xl">
+                      <div className="flex flex-col items-center gap-2 mt-4 bg-white/5 rounded-[1.5rem] p-4 w-full border border-white/10 shadow-xl">
                         {prestationsLinks.map((link) => (
                           <button
                             key={link.label}
                             onClick={() => handlePrestationClick(link)}
-                            className="text-[11px] font-black text-white/70 hover:text-brand-magenta uppercase tracking-[0.15em] text-center w-full py-2.5 border-b border-white/5 last:border-0"
+                            className="text-[10px] font-black text-white/70 hover:text-brand-magenta uppercase tracking-[0.15em] text-center w-full py-3 border-b border-white/5 last:border-0"
                           >
                             {link.label}
                           </button>
