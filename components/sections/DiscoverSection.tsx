@@ -1,25 +1,14 @@
 
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { View } from '../../types';
 import { ASSETS } from '../../assets';
 import { Mic2, Music, Star, ChevronRight, Zap, Tv, Headphones } from 'lucide-react';
-import { usePerformanceMode } from '../../hooks/usePerformanceMode';
 
 interface DiscoverSectionProps {
     onNavigate: (view: View, context?: any) => void;
 }
 
 const DiscoverSection: React.FC<DiscoverSectionProps> = ({ onNavigate }) => {
-    const { isMobile } = usePerformanceMode();
-    // Sur mobile, affichage instantané. Sur desktop, animation après montage.
-    const [mounted, setMounted] = useState(isMobile);
-
-    useEffect(() => {
-        // Sur desktop uniquement, déclencher l'animation
-        if (!isMobile) {
-            setMounted(true);
-        }
-    }, [isMobile]);
 
     const approaches = [
         {
@@ -76,7 +65,7 @@ const DiscoverSection: React.FC<DiscoverSectionProps> = ({ onNavigate }) => {
     return (
         <section id="prestations" className="w-full py-10 lg:py-16 px-6 lg:px-12 relative dark:bg-brand-dark transition-colors duration-500 overflow-hidden">
             <div className="max-w-[1400px] mx-auto">
-                <div className={`text-center mb-10 lg:mb-12 transition-all duration-1000 transform ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+                <div className="text-center mb-10 lg:mb-12 lg:opacity-0 lg:translate-y-10 lg:animate-fade-in-up">
                     <h2 className="font-sans font-black text-3xl lg:text-7xl text-brand-dark dark:text-white mb-3 tracking-tighter uppercase leading-none">
                         NOS <span className="gradient-text italic">PRESTATIONS</span>
                     </h2>
@@ -88,12 +77,8 @@ const DiscoverSection: React.FC<DiscoverSectionProps> = ({ onNavigate }) => {
                         <div
                             key={index}
                             onClick={() => onNavigate(item.id, item.sectionId ? { sectionId: item.sectionId } : undefined)}
-                            className={`
-                                group relative h-[120px] sm:h-[280px] lg:h-[340px] cursor-pointer rounded-2xl lg:rounded-[3rem] overflow-hidden transition-all duration-700
-                                ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'}
-                                hover:shadow-2xl
-                            `}
-                            style={{ transitionDelay: isMobile ? '0ms' : `${index * 50}ms` }}
+                            className="group relative h-[120px] sm:h-[280px] lg:h-[340px] cursor-pointer rounded-2xl lg:rounded-[3rem] overflow-hidden hover:shadow-2xl lg:opacity-0 lg:translate-y-20 lg:animate-fade-in-up"
+                            style={{ animationDelay: `${index * 50}ms` }}
                         >
                             <div className="absolute inset-0">
                                 <img src={item.image} alt={item.title} className="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-110" />

@@ -1,40 +1,26 @@
 
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useRef } from 'react';
 import { ASSETS } from '../../assets';
 import { Calendar, Sparkles, ChevronRight, ChevronLeft } from 'lucide-react';
-import { usePerformanceMode } from '../../hooks/usePerformanceMode';
 
 const UpcomingShows: React.FC = () => {
-  const { isMobile } = usePerformanceMode();
-  // Sur mobile, affichage instantané. Sur desktop, animation après montage.
-  const [mounted, setMounted] = useState(isMobile);
   const scrollRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    // Sur desktop uniquement, déclencher l'animation
-    if (!isMobile) {
-      setMounted(true);
-    }
-  }, [isMobile]);
-
   const shows = ASSETS.SHOWS_2026;
 
   const scroll = (direction: 'left' | 'right') => {
     if (scrollRef.current) {
       const { scrollLeft, clientWidth } = scrollRef.current;
       const step = window.innerWidth < 1024 ? 284 : clientWidth * 0.6;
-      const scrollTo = direction === 'left' 
+      const scrollTo = direction === 'left'
         ? scrollLeft - step
         : scrollLeft + step;
-      
+
       scrollRef.current.scrollTo({
         left: scrollTo,
         behavior: 'smooth'
       });
     }
   };
-
-  const sectionVisibility = mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10';
 
   return (
     <section className="py-16 lg:py-24 relative dark:bg-brand-dark transition-colors duration-500 overflow-hidden">
@@ -43,7 +29,7 @@ const UpcomingShows: React.FC = () => {
       <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-brand-cyan/5 rounded-full blur-[120px] pointer-events-none" />
 
       <div className="max-w-[1400px] mx-auto relative z-10">
-        <div className={`text-center mb-10 lg:mb-12 transition-all duration-1000 transform ${sectionVisibility}`}>
+        <div className="text-center mb-10 lg:mb-12 lg:opacity-0 lg:translate-y-10 lg:animate-fade-in-up">
           <div className="inline-flex items-center gap-3 px-6 py-3 rounded-full border-2 border-brand-orange/50 bg-brand-orange/5 dark:bg-gradient-to-r dark:from-brand-magenta/20 dark:to-brand-orange/20 mb-8 shadow-xl dark:shadow-[0_0_30px_rgba(255,138,0,0.2)] animate-breathe">
             <Calendar size={18} className="text-brand-orange" />
             <span className="text-xs lg:text-sm uppercase tracking-[0.4em] text-brand-dark dark:text-white font-black">Saison 2026</span>
@@ -80,8 +66,8 @@ const UpcomingShows: React.FC = () => {
             {shows.map((show, index) => (
               <div
                 key={index}
-                className={`flex-shrink-0 w-[260px] sm:w-[300px] lg:w-[340px] snap-center flex flex-col items-center transition-all duration-700 ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'}`}
-                style={{ transitionDelay: mounted && !isMobile ? `${index * 150}ms` : '0ms' }}
+                className="flex-shrink-0 w-[260px] sm:w-[300px] lg:w-[340px] snap-center flex flex-col items-center lg:opacity-0 lg:translate-y-20 lg:animate-fade-in-up"
+                style={{ animationDelay: `${index * 150}ms` }}
               >
                 {/* 1. TOP BADGE - OUTSIDE IMAGE */}
                 <div className="mb-6 flex items-center gap-3 px-4 py-2 rounded-full border border-brand-magenta/30 bg-brand-magenta/5 dark:bg-brand-magenta/10 shadow-lg dark:shadow-[0_0_15px_rgba(255,0,122,0.1)]">
