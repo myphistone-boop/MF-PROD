@@ -162,7 +162,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate }) => {
 
       {/* Mobile Menu */}
       {mobileMenuOpen && (
-        <div className="fixed inset-0 z-[60] bg-brand-dark/98 backdrop-blur-sm flex flex-col items-center justify-center lg:hidden overflow-y-auto">
+        <div className="fixed inset-0 z-[60] bg-black flex flex-col items-center justify-center lg:hidden overflow-y-auto">
            {/* Close Button - More subtle and higher up */}
            <button 
                 onClick={() => setMobileMenuOpen(false)}

@@ -1,27 +1,15 @@
 
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import Orrery from '../Orrery';
 import { Button } from '../ui/Button';
 import { Zap } from 'lucide-react';
 import { View } from '../../types';
-import { usePerformanceMode } from '../../hooks/usePerformanceMode';
 
 interface HeroProps {
   onNavigate: (view: View) => void;
 }
 
 const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
-  const { isMobile } = usePerformanceMode();
-  // Sur mobile, affichage instantané. Sur desktop, animation après montage.
-  const [mounted, setMounted] = useState(isMobile);
-
-  useEffect(() => {
-    // Sur desktop uniquement, déclencher l'animation
-    if (!isMobile) {
-      setMounted(true);
-    }
-  }, [isMobile]);
-
   const scrollToPrestations = () => {
     const element = document.getElementById('prestations');
     if (element) {
@@ -29,17 +17,11 @@ const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
     }
   };
 
-  const visibilityClass = mounted ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-10';
-
   return (
     <section className="min-h-[50vh] lg:min-h-[75vh] w-full flex flex-col lg:flex-row items-center relative overflow-hidden pt-24 lg:pt-10 pb-12 lg:pb-0 px-6 md:px-12 lg:px-24">
         
         {/* Text Content */}
-        <div className={`
-            flex-1 w-full flex flex-col justify-start lg:justify-center items-start z-20 
-            transition-all duration-1000 ease-out transform
-            ${visibilityClass}
-          `}>
+        <div className="flex-1 w-full flex flex-col justify-start lg:justify-center items-start z-20 lg:opacity-0 lg:-translate-x-10 lg:animate-fade-in-up">
           
           <div className="inline-flex items-center gap-3 px-4 py-1.5 rounded-full border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 mb-3 lg:mb-6 shadow-xl">
             <Zap size={12} className="text-brand-cyan animate-pulse" />
@@ -66,12 +48,7 @@ const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
         </div>
 
         {/* Visual Content (Orrery) - Hidden on Mobile */}
-        <div className={`
-            hidden lg:flex lg:flex-1 w-full items-center justify-center relative z-10
-            lg:order-2
-            transition-all duration-1000 delay-300 ease-out transform
-            ${mounted ? 'opacity-100 scale-100' : 'opacity-0 lg:scale-95'}
-          `}>
+        <div className="hidden lg:flex lg:flex-1 w-full items-center justify-center relative z-10 lg:order-2 lg:opacity-0 lg:scale-95 lg:animate-fade-in-up" style={{ animationDelay: '300ms' }}>
           <div className="transform lg:scale-[0.8] xl:scale-[0.9] transition-transform duration-[2s] lg:hover:scale-95 flex items-center justify-center pointer-events-none">
              <Orrery />
           </div>

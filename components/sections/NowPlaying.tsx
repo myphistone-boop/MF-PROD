@@ -1,39 +1,28 @@
 
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Button } from '../ui/Button';
 import { View } from '../../types';
 import { Sparkles, Zap, ArrowRight } from 'lucide-react';
-import { usePerformanceMode } from '../../hooks/usePerformanceMode';
 
 interface NowPlayingProps {
   onNavigate: (view: View, context?: any) => void;
 }
 
 const NowPlaying: React.FC<NowPlayingProps> = ({ onNavigate }) => {
-  const { isLowPerf, isMobile } = usePerformanceMode();
-  // Sur mobile, affichage instantané. Sur desktop, animation après montage.
-  const [mounted, setMounted] = useState(isMobile);
-
   // URL GCS Superstar pour l'affiche fixe
   const posterUrl = "https://storage.googleapis.com/novelec_assets/MF%20PROD/SPETACLES/affiche__superstars-1-768x1086.webp";
   const videoUrl = "https://storage.googleapis.com/novelec_assets/MF%20PROD/SUPERSTAR-VIDEO-ACCUEIL.mp4";
 
-  useEffect(() => {
-    // Sur desktop uniquement, déclencher l'animation
-    if (!isMobile) {
-      setMounted(true);
-    }
-  }, [isMobile]);
-
-  const visibilityClass = mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10';
-  const shouldShowVideo = !isMobile && !isLowPerf;
+  // Détection mobile via CSS media query
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 1024;
+  const shouldShowVideo = !isMobile;
 
   return (
     <section className="relative pt-4 pb-12 lg:pt-6 lg:pb-20 bg-brand-light dark:bg-brand-dark transition-colors duration-500 overflow-hidden">
       <div className="absolute top-1/2 right-0 w-[600px] h-[600px] bg-brand-magenta/5 rounded-full blur-[120px] pointer-events-none -translate-y-1/2 opacity-50" />
       
       <div className="max-w-[1400px] mx-auto px-6 lg:px-12 relative z-10">
-        <div className={`flex flex-col lg:flex-row gap-8 lg:gap-20 items-center transition-all duration-1000 transform ${visibilityClass}`}>
+        <div className="flex flex-col lg:flex-row gap-8 lg:gap-20 items-center lg:opacity-0 lg:translate-y-10 lg:animate-fade-in-up">
           
           {/* Texte - Masqué sur Mobile */}
           <div className="w-full lg:w-2/5 order-2 lg:order-1 hidden lg:block">
