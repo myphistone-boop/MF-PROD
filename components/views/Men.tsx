@@ -20,9 +20,9 @@ const Men: React.FC<MenProps> = ({ onNavigate }) => {
         <div className="w-full min-h-screen pt-32 lg:pt-40 relative bg-brand-light dark:bg-brand-dark transition-colors duration-500">
             <div className="fixed top-0 left-0 w-full h-[80vh] -z-10 opacity-40">
                 <div className="absolute inset-0 bg-gradient-to-b from-transparent via-brand-light/50 dark:via-brand-dark/50 to-brand-light dark:to-brand-dark" />
-                <img 
-                    src="https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80" 
-                    className="w-full h-full object-cover filter contrast-125 brightness-75"
+                <img
+                    src="https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80"
+                    className="w-full h-full object-cover lg:filter lg:contrast-125 lg:brightness-75"
                     alt="Scène de spectacle"
                 />
             </div>
@@ -88,7 +88,7 @@ const Men: React.FC<MenProps> = ({ onNavigate }) => {
                                         <span className="text-brand-cyan font-black">DISPONIBLE</span>
                                     </div>
                                 </div>
-                                <Button className="w-full justify-center py-6 text-lg shadow-xl" onClick={() => onNavigate(View.BOOKING)}>Commander le Spectacle</Button>
+                                <Button className="w-full justify-center py-2 lg:py-6 px-6 lg:px-10 text-[10px] lg:text-lg shadow-xl text-white" onClick={() => onNavigate(View.BOOKING)}>Commander</Button>
                                 <p className="text-center text-[9px] uppercase tracking-[0.4em] text-brand-dark/20 dark:text-white/20 mt-10 font-black">DOSSIER TECHNIQUE SUR DEMANDE</p>
                             </div>
                         </div>

@@ -354,8 +354,8 @@ const ProductionSpectacles: React.FC<Props> = ({ onNavigate }) => {
                 </div>
 
                 {/* --- SECTION 1: LE CARROUSSEL 2026 --- */}
-                <section className="mb-16 lg:mb-48 relative">
-                    <div className="flex items-center justify-between mb-8 lg:mb-16 px-4">
+                <section className="mb-8 lg:mb-48 relative">
+                    <div className="flex items-center justify-between mb-4 lg:mb-16 px-4">
                         <div className="flex items-center gap-6">
                             <h2 className="text-xs font-black uppercase tracking-[0.3em] lg:tracking-[0.6em] text-brand-cyan">SAISON 2026 - LES PROCHAINES PRODUCTIONS</h2>
                             <div className="h-px w-32 bg-brand-cyan/30 hidden md:block"></div>
@@ -413,10 +413,10 @@ const ProductionSpectacles: React.FC<Props> = ({ onNavigate }) => {
                 </section>
 
                 {/* --- SECTION 2: LE CATALOGUE COMPLET --- */}
-                <section className="mb-48 space-y-32">
+                <section className="mb-8 lg:mb-48 space-y-8 lg:space-y-32">
                     {/* Index 2026 */}
                     <div>
-                        <div className="flex items-center gap-6 mb-16 px-4">
+                        <div className="flex items-center gap-6 mb-4 lg:mb-16 px-4">
                             <h2 className="text-xs font-black uppercase tracking-[0.6em] text-brand-cyan whitespace-nowrap">INDEX SAISON 2026</h2>
                             <div className="h-[1px] flex-1 bg-gradient-to-r from-brand-cyan/30 to-transparent"></div>
                         </div>
@@ -441,7 +441,7 @@ const ProductionSpectacles: React.FC<Props> = ({ onNavigate }) => {
 
                     {/* Index Historique */}
                     <div>
-                        <div className="flex items-center gap-6 mb-16 px-4">
+                        <div className="flex items-center gap-6 mb-4 lg:mb-16 px-4">
                             <h2 className="text-xs font-black uppercase tracking-[0.6em] text-brand-magenta whitespace-nowrap">HISTORIQUE DES PRODUCTIONS</h2>
                             <div className="h-[1px] flex-1 bg-gradient-to-r from-brand-magenta/30 to-transparent"></div>
                         </div>
@@ -467,8 +467,8 @@ const ProductionSpectacles: React.FC<Props> = ({ onNavigate }) => {
                 </section>
 
                 {/* --- SECTION 3: FOCUS SAISON 2026 --- */}
-                <div className="space-y-64 mb-64">
-                    <div className="flex flex-col items-center gap-4 mb-32">
+                <div className="space-y-12 lg:space-y-64 mb-12 lg:mb-64">
+                    <div className="flex flex-col items-center gap-4 mb-6 lg:mb-32">
                         <div className="h-20 w-px bg-gradient-to-b from-transparent to-brand-cyan"></div>
                         <h2 className="text-xs font-black uppercase tracking-[1em] text-brand-cyan">FOCUS SAISON 2026</h2>
                     </div>
@@ -477,7 +477,7 @@ const ProductionSpectacles: React.FC<Props> = ({ onNavigate }) => {
                         const isExpanded = expandedShows.has(show.id);
                         return (
                             <div key={i} id={show.id} className="relative scroll-mt-48 group">
-                                <div className="flex items-center gap-6 mb-16">
+                                <div className="flex items-center gap-6 mb-4 lg:mb-16">
                                     <span className="text-8xl lg:text-9xl font-black opacity-5 dark:opacity-10 select-none">0{i + 1}</span>
                                     <div className="h-px flex-1 bg-brand-cyan/20"></div>
                                     <span className="text-[10px] font-black uppercase tracking-[0.5em] text-brand-cyan">{show.tag}</span>
@@ -536,8 +536,8 @@ const ProductionSpectacles: React.FC<Props> = ({ onNavigate }) => {
                 </div>
 
                 {/* --- SECTION 4: MF PROD ANTHOLOGY --- */}
-                <div className="space-y-64 mb-32">
-                    <div className="flex flex-col items-center gap-4 mb-32">
+                <div className="space-y-12 lg:space-y-64 mb-8 lg:mb-32">
+                    <div className="flex flex-col items-center gap-4 mb-6 lg:mb-32">
                         <div className="h-20 w-px bg-gradient-to-b from-transparent to-brand-magenta"></div>
                         <h2 className="text-xs font-black uppercase tracking-[1em] text-brand-magenta text-center">MF PROD ANTHOLOGY<br/><span className="text-[10px] opacity-40">HISTORIQUE DES RÉALISATIONS</span></h2>
                     </div>
@@ -546,7 +546,7 @@ const ProductionSpectacles: React.FC<Props> = ({ onNavigate }) => {
                         const isExpanded = expandedShows.has(show.id);
                         return (
                             <div key={i} id={show.id} className="relative scroll-mt-48 group">
-                                <div className="flex items-center gap-6 mb-16">
+                                <div className="flex items-center gap-6 mb-4 lg:mb-16">
                                     <span className="text-8xl lg:text-9xl font-black opacity-5 dark:opacity-10 select-none">{String(upcomingShows.length + i + 1).padStart(2, '0')}</span>
                                     <div className="h-px flex-1 bg-brand-magenta/20"></div>
                                     <span className="text-[10px] font-black uppercase tracking-[0.5em] text-brand-magenta">{show.tag}</span>

@@ -232,7 +232,7 @@ const CoachingVocal: React.FC<Props> = ({ onNavigate }) => {
                                             </div>
                                         </div>
                                     </div>
-                                    <Button className="w-full sm:w-auto" onClick={() => handleBooking("Cours Particulier", "À partir de 570€/an", "APPOINTMENT")}>S'inscrire</Button>
+                                    <Button className="w-full sm:w-auto py-2 lg:py-4 px-6 lg:px-10 text-[10px] lg:text-xs text-white" onClick={() => handleBooking("Cours Particulier", "À partir de 570€/an", "APPOINTMENT")}>S'inscrire</Button>
                                 </div>
                                 <div className="lg:col-span-6 order-1 lg:order-2">
                                     <div className="relative aspect-square rounded-[3rem] lg:rounded-[4rem] overflow-hidden border-4 border-white dark:border-brand-dark-soft shadow-2xl">
@@ -269,7 +269,7 @@ const CoachingVocal: React.FC<Props> = ({ onNavigate }) => {
                                         <span className="text-xs font-black uppercase tracking-widest text-brand-magenta">Tarif Annuel</span>
                                         <span className="text-4xl font-black text-brand-dark dark:text-white">310 €</span>
                                     </div>
-                                    <Button variant="secondary" className="w-full sm:w-auto" onClick={() => handleBooking("Cours Collectifs", "310 € / an")}>Rejoindre un groupe</Button>
+                                    <Button variant="secondary" className="w-full sm:w-auto py-2 lg:py-4 px-6 lg:px-10 text-[10px] lg:text-xs text-white" onClick={() => handleBooking("Cours Collectifs", "310 € / an")}>Rejoindre</Button>
                                 </div>
                                 <div className="lg:col-span-6 order-1 lg:order-1">
                                     <div className="relative aspect-square rounded-[3rem] lg:rounded-[4rem] overflow-hidden border-4 border-white dark:border-brand-dark-soft shadow-2xl">
@@ -306,7 +306,7 @@ const CoachingVocal: React.FC<Props> = ({ onNavigate }) => {
                                         <span className="text-xs font-black uppercase tracking-widest text-brand-cyan">Tarif Annuel</span>
                                         <span className="text-4xl font-black text-brand-dark dark:text-white">280 €</span>
                                     </div>
-                                    <Button className="w-full sm:w-auto" onClick={() => handleBooking("Chorale MF Prod", "280 € / an")}>S'inscrire</Button>
+                                    <Button className="w-full sm:w-auto py-2 lg:py-4 px-6 lg:px-10 text-[10px] lg:text-xs text-white" onClick={() => handleBooking("Chorale MF Prod", "280 € / an")}>S'inscrire</Button>
                                 </div>
                                 <div className="lg:col-span-6 order-1 lg:order-2">
                                     <div className="relative aspect-square rounded-[3rem] lg:rounded-[4rem] overflow-hidden border-4 border-white dark:border-brand-dark-soft shadow-2xl">
@@ -350,7 +350,7 @@ const CoachingVocal: React.FC<Props> = ({ onNavigate }) => {
                                             <span className="text-xs font-black uppercase tracking-widest text-brand-orange">Tarif Annuel</span>
                                             <span className="text-4xl font-black text-brand-dark dark:text-white">360 €</span>
                                         </div>
-                                        <Button className="w-full sm:w-auto px-12" onClick={() => handleBooking("Atelier Spectacle", "360 € / an")}>S'inscrire</Button>
+                                        <Button className="w-full sm:w-auto px-6 lg:px-12 py-2 lg:py-4 text-[10px] lg:text-xs text-white" onClick={() => handleBooking("Atelier Spectacle", "360 € / an")}>S'inscrire</Button>
                                     </div>
                                 </div>
                                 <div className="lg:col-span-5 order-1 lg:order-2 lg:sticky lg:top-48">
@@ -388,7 +388,7 @@ const CoachingVocal: React.FC<Props> = ({ onNavigate }) => {
                                         <span className="text-4xl font-black text-brand-dark dark:text-white">250 €</span>
                                     </div>
                                     
-                                    <Button variant="secondary" className="w-full sm:w-auto" onClick={() => handleBooking("Cours de Danse", "250 € / an")}>Rejoindre le cours</Button>
+                                    <Button variant="secondary" className="w-full sm:w-auto py-2 lg:py-4 px-6 lg:px-10 text-[10px] lg:text-xs text-white" onClick={() => handleBooking("Cours de Danse", "250 € / an")}>Rejoindre</Button>
                                 </div>
                                 <div className="lg:col-span-6 order-1 lg:order-1">
                                     <div className="relative aspect-square rounded-[3rem] lg:rounded-[4rem] overflow-hidden border-4 border-white dark:border-brand-dark-soft shadow-2xl">
@@ -448,7 +448,7 @@ const CoachingVocal: React.FC<Props> = ({ onNavigate }) => {
                                     <p className="text-xl lg:text-2xl font-light text-brand-dark/70 dark:text-brand-light/70 mb-10 leading-relaxed text-center lg:text-left">
                                         Une formation alliant théorie et pratique pour booster votre impact à l'oral.
                                     </p>
-                                    <div className="mb-12"><Button className="w-full sm:w-auto px-12" onClick={() => handleBooking("Formation Voix & Com", "Sur Devis", "RESERVATION")}>Réserver sa place</Button></div>
+                                    <div className="mb-12"><Button className="w-full sm:w-auto px-6 lg:px-12 py-2 lg:py-4 text-[10px] lg:text-xs text-white" onClick={() => handleBooking("Formation Voix & Com", "Sur Devis", "RESERVATION")}>Réserver</Button></div>
                                 </div>
                                 <div className="lg:col-span-6 order-1 lg:order-1">
                                     <div className="relative aspect-square rounded-[3rem] lg:rounded-[4rem] overflow-hidden border-4 border-white dark:border-brand-dark-soft shadow-2xl">

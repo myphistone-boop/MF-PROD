@@ -152,11 +152,11 @@ const VoixOff: React.FC<Props> = ({ onNavigate }) => {
                             </div>
 
                             <div className="mt-16 flex flex-col sm:flex-row gap-6">
-                                <Button onClick={() => handleBooking()} className="shadow-xl px-16 py-6 text-lg">Démarrer un projet</Button>
+                                <Button onClick={() => handleBooking()} className="shadow-xl px-6 lg:px-16 py-2 lg:py-6 text-[10px] lg:text-lg text-white">Démarrer</Button>
                                 <Button variant="secondary" onClick={() => {
                                     const el = document.getElementById('audios');
                                     el?.scrollIntoView({ behavior: 'smooth' });
-                                }} className="px-12 py-6">Écouter les démos</Button>
+                                }} className="px-6 lg:px-12 py-2 lg:py-6 text-[10px] lg:text-base text-white">Écouter</Button>
                             </div>
                         </div>
 

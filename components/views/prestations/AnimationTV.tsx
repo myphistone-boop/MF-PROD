@@ -393,7 +393,7 @@ const AnimationTV: React.FC<Props> = ({ onNavigate }) => {
                         Besoin d'un animateur chevronné pour votre média, festival ou avant-première ?
                     </p>
                     <div className="flex flex-col sm:flex-row gap-6 justify-center">
-                        <Button className="py-7 lg:py-8 px-16 lg:px-20 text-lg shadow-[0_30px_60px_-15px_rgba(255,138,0,0.3)]" onClick={() => handleBooking()}>Engager Mikaël Ferreira</Button>
+                        <Button className="py-2 lg:py-8 px-6 lg:px-20 text-[10px] lg:text-lg shadow-[0_30px_60px_-15px_rgba(255,138,0,0.3)] text-white" onClick={() => handleBooking()}>Engager</Button>
                     </div>
                 </div>
             </div>

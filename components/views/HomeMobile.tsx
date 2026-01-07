@@ -48,11 +48,11 @@ const HomeMobile: React.FC<HomeMobileProps> = ({ onNavigate }) => {
         </p>
 
         <div className="flex flex-col gap-3 w-full">
-          <Button onClick={scrollToPrestations} className="py-3 text-[10px] w-full">
-            Explorer nos Prestations
+          <Button onClick={scrollToPrestations} className="py-2 px-6 text-[10px] w-full text-white">
+            Explorer
           </Button>
-          <Button variant="secondary" onClick={() => onNavigate(View.SPECTACLES)} className="py-3 bg-brand-dark-soft border-white/10 text-[10px] w-full">
-            Voir les Spectacles
+          <Button variant="secondary" onClick={() => onNavigate(View.SPECTACLES)} className="py-2 px-6 bg-brand-dark-soft border-white/10 text-[10px] w-full text-white">
+            Découvrir
           </Button>
         </div>
       </section>
@@ -75,8 +75,8 @@ const HomeMobile: React.FC<HomeMobileProps> = ({ onNavigate }) => {
                 Plongez dans un spectacle explosif qui célèbre les plus grandes stars de la musique internationale.
               </p>
 
-              <Button onClick={() => onNavigate(View.SPECTACLES)} size="sm" className="text-[10px]">
-                Découvrir le spectacle
+              <Button onClick={() => onNavigate(View.SPECTACLES)} size="sm" className="text-[10px] py-2 px-6 text-white">
+                Découvrir
               </Button>
             </div>
 
@@ -194,7 +194,7 @@ const HomeMobile: React.FC<HomeMobileProps> = ({ onNavigate }) => {
       </section>
 
       {/* ABOUT - Version mobile simple */}
-      <section className="py-12 px-6 relative bg-brand-dark">
+      <section id="about" className="py-12 px-6 relative bg-brand-dark">
         <div className="max-w-[1400px] mx-auto">
           <div className="text-center mb-10">
             <div className="inline-flex items-center gap-3 px-6 py-2 rounded-full border border-brand-cyan/30 bg-brand-cyan/10 mb-6">
