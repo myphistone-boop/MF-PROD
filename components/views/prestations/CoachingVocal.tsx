@@ -51,9 +51,28 @@ const CoachingVocal: React.FC<Props> = ({ onNavigate }) => {
     const scrollManual = (direction: 'left' | 'right') => {
         if (scrollContainerRef.current) {
             const container = scrollContainerRef.current;
-            const scrollAmount = container.clientWidth; // Utilise la largeur totale pour un passage propre
-            container.scrollBy({
-                left: direction === 'left' ? -scrollAmount : scrollAmount,
+            const sections = container.querySelectorAll('section');
+            const containerLeft = container.scrollLeft;
+            const containerWidth = container.clientWidth;
+
+            // Trouve la section actuellement visible au centre
+            let currentIndex = 0;
+            sections.forEach((section, index) => {
+                const sectionElement = section as HTMLElement;
+                const sectionLeft = sectionElement.offsetLeft - container.offsetLeft;
+                if (Math.abs(sectionLeft - containerLeft) < containerWidth / 2) {
+                    currentIndex = index;
+                }
+            });
+
+            // Calcule l'index de la section cible
+            const targetIndex = direction === 'left'
+                ? Math.max(0, currentIndex - 1)
+                : Math.min(sections.length - 1, currentIndex + 1);
+
+            const targetSection = sections[targetIndex] as HTMLElement;
+            container.scrollTo({
+                left: targetSection.offsetLeft - container.offsetLeft,
                 behavior: 'smooth'
             });
         }
@@ -173,12 +192,12 @@ const CoachingVocal: React.FC<Props> = ({ onNavigate }) => {
                 </header>
 
                 <div className="relative group">
-                    <div 
+                    <div
                         ref={scrollContainerRef}
-                        className="flex lg:flex-col overflow-x-auto lg:overflow-visible snap-x snap-mandatory lg:snap-none no-scrollbar gap-12 lg:gap-64 pb-12 scroll-smooth"
+                        className="flex lg:flex-col overflow-x-auto lg:overflow-visible lg:snap-none no-scrollbar gap-12 lg:gap-64 pb-12 scroll-smooth"
                     >
                         {/* --- SECTION 1: COURS PARTICULIERS --- */}
-                        <section id="particuliers" className="min-w-full lg:min-w-0 snap-center snap-always scroll-mt-48 px-2 lg:px-0 flex flex-col">
+                        <section id="particuliers" className="min-w-full lg:min-w-0 scroll-mt-48 px-2 lg:px-0 flex flex-col">
                             <div className="lg:hidden flex flex-col items-center mb-6">
                                 <ActivityTitle prefix="COURS" suffix="PARTICULIERS" color="brand-cyan" />
                                 <div className="-mt-4"><SectionTag label="Pour tous niveaux" color="brand-cyan" /></div>
@@ -224,7 +243,7 @@ const CoachingVocal: React.FC<Props> = ({ onNavigate }) => {
                         </section>
 
                         {/* --- SECTION 2: COURS COLLECTIFS --- */}
-                        <section id="collectifs" className="min-w-full lg:min-w-0 snap-center snap-always scroll-mt-48 px-2 lg:px-0 flex flex-col">
+                        <section id="collectifs" className="min-w-full lg:min-w-0  scroll-mt-48 px-2 lg:px-0 flex flex-col">
                             <div className="lg:hidden flex flex-col items-center mb-6">
                                 <ActivityTitle prefix="COURS" suffix="COLLECTIFS" color="brand-magenta" />
                                 <div className="-mt-4"><SectionTag label="Pour tous niveaux" color="brand-magenta" /></div>
@@ -261,7 +280,7 @@ const CoachingVocal: React.FC<Props> = ({ onNavigate }) => {
                         </section>
 
                         {/* --- SECTION 3: CHORALE --- */}
-                        <section id="chorale" className="min-w-full lg:min-w-0 snap-center snap-always scroll-mt-48 px-2 lg:px-0 flex flex-col">
+                        <section id="chorale" className="min-w-full lg:min-w-0  scroll-mt-48 px-2 lg:px-0 flex flex-col">
                             <div className="lg:hidden flex flex-col items-center mb-6">
                                 <ActivityTitle prefix="LA" suffix="CHORALE" color="brand-cyan" />
                                 <div className="-mt-4"><SectionTag label="Puissance Collective" color="brand-cyan" /></div>
@@ -298,7 +317,7 @@ const CoachingVocal: React.FC<Props> = ({ onNavigate }) => {
                         </section>
 
                         {/* --- SECTION 4: ATELIER SPECTACLE --- */}
-                        <section id="atelier" className="min-w-full lg:min-w-0 snap-center snap-always scroll-mt-48 px-2 lg:px-0 flex flex-col">
+                        <section id="atelier" className="min-w-full lg:min-w-0  scroll-mt-48 px-2 lg:px-0 flex flex-col">
                             <div className="lg:hidden flex flex-col items-center mb-6">
                                 <ActivityTitle prefix="ATELIER" suffix="SPECTACLE" color="brand-orange" />
                                 <div className="-mt-4"><SectionTag label="Adultes & Enfants" color="brand-orange" /></div>
@@ -343,7 +362,7 @@ const CoachingVocal: React.FC<Props> = ({ onNavigate }) => {
                         </section>
 
                         {/* --- SECTION 5: DANSE --- */}
-                        <section id="danse" className="min-w-full lg:min-w-0 snap-center snap-always scroll-mt-48 px-2 lg:px-0 flex flex-col">
+                        <section id="danse" className="min-w-full lg:min-w-0  scroll-mt-48 px-2 lg:px-0 flex flex-col">
                             <div className="lg:hidden flex flex-col items-center mb-6">
                                 <ActivityTitle prefix="COURS DE" suffix="DANSE" color="brand-magenta" />
                                 <div className="-mt-4"><SectionTag label="Tous niveaux" color="brand-magenta" /></div>
@@ -380,7 +399,7 @@ const CoachingVocal: React.FC<Props> = ({ onNavigate }) => {
                         </section>
 
                         {/* --- SECTION 6: INSTRUMENTS --- */}
-                        <section id="instruments" className="min-w-full lg:min-w-0 snap-center snap-always scroll-mt-48 px-2 lg:px-0 flex flex-col">
+                        <section id="instruments" className="min-w-full lg:min-w-0  scroll-mt-48 px-2 lg:px-0 flex flex-col">
                             <div className="lg:hidden flex flex-col items-center mb-6">
                                 <ActivityTitle prefix="PIANO OU" suffix="GUITARE" color="brand-cyan" />
                                 <div className="-mt-4"><SectionTag label="Tous âges" color="brand-cyan" /></div>
@@ -413,7 +432,7 @@ const CoachingVocal: React.FC<Props> = ({ onNavigate }) => {
                         </section>
 
                         {/* --- SECTION 7: FORMATION & STAGE --- */}
-                        <section id="formations" className="min-w-full lg:min-w-0 snap-center snap-always scroll-mt-48 pb-20 px-2 lg:px-0 flex flex-col">
+                        <section id="formations" className="min-w-full lg:min-w-0  scroll-mt-48 pb-20 px-2 lg:px-0 flex flex-col">
                             <div className="lg:hidden flex flex-col items-center mb-6">
                                 <ActivityTitle prefix="VOIX &" suffix="COMMUNICATION" color="brand-orange" />
                                 <div className="-mt-4"><SectionTag label="Entreprise & Particulier" color="brand-orange" /></div>

@@ -354,7 +354,7 @@ const ProductionSpectacles: React.FC<Props> = ({ onNavigate }) => {
                 </div>
 
                 {/* --- SECTION 1: LE CARROUSSEL 2026 --- */}
-                <section className="mb-48 relative">
+                <section className="mb-16 lg:mb-48 relative">
                     <div className="flex items-center justify-between mb-8 lg:mb-16 px-4">
                         <div className="flex items-center gap-6">
                             <h2 className="text-xs font-black uppercase tracking-[0.3em] lg:tracking-[0.6em] text-brand-cyan">SAISON 2026 - LES PROCHAINES PRODUCTIONS</h2>

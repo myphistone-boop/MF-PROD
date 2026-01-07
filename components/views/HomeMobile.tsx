@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View } from '../../types';
 import { LOGO_URL } from '../../constants';
 import { ASSETS } from '../../assets';
-import { Zap, Play, Calendar, Star, Mic2, Handshake, Phone, Mail, MapPin } from 'lucide-react';
+import { Zap, Play, Calendar, Star, Mic2, Handshake, Phone, Mail, MapPin, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from '../ui/Button';
 
 interface HomeMobileProps {
@@ -10,11 +10,22 @@ interface HomeMobileProps {
 }
 
 const HomeMobile: React.FC<HomeMobileProps> = ({ onNavigate }) => {
+  const [currentShowIndex, setCurrentShowIndex] = useState(0);
+  const shows = ASSETS.SHOWS_2026;
+
   const scrollToPrestations = () => {
     const element = document.getElementById('prestations');
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
     }
+  };
+
+  const nextShow = () => {
+    setCurrentShowIndex((prev) => (prev + 1) % shows.length);
+  };
+
+  const prevShow = () => {
+    setCurrentShowIndex((prev) => (prev - 1 + shows.length) % shows.length);
   };
 
   return (
@@ -71,14 +82,22 @@ const HomeMobile: React.FC<HomeMobileProps> = ({ onNavigate }) => {
 
             <div className="flex-1">
               <div className="relative aspect-[16/9] rounded-2xl overflow-hidden bg-brand-dark-soft">
-                <img src="https://storage.googleapis.com/novelec_assets/MF%20PROD/SPETACLES/affiche__superstars-1-768x1086.webp" className="w-full h-full object-cover" alt="Superstars" loading="eager" />
+                <video
+                  src="https://storage.googleapis.com/novelec_assets/MF%20PROD/SUPERSTAR-VIDEO-ACCUEIL.mp4"
+                  className="w-full h-full object-cover"
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  poster="https://storage.googleapis.com/novelec_assets/MF%20PROD/SPETACLES/affiche__superstars-1-768x1086.webp"
+                />
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* UPCOMING SHOWS - Version mobile simple */}
+      {/* UPCOMING SHOWS - Carrousel mobile avec flèches */}
       <section className="py-16 relative bg-brand-dark px-6">
         <div className="max-w-[1400px] mx-auto">
           <div className="text-center mb-10">
@@ -92,20 +111,47 @@ const HomeMobile: React.FC<HomeMobileProps> = ({ onNavigate }) => {
             </h2>
           </div>
 
-          <div className="space-y-6">
-            {ASSETS.SHOWS_2026.slice(0, 2).map((show, index) => (
-              <div key={index} className="relative h-[200px] rounded-2xl overflow-hidden">
-                <img src={show.url} className="w-full h-full object-cover" alt={show.title} loading="eager" />
-                <div className="absolute inset-0 bg-gradient-to-t from-brand-dark via-brand-dark/60 to-transparent"></div>
-                <div className="absolute bottom-4 left-4 right-4">
-                  <h3 className="font-black text-xl text-white uppercase mb-2">{show.title}</h3>
-                  <p className="text-xs text-brand-light/60 mb-3">Production 2026 MF Prod</p>
-                  <Button onClick={() => onNavigate(View.SPECTACLES)} size="sm" className="text-[10px]">
-                    En savoir plus
-                  </Button>
-                </div>
+          {/* Carrousel avec flèches */}
+          <div className="relative">
+            <button
+              onClick={prevShow}
+              className="absolute left-0 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-brand-dark-soft/80 border border-white/20 text-white flex items-center justify-center backdrop-blur-xl"
+              aria-label="Précédent"
+            >
+              <ChevronLeft size={20} />
+            </button>
+
+            <button
+              onClick={nextShow}
+              className="absolute right-0 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-brand-dark-soft/80 border border-white/20 text-white flex items-center justify-center backdrop-blur-xl"
+              aria-label="Suivant"
+            >
+              <ChevronRight size={20} />
+            </button>
+
+            <div className="relative aspect-[2/3] rounded-2xl overflow-hidden mx-12">
+              <img src={shows[currentShowIndex].url} className="w-full h-full object-cover" alt={shows[currentShowIndex].title} loading="eager" />
+              <div className="absolute inset-0 bg-gradient-to-t from-brand-dark via-brand-dark/60 to-transparent"></div>
+              <div className="absolute bottom-6 left-6 right-6">
+                <h3 className="font-black text-2xl text-white uppercase mb-2">{shows[currentShowIndex].title}</h3>
+                <p className="text-sm text-brand-light/60 mb-4">Production 2026 MF Prod</p>
+                <Button onClick={() => onNavigate(View.SPECTACLES)} size="sm" className="text-[10px] w-full">
+                  En savoir plus
+                </Button>
               </div>
-            ))}
+            </div>
+
+            {/* Indicateurs de pagination */}
+            <div className="flex justify-center gap-2 mt-6">
+              {shows.map((_, index) => (
+                <div
+                  key={index}
+                  className={`h-2 rounded-full transition-all ${
+                    index === currentShowIndex ? 'w-8 bg-brand-magenta' : 'w-2 bg-white/30'
+                  }`}
+                />
+              ))}
+            </div>
           </div>
         </div>
       </section>

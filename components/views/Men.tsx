@@ -30,7 +30,7 @@ const Men: React.FC<MenProps> = ({ onNavigate }) => {
             <div className="max-w-[1400px] mx-auto px-6 lg:px-12 grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24 pb-20">
                 <div className={`lg:col-span-8 transition-all duration-1000 ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
                     <span className="text-brand-magenta uppercase tracking-[0.5em] text-xs font-black mb-6 block">PRODUCTION MF PROD</span>
-                    <h1 className="font-sans font-black text-6xl md:text-8xl lg:text-9xl text-brand-dark dark:text-white mb-16 leading-[0.85] tracking-tighter">
+                    <h1 className="font-sans font-black text-4xl md:text-8xl lg:text-9xl text-brand-dark dark:text-white mb-16 leading-[0.85] tracking-tighter">
                         LE SHOW <br/><span className="gradient-text uppercase italic">SUPERSTARS</span>
                     </h1>
 

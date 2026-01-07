@@ -126,7 +126,7 @@ const VoixOff: React.FC<Props> = ({ onNavigate }) => {
                         <span className="text-[10px] uppercase tracking-[0.4em] text-brand-cyan font-black">Narration & Signature Vocale</span>
                     </div>
                     
-                    <h1 className="font-sans font-black text-6xl md:text-8xl lg:text-9xl text-brand-dark dark:text-white mb-12 tracking-tighter leading-[0.85] uppercase">
+                    <h1 className="font-sans font-black text-4xl md:text-8xl lg:text-9xl text-brand-dark dark:text-white mb-12 tracking-tighter leading-[0.85] uppercase">
                         VOIX <br/><span className="gradient-text italic text-brand-cyan">OFF</span>
                     </h1>
 
@@ -290,7 +290,7 @@ const VoixOff: React.FC<Props> = ({ onNavigate }) => {
                 </section>
 
                 {/* --- FINAL CTA --- */}
-                <div className="p-16 lg:p-24 rounded-[5rem] bg-brand-dark text-white border-2 border-white/10 relative overflow-hidden shadow-2xl text-center group">
+                <div className="hidden lg:block p-16 lg:p-24 rounded-[5rem] bg-brand-dark text-white border-2 border-white/10 relative overflow-hidden shadow-2xl text-center group">
                     <div className="absolute inset-0 bg-gradient-to-br from-brand-cyan/10 via-transparent to-brand-magenta/10 pointer-events-none opacity-50" />
                     <Sparkles className="mx-auto mb-10 text-brand-cyan animate-pulse" size={56} />
                     <h3 className="text-4xl lg:text-7xl font-black uppercase tracking-tighter mb-10 leading-tight">VOTRE IDENTITÉ <br/><span className="text-brand-cyan italic underline decoration-brand-cyan/30 underline-offset-8">A UNE VOIX</span></h3>
