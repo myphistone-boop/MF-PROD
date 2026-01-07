@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import Navbar from './components/Navbar';
 import BackgroundCanvas from './components/BackgroundCanvas';
 import Home from './components/views/Home';
+import HomeMobile from './components/views/HomeMobile';
 import Men from './components/views/Men';
 import Discover from './components/views/Discover';
 import Gallery from './components/views/Gallery';
@@ -20,6 +21,7 @@ import { View, BookingContext } from './types';
 const App: React.FC = () => {
   const [currentView, setCurrentView] = useState<View>(View.HOME);
   const [bookingContext, setBookingContext] = useState<BookingContext | null>(null);
+  const [isMobile] = useState(() => typeof window !== 'undefined' && window.innerWidth < 1024);
 
   useEffect(() => {
     // Force dark mode
@@ -51,8 +53,8 @@ const App: React.FC = () => {
       
       <Navbar currentView={currentView} onNavigate={navigate} />
       
-      <main className="transition-opacity duration-500 ease-in-out">
-        {currentView === View.HOME && <Home onNavigate={navigate} />}
+      <main className={isMobile ? "" : "transition-opacity duration-500 ease-in-out"}>
+        {currentView === View.HOME && (isMobile ? <HomeMobile onNavigate={navigate} /> : <Home onNavigate={navigate} />)}
         {currentView === View.SPECTACLES && <Men onNavigate={navigate} />}
         {currentView === View.SERVICES && <Discover onNavigate={navigate} />}
         {currentView === View.EVENEMENTS && <Evenements onNavigate={navigate} />}
