@@ -116,6 +116,25 @@
         padding-right: 0.25em;
         margin-right: -0.25em;
       }
+
+      /* Désactiver les animations d'apparition sur mobile pour affichage instantané */
+      @media (max-width: 1023px) {
+        /* Forcer l'affichage immédiat de TOUS les éléments */
+        * {
+          animation-duration: 0s !important;
+          animation-delay: 0s !important;
+          transition-duration: 0s !important;
+          opacity: 1 !important;
+        }
+
+        /* Exceptions : conserver les animations essentielles */
+        [class*="animate-marquee"],
+        [class*="animate-pulse"],
+        [class*="animate-spin"] {
+          animation-duration: revert !important;
+          animation-delay: revert !important;
+        }
+      }
     </style>
     <script type="importmap">
     {
