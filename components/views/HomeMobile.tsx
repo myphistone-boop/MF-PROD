@@ -71,7 +71,7 @@ const HomeMobile: React.FC<HomeMobileProps> = ({ onNavigate }) => {
 
             <div className="flex-1">
               <div className="relative aspect-[16/9] rounded-2xl overflow-hidden bg-brand-dark-soft">
-                <img src={ASSETS.SPECTACLES.SUPERSTARS.POSTER} className="w-full h-full object-cover" alt="Superstars" loading="eager" />
+                <img src="https://storage.googleapis.com/novelec_assets/MF%20PROD/SPETACLES/affiche__superstars-1-768x1086.webp" className="w-full h-full object-cover" alt="Superstars" loading="eager" />
               </div>
             </div>
           </div>
@@ -93,31 +93,19 @@ const HomeMobile: React.FC<HomeMobileProps> = ({ onNavigate }) => {
           </div>
 
           <div className="space-y-6">
-            {/* Thriller Live */}
-            <div className="relative h-[200px] rounded-2xl overflow-hidden">
-              <img src={ASSETS.SPECTACLES.THRILLER.BANNER} className="w-full h-full object-cover" alt="Thriller Live" loading="eager" />
-              <div className="absolute inset-0 bg-gradient-to-t from-brand-dark via-brand-dark/60 to-transparent"></div>
-              <div className="absolute bottom-4 left-4 right-4">
-                <h3 className="font-black text-xl text-white uppercase mb-2">THRILLER LIVE</h3>
-                <p className="text-xs text-brand-light/60 mb-3">Un hommage explosif au Roi de la Pop</p>
-                <Button onClick={() => onNavigate(View.SPECTACLES)} size="sm" className="text-[10px]">
-                  En savoir plus
-                </Button>
+            {ASSETS.SHOWS_2026.slice(0, 2).map((show, index) => (
+              <div key={index} className="relative h-[200px] rounded-2xl overflow-hidden">
+                <img src={show.url} className="w-full h-full object-cover" alt={show.title} loading="eager" />
+                <div className="absolute inset-0 bg-gradient-to-t from-brand-dark via-brand-dark/60 to-transparent"></div>
+                <div className="absolute bottom-4 left-4 right-4">
+                  <h3 className="font-black text-xl text-white uppercase mb-2">{show.title}</h3>
+                  <p className="text-xs text-brand-light/60 mb-3">Production 2026 MF Prod</p>
+                  <Button onClick={() => onNavigate(View.SPECTACLES)} size="sm" className="text-[10px]">
+                    En savoir plus
+                  </Button>
+                </div>
               </div>
-            </div>
-
-            {/* Forever King of Pop */}
-            <div className="relative h-[200px] rounded-2xl overflow-hidden">
-              <img src={ASSETS.SPECTACLES.KING_OF_POP.BANNER} className="w-full h-full object-cover" alt="Forever King of Pop" loading="eager" />
-              <div className="absolute inset-0 bg-gradient-to-t from-brand-dark via-brand-dark/60 to-transparent"></div>
-              <div className="absolute bottom-4 left-4 right-4">
-                <h3 className="font-black text-xl text-white uppercase mb-2">FOREVER KING OF POP</h3>
-                <p className="text-xs text-brand-light/60 mb-3">La légende continue de vibrer</p>
-                <Button onClick={() => onNavigate(View.SPECTACLES)} size="sm" className="text-[10px]">
-                  En savoir plus
-                </Button>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
       </section>
@@ -133,11 +121,11 @@ const HomeMobile: React.FC<HomeMobileProps> = ({ onNavigate }) => {
 
           <div className="grid grid-cols-2 gap-3">
             {[
-              { title: 'Production de Spectacles', image: ASSETS.PRESTATIONS.PRODUCTION, view: View.PRODUCTION_SPECTACLES },
+              { title: 'Production de Spectacles', image: ASSETS.PRESTATIONS.SPECTACLES, view: View.PRODUCTION_SPECTACLES },
               { title: 'Coaching Vocal', image: ASSETS.PRESTATIONS.COACHING, view: View.COACHING_VOCAL },
-              { title: 'Animation TV', image: ASSETS.PRESTATIONS.ANIMATION_TV, view: View.ANIMATION_TV },
+              { title: 'Animation TV', image: ASSETS.PRESTATIONS.ANIMATION, view: View.ANIMATION_TV },
               { title: 'Voix Off', image: ASSETS.PRESTATIONS.VOIX_OFF, view: View.VOIX_OFF },
-              { title: 'Direction de Chorale', image: ASSETS.PRESTATIONS.CHORALE, view: View.CHORALE },
+              { title: 'Direction de Chorale', image: ASSETS.PRESTATIONS.STAGES, view: View.CHORALE },
               { title: 'Atelier Spectacle', image: ASSETS.PRESTATIONS.ATELIER, view: View.ATELIER_SPECTACLE },
             ].map((item, index) => (
               <div
