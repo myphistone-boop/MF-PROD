@@ -11,6 +11,7 @@ interface GalleryProps {
 const Gallery: React.FC<GalleryProps> = ({ onNavigate }) => {
   const [mounted, setMounted] = useState(false);
   const [selectedImg, setSelectedImg] = useState<number | null>(null);
+  const [selectedUpcomingEvent, setSelectedUpcomingEvent] = useState<number | null>(null);
 
   useEffect(() => {
     setMounted(true);
@@ -120,22 +121,19 @@ const Gallery: React.FC<GalleryProps> = ({ onNavigate }) => {
             </p>
           </div>
 
-          {/* Grille Mobile: 3 colonnes (ligne 1) puis 2 colonnes (ligne 2) via grid-cols-6 et col-span conditionnel */}
-          <div className="grid grid-cols-6 sm:grid-cols-2 lg:grid-cols-5 gap-3 sm:gap-8">
-            {upcomingEvents.map((event, index) => (
-              <div 
-                key={index} 
-                className={`
-                  group relative aspect-[3/4] rounded-2xl sm:rounded-[3rem] overflow-hidden border border-black/10 dark:border-white/10 shadow-2xl transition-all duration-500 hover:-translate-y-4 hover:border-brand-magenta/50
-                  ${index < 3 ? 'col-span-2' : 'col-span-3'}
-                  sm:col-span-1
-                `}
+          {/* Grille Mobile: 2x2 pour 4 événements | Desktop: 5 colonnes */}
+          <div className="grid grid-cols-2 lg:grid-cols-5 gap-3 lg:gap-8">
+            {upcomingEvents.slice(0, typeof window !== 'undefined' && window.innerWidth < 1024 ? 4 : 5).map((event, index) => (
+              <div
+                key={index}
+                onClick={() => window.innerWidth < 1024 ? setSelectedUpcomingEvent(index) : null}
+                className="group relative aspect-[3/4] rounded-2xl lg:rounded-[3rem] overflow-hidden border border-black/10 dark:border-white/10 shadow-2xl transition-all duration-500 hover:-translate-y-4 hover:border-brand-magenta/50 cursor-pointer"
               >
                 <img src={event.img} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-[2s]" alt={event.title} />
-                <div className="absolute inset-0 bg-gradient-to-t from-brand-dark via-brand-dark/40 to-transparent flex flex-col justify-end p-4 sm:p-8">
-                  <span className="text-[8px] sm:text-[10px] font-black text-brand-cyan uppercase tracking-widest mb-1 sm:mb-2">{event.date}</span>
-                  <h3 className="text-xs sm:text-xl font-black text-white uppercase leading-tight mb-3 sm:mb-6 line-clamp-2">{event.title}</h3>
-                  <Button variant="primary" className="w-full py-2 sm:py-4 text-[8px] sm:text-[10px] min-h-0" onClick={() => onNavigate(View.BOOKING)}>S'inscrire</Button>
+                <div className="absolute inset-0 bg-gradient-to-t from-brand-dark via-brand-dark/40 to-transparent flex flex-col justify-end p-4 lg:p-8">
+                  <span className="text-[8px] lg:text-[10px] font-black text-brand-cyan uppercase tracking-widest mb-1 lg:mb-2">{event.date}</span>
+                  <h3 className="text-xs lg:text-xl font-black text-white uppercase leading-tight mb-3 lg:mb-6 line-clamp-2">{event.title}</h3>
+                  <Button variant="primary" className="hidden lg:block w-full py-2 lg:py-4 text-[8px] lg:text-[10px] min-h-0" onClick={(e) => { e.stopPropagation(); onNavigate(View.BOOKING); }}>S'inscrire</Button>
                 </div>
               </div>
             ))}
@@ -178,7 +176,7 @@ const Gallery: React.FC<GalleryProps> = ({ onNavigate }) => {
                                         className="w-full h-full object-cover transform scale-100 group-hover:scale-105 transition-transform duration-[1.5s]"
                                         loading="lazy"
                                     />
-                                    <div className="absolute inset-0 bg-brand-dark/40 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col items-center justify-center backdrop-blur-sm p-6 text-center">
+                                    <div className="absolute inset-0 bg-brand-dark/40 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col items-center justify-center lg:backdrop-blur-sm p-6 text-center">
                                         <div className="w-14 h-14 rounded-full bg-white/20 border border-white/40 flex items-center justify-center text-white mb-6 scale-50 group-hover:scale-100 transition-transform duration-500">
                                             <ZoomIn size={28} />
                                         </div>
@@ -204,6 +202,61 @@ const Gallery: React.FC<GalleryProps> = ({ onNavigate }) => {
           ))}
         </div>
       </div>
+
+      {/* Modale Événement à venir - Mobile uniquement */}
+      {selectedUpcomingEvent !== null && (
+        <div
+          className="fixed inset-0 z-[100] bg-brand-dark/98 backdrop-blur-2xl flex items-center justify-center p-6 lg:hidden"
+          onClick={() => setSelectedUpcomingEvent(null)}
+        >
+          <button
+            className="absolute top-6 right-6 w-12 h-12 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-brand-magenta transition-all z-[110] shadow-2xl active:scale-90"
+            onClick={() => setSelectedUpcomingEvent(null)}
+          >
+            <X size={28} />
+          </button>
+
+          <div
+            className="relative bg-brand-dark-soft rounded-3xl overflow-hidden border border-white/10 max-w-md w-full"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex flex-col">
+              {/* Image */}
+              <div className="relative aspect-[4/3]">
+                <img
+                  src={upcomingEvents[selectedUpcomingEvent].img}
+                  className="w-full h-full object-cover"
+                  alt={upcomingEvents[selectedUpcomingEvent].title}
+                />
+              </div>
+
+              {/* Contenu */}
+              <div className="p-6">
+                <span className="text-[10px] font-black text-brand-cyan uppercase tracking-widest mb-2 block">
+                  {upcomingEvents[selectedUpcomingEvent].date}
+                </span>
+                <h3 className="text-2xl font-black text-white uppercase leading-tight mb-4">
+                  {upcomingEvents[selectedUpcomingEvent].title}
+                </h3>
+                <p className="text-sm text-brand-light/60 leading-relaxed mb-6">
+                  Rejoignez-nous pour cet événement exceptionnel. Places limitées.
+                </p>
+                <Button
+                  variant="primary"
+                  className="w-full py-4 text-sm"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setSelectedUpcomingEvent(null);
+                    onNavigate(View.BOOKING);
+                  }}
+                >
+                  S'inscrire
+                </Button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Lightbox - Fixed Positioning and Scaling */}
       {selectedImg !== null && (

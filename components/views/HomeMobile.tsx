@@ -129,16 +129,17 @@ const HomeMobile: React.FC<HomeMobileProps> = ({ onNavigate }) => {
               <ChevronRight size={20} />
             </button>
 
-            <div className="relative aspect-[2/3] rounded-2xl overflow-hidden mx-12">
-              <img src={shows[currentShowIndex].url} className="w-full h-full object-cover" alt={shows[currentShowIndex].title} loading="eager" />
-              <div className="absolute inset-0 bg-gradient-to-t from-brand-dark via-brand-dark/60 to-transparent"></div>
-              <div className="absolute bottom-6 left-6 right-6">
-                <h3 className="font-black text-2xl text-white uppercase mb-2">{shows[currentShowIndex].title}</h3>
-                <p className="text-sm text-brand-light/60 mb-4">Production 2026 MF Prod</p>
-                <Button onClick={() => onNavigate(View.SPECTACLES)} size="sm" className="text-[10px] w-full">
-                  En savoir plus
-                </Button>
+            <div className="mx-12">
+              {/* Titre au-dessus */}
+              <h3 className="font-black text-2xl text-white uppercase mb-4 text-center">{shows[currentShowIndex].title}</h3>
+
+              {/* Image sans overlay */}
+              <div className="relative aspect-[2/3] rounded-2xl overflow-hidden">
+                <img src={shows[currentShowIndex].url} className="w-full h-full object-cover" alt={shows[currentShowIndex].title} loading="eager" />
               </div>
+
+              {/* Texte en dessous */}
+              <p className="text-sm text-brand-light/60 mt-4 text-center">Production 2026 MF Prod</p>
             </div>
 
             {/* Indicateurs de pagination */}

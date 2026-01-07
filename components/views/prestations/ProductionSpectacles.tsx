@@ -348,7 +348,7 @@ const ProductionSpectacles: React.FC<Props> = ({ onNavigate }) => {
                         <span className="text-[10px] uppercase tracking-[0.4em] text-brand-orange font-black">Production & Direction Artistique</span>
                     </div>
                     
-                    <h1 className="font-sans font-black text-6xl md:text-8xl lg:text-9xl text-brand-dark dark:text-white mb-12 tracking-tighter leading-[0.85] uppercase">
+                    <h1 className="font-sans font-black text-4xl md:text-8xl lg:text-9xl text-brand-dark dark:text-white mb-12 tracking-tighter leading-[0.85] uppercase">
                         RÉALISATIONS <br/><span className="gradient-text italic">MF PROD</span>
                     </h1>
                 </div>
