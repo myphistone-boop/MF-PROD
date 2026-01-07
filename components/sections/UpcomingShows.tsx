@@ -23,7 +23,7 @@ const UpcomingShows: React.FC = () => {
   };
 
   return (
-    <section className="py-16 lg:py-24 relative dark:bg-brand-dark transition-colors duration-500 overflow-hidden">
+    <section className="py-16 lg:py-24 relative dark:bg-brand-dark lg:transition-colors lg:duration-500 overflow-hidden">
       {/* Background Decor */}
       <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-brand-magenta/5 rounded-full blur-[120px] pointer-events-none" />
       <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-brand-cyan/5 rounded-full blur-[120px] pointer-events-none" />

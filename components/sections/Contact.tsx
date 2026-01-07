@@ -9,7 +9,7 @@ interface ContactProps {
 
 const Contact: React.FC<ContactProps> = ({ onNavigate }) => {
   return (
-       <section id="contact" className="py-12 lg:py-24 px-6 relative overflow-hidden bg-brand-light dark:bg-brand-dark transition-colors duration-500">
+       <section id="contact" className="py-12 lg:py-24 px-6 relative overflow-hidden bg-brand-light dark:bg-brand-dark lg:transition-colors lg:duration-500">
          <div className="max-w-[1400px] mx-auto relative z-10">
             <div className="text-center mb-10 lg:mb-20">
                 <h2 className="font-sans font-black text-4xl lg:text-7xl text-brand-dark dark:text-white tracking-tighter mb-4">

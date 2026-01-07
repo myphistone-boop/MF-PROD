@@ -63,7 +63,7 @@ const DiscoverSection: React.FC<DiscoverSectionProps> = ({ onNavigate }) => {
     ];
 
     return (
-        <section id="prestations" className="w-full py-10 lg:py-16 px-6 lg:px-12 relative dark:bg-brand-dark transition-colors duration-500 overflow-hidden">
+        <section id="prestations" className="w-full py-10 lg:py-16 px-6 lg:px-12 relative dark:bg-brand-dark lg:transition-colors lg:duration-500 overflow-hidden">
             <div className="max-w-[1400px] mx-auto">
                 <div className="text-center mb-10 lg:mb-12 lg:opacity-0 lg:translate-y-10 lg:animate-fade-in-up">
                     <h2 className="font-sans font-black text-3xl lg:text-7xl text-brand-dark dark:text-white mb-3 tracking-tighter uppercase leading-none">
@@ -81,7 +81,7 @@ const DiscoverSection: React.FC<DiscoverSectionProps> = ({ onNavigate }) => {
                             style={{ animationDelay: `${index * 50}ms` }}
                         >
                             <div className="absolute inset-0">
-                                <img src={item.image} alt={item.title} className="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-110" />
+                                <img src={item.image} alt={item.title} className="w-full h-full object-cover transform lg:transition-transform lg:duration-700 group-hover:scale-110" loading="eager" />
                                 <div className="absolute inset-0 bg-gradient-to-t from-brand-dark/95 via-brand-dark/20 to-transparent"></div>
                             </div>
 

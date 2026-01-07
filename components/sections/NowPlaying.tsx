@@ -18,7 +18,7 @@ const NowPlaying: React.FC<NowPlayingProps> = ({ onNavigate }) => {
   const shouldShowVideo = !isMobile;
 
   return (
-    <section className="relative pt-4 pb-12 lg:pt-6 lg:pb-20 bg-brand-light dark:bg-brand-dark transition-colors duration-500 overflow-hidden">
+    <section className="relative pt-4 pb-12 lg:pt-6 lg:pb-20 bg-brand-light dark:bg-brand-dark lg:transition-colors lg:duration-500 overflow-hidden">
       <div className="absolute top-1/2 right-0 w-[600px] h-[600px] bg-brand-magenta/5 rounded-full blur-[120px] pointer-events-none -translate-y-1/2 opacity-50" />
       
       <div className="max-w-[1400px] mx-auto px-6 lg:px-12 relative z-10">

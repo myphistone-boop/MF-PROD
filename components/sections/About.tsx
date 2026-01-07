@@ -7,7 +7,7 @@ const About: React.FC = () => {
   const [isExpanded, setIsExpanded] = useState(false);
 
   return (
-    <section className="py-12 lg:py-24 px-6 lg:px-12 relative dark:bg-brand-dark transition-colors duration-500 overflow-hidden">
+    <section className="py-12 lg:py-24 px-6 lg:px-12 relative dark:bg-brand-dark lg:transition-colors lg:duration-500 overflow-hidden">
       <div className="absolute top-20 left-1/4 w-[600px] h-[600px] bg-brand-cyan/5 rounded-full blur-[150px] pointer-events-none" />
       
       <div className="max-w-[1400px] mx-auto">
@@ -48,7 +48,7 @@ const About: React.FC = () => {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-center">
           <div className="lg:col-span-5 relative group">
             <div className="relative aspect-[4/5] w-full rounded-[2rem] lg:rounded-[4rem] overflow-hidden shadow-2xl bg-brand-dark">
-              <img src={ASSETS.BIO.MIKAEL_PORTRAIT} className="w-full h-full object-cover" alt="Mikaël Ferreira" />
+              <img src={ASSETS.BIO.MIKAEL_PORTRAIT} className="w-full h-full object-cover" alt="Mikaël Ferreira" loading="eager" />
               <div className="absolute inset-0 bg-gradient-to-t from-brand-dark via-brand-dark/20 to-transparent opacity-80"></div>
               <div className="absolute bottom-6 left-6 lg:bottom-10 lg:left-10 text-white">
                 <div className="font-sans font-black text-2xl lg:text-5xl tracking-tighter uppercase leading-none mb-2">MIKAËL <br/>FERREIRA</div>

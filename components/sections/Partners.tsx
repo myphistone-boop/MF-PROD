@@ -6,7 +6,7 @@ import { Handshake } from 'lucide-react';
 const Partners: React.FC = () => {
 
   return (
-    <section className="py-12 lg:py-20 relative overflow-hidden bg-brand-light dark:bg-brand-dark transition-colors duration-500">
+    <section className="py-12 lg:py-20 relative overflow-hidden bg-brand-light dark:bg-brand-dark lg:transition-colors lg:duration-500">
       <div className="max-w-[1400px] mx-auto px-6 lg:px-12 relative z-10">
         <div className="text-center mb-10 lg:mb-16 lg:opacity-0 lg:translate-y-10 lg:animate-fade-in-up">
           <div className="inline-flex items-center gap-3 px-6 py-2 rounded-full border border-brand-cyan/30 bg-brand-cyan/10 mb-6">
@@ -22,7 +22,7 @@ const Partners: React.FC = () => {
         <div className="hidden lg:grid grid-cols-7 gap-8 items-center justify-items-center">
           {ASSETS.PARTNERS.map((logoUrl, index) => (
             <div key={index} className="group relative w-full aspect-square max-w-[140px] flex items-center justify-center bg-white border-2 border-white rounded-[2.5rem] p-6 shadow-xl hover:shadow-2xl transition-all">
-              <img src={logoUrl} alt="Partenaire" className="max-w-full max-h-full object-contain" />
+              <img src={logoUrl} alt="Partenaire" className="max-w-full max-h-full object-contain" loading="eager" />
             </div>
           ))}
         </div>
@@ -32,7 +32,7 @@ const Partners: React.FC = () => {
            <div className="flex w-max animate-marquee gap-6 py-4">
               {[...ASSETS.PARTNERS, ...ASSETS.PARTNERS].map((logoUrl, index) => (
                 <div key={index} className="w-20 h-20 flex-shrink-0 bg-white rounded-2xl p-4 flex items-center justify-center shadow-lg">
-                  <img src={logoUrl} alt="Partenaire" className="max-w-full max-h-full object-contain" />
+                  <img src={logoUrl} alt="Partenaire" className="max-w-full max-h-full object-contain" loading="eager" />
                 </div>
               ))}
            </div>
