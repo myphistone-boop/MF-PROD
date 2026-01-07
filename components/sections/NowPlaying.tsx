@@ -10,19 +10,22 @@ interface NowPlayingProps {
 }
 
 const NowPlaying: React.FC<NowPlayingProps> = ({ onNavigate }) => {
-  const [mounted, setMounted] = useState(false);
   const { isLowPerf, isMobile } = usePerformanceMode();
-  
+  // Sur mobile, affichage instantané. Sur desktop, animation après montage.
+  const [mounted, setMounted] = useState(isMobile);
+
   // URL GCS Superstar pour l'affiche fixe
   const posterUrl = "https://storage.googleapis.com/novelec_assets/MF%20PROD/SPETACLES/affiche__superstars-1-768x1086.webp";
   const videoUrl = "https://storage.googleapis.com/novelec_assets/MF%20PROD/SUPERSTAR-VIDEO-ACCUEIL.mp4";
 
   useEffect(() => {
-    setMounted(true);
-  }, []);
+    // Sur desktop uniquement, déclencher l'animation
+    if (!isMobile) {
+      setMounted(true);
+    }
+  }, [isMobile]);
 
-  // Sur mobile, on ne veut JAMAIS de délai d'apparition
-  const visibilityClass = (isMobile || mounted) ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10';
+  const visibilityClass = mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10';
   const shouldShowVideo = !isMobile && !isLowPerf;
 
   return (

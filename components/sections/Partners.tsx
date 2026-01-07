@@ -2,13 +2,19 @@
 import React, { useEffect, useState } from 'react';
 import { ASSETS } from '../../assets';
 import { Handshake } from 'lucide-react';
+import { usePerformanceMode } from '../../hooks/usePerformanceMode';
 
 const Partners: React.FC = () => {
-  const [mounted, setMounted] = useState(false);
+  const { isMobile } = usePerformanceMode();
+  // Sur mobile, affichage instantané. Sur desktop, animation après montage.
+  const [mounted, setMounted] = useState(isMobile);
 
   useEffect(() => {
-    setMounted(true);
-  }, []);
+    // Sur desktop uniquement, déclencher l'animation
+    if (!isMobile) {
+      setMounted(true);
+    }
+  }, [isMobile]);
 
   return (
     <section className="py-12 lg:py-20 relative overflow-hidden bg-brand-light dark:bg-brand-dark transition-colors duration-500">

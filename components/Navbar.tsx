@@ -64,7 +64,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate }) => {
       >
         <div className={`
           relative w-full h-full rounded-full flex items-center justify-between px-8 lg:px-14 transition-all duration-700
-          backdrop-blur-2xl border border-white/10 shadow-2xl
+          backdrop-blur-xl border border-white/10 shadow-2xl
           ${scrolled ? 'bg-brand-dark-soft/95' : 'bg-brand-dark/60'}
         `}>
           
@@ -126,7 +126,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate }) => {
                       ${dropdownOpen ? 'opacity-100 translate-y-0 pointer-events-auto' : 'opacity-0 -translate-y-4 pointer-events-none'}
                     `}>
                       <div className={`
-                        backdrop-blur-3xl border border-white/10 rounded-[2.5rem] p-8 w-[360px] shadow-[0_30px_60px_-15px_rgba(0,0,0,0.3)]
+                        backdrop-blur-xl border border-white/10 rounded-[2.5rem] p-8 w-[360px] shadow-[0_30px_60px_-15px_rgba(0,0,0,0.3)]
                         ${scrolled ? 'bg-brand-dark-soft' : 'bg-brand-dark'}
                       `}>
                         <div className="flex flex-col gap-2">
@@ -162,7 +162,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, onNavigate }) => {
 
       {/* Mobile Menu */}
       {mobileMenuOpen && (
-        <div className="fixed inset-0 z-[60] bg-brand-dark/98 backdrop-blur-3xl flex flex-col items-center justify-center lg:hidden animate-fade-in-up overflow-y-auto">
+        <div className="fixed inset-0 z-[60] bg-brand-dark/98 backdrop-blur-sm flex flex-col items-center justify-center lg:hidden overflow-y-auto">
            {/* Close Button - More subtle and higher up */}
            <button 
                 onClick={() => setMobileMenuOpen(false)}

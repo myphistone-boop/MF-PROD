@@ -26,9 +26,12 @@ const BackgroundCanvas: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const particlesRef = useRef<Particle[]>([]);
   const orbsRef = useRef<Orb[]>([]);
-  const { isLowPerf } = usePerformanceMode();
+  const { isLowPerf, isMobile } = usePerformanceMode();
 
   useEffect(() => {
+    // Désactiver complètement le canvas sur mobile pour performances optimales
+    if (isMobile) return;
+
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
@@ -155,7 +158,7 @@ const BackgroundCanvas: React.FC = () => {
         window.removeEventListener('resize', resize);
         cancelAnimationFrame(animationId);
     };
-  }, [isLowPerf]);
+  }, [isLowPerf, isMobile]);
 
   return <canvas ref={canvasRef} className="fixed top-0 left-0 w-full h-full -z-10 pointer-events-none" />;
 };

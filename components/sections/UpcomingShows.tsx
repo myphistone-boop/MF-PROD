@@ -5,13 +5,17 @@ import { Calendar, Sparkles, ChevronRight, ChevronLeft } from 'lucide-react';
 import { usePerformanceMode } from '../../hooks/usePerformanceMode';
 
 const UpcomingShows: React.FC = () => {
-  const [mounted, setMounted] = useState(false);
   const { isMobile } = usePerformanceMode();
+  // Sur mobile, affichage instantané. Sur desktop, animation après montage.
+  const [mounted, setMounted] = useState(isMobile);
   const scrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    setMounted(true);
-  }, []);
+    // Sur desktop uniquement, déclencher l'animation
+    if (!isMobile) {
+      setMounted(true);
+    }
+  }, [isMobile]);
 
   const shows = ASSETS.SHOWS_2026;
 
@@ -30,7 +34,7 @@ const UpcomingShows: React.FC = () => {
     }
   };
 
-  const sectionVisibility = (isMobile || mounted) ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10';
+  const sectionVisibility = mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10';
 
   return (
     <section className="py-16 lg:py-24 relative dark:bg-brand-dark transition-colors duration-500 overflow-hidden">
@@ -74,10 +78,10 @@ const UpcomingShows: React.FC = () => {
             className="flex overflow-x-auto pb-8 pt-4 gap-6 lg:gap-10 no-scrollbar snap-x snap-mandatory items-start px-[calc(50%-130px)] lg:px-12 scroll-px-[calc(50%-130px)] lg:scroll-px-12"
           >
             {shows.map((show, index) => (
-              <div 
+              <div
                 key={index}
-                className={`flex-shrink-0 w-[260px] sm:w-[300px] lg:w-[340px] snap-center flex flex-col items-center transition-all duration-700 ${(isMobile || mounted) ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'}`}
-                style={{ transitionDelay: isMobile ? '0ms' : `${index * 150}ms` }}
+                className={`flex-shrink-0 w-[260px] sm:w-[300px] lg:w-[340px] snap-center flex flex-col items-center transition-all duration-700 ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'}`}
+                style={{ transitionDelay: mounted && !isMobile ? `${index * 150}ms` : '0ms' }}
               >
                 {/* 1. TOP BADGE - OUTSIDE IMAGE */}
                 <div className="mb-6 flex items-center gap-3 px-4 py-2 rounded-full border border-brand-magenta/30 bg-brand-magenta/5 dark:bg-brand-magenta/10 shadow-lg dark:shadow-[0_0_15px_rgba(255,0,122,0.1)]">
@@ -89,11 +93,11 @@ const UpcomingShows: React.FC = () => {
                 <div className="relative w-full aspect-[2/3] rounded-[2.5rem] overflow-hidden border-2 border-black/5 dark:border-white/10 bg-white dark:bg-brand-dark-soft group/card transition-all duration-500 hover:border-brand-magenta/50 shadow-xl hover:shadow-[0_25px_50px_-12px_rgba(255,0,122,0.4)]">
                   <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent z-10"></div>
                   
-                  <img 
-                    src={show.url} 
-                    alt={show.title} 
+                  <img
+                    src={show.url}
+                    alt={show.title}
                     className="w-full h-full object-cover transform scale-100 group-hover/card:scale-110 transition-transform duration-[2s] ease-out"
-                    loading={isMobile ? "eager" : "lazy"}
+                    loading="eager"
                   />
                 </div>
 

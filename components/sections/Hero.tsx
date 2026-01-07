@@ -11,12 +11,16 @@ interface HeroProps {
 }
 
 const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
-  const [mounted, setMounted] = useState(false);
   const { isMobile } = usePerformanceMode();
+  // Sur mobile, affichage instantané. Sur desktop, animation après montage.
+  const [mounted, setMounted] = useState(isMobile);
 
   useEffect(() => {
-    setMounted(true);
-  }, []);
+    // Sur desktop uniquement, déclencher l'animation
+    if (!isMobile) {
+      setMounted(true);
+    }
+  }, [isMobile]);
 
   const scrollToPrestations = () => {
     const element = document.getElementById('prestations');
@@ -25,7 +29,7 @@ const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
     }
   };
 
-  const visibilityClass = (isMobile || mounted) ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-10';
+  const visibilityClass = mounted ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-10';
 
   return (
     <section className="min-h-[50vh] lg:min-h-[75vh] w-full flex flex-col lg:flex-row items-center relative overflow-hidden pt-24 lg:pt-10 pb-12 lg:pb-0 px-6 md:px-12 lg:px-24">
@@ -63,10 +67,10 @@ const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
 
         {/* Visual Content (Orrery) - Hidden on Mobile */}
         <div className={`
-            hidden lg:flex lg:flex-1 w-full items-center justify-center relative z-10 
+            hidden lg:flex lg:flex-1 w-full items-center justify-center relative z-10
             lg:order-2
             transition-all duration-1000 delay-300 ease-out transform
-            ${(isMobile || mounted) ? 'opacity-100 scale-100' : 'opacity-0 lg:scale-95'}
+            ${mounted ? 'opacity-100 scale-100' : 'opacity-0 lg:scale-95'}
           `}>
           <div className="transform lg:scale-[0.8] xl:scale-[0.9] transition-transform duration-[2s] lg:hover:scale-95 flex items-center justify-center pointer-events-none">
              <Orrery />

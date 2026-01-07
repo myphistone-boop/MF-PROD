@@ -3,17 +3,23 @@ import React, { useEffect, useState } from 'react';
 import { View } from '../../types';
 import { ASSETS } from '../../assets';
 import { Mic2, Music, Star, ChevronRight, Zap, Tv, Headphones } from 'lucide-react';
+import { usePerformanceMode } from '../../hooks/usePerformanceMode';
 
 interface DiscoverSectionProps {
     onNavigate: (view: View, context?: any) => void;
 }
 
 const DiscoverSection: React.FC<DiscoverSectionProps> = ({ onNavigate }) => {
-    const [mounted, setMounted] = useState(false);
+    const { isMobile } = usePerformanceMode();
+    // Sur mobile, affichage instantané. Sur desktop, animation après montage.
+    const [mounted, setMounted] = useState(isMobile);
 
     useEffect(() => {
-        setMounted(true);
-    }, []);
+        // Sur desktop uniquement, déclencher l'animation
+        if (!isMobile) {
+            setMounted(true);
+        }
+    }, [isMobile]);
 
     const approaches = [
         {
@@ -79,15 +85,15 @@ const DiscoverSection: React.FC<DiscoverSectionProps> = ({ onNavigate }) => {
                 {/* Mobile: Grid 3x2 | Tablet/Desktop: 2/3 cols */}
                 <div className="grid grid-cols-3 md:grid-cols-2 lg:grid-cols-3 gap-3 lg:gap-6">
                     {approaches.map((item, index) => (
-                        <div 
+                        <div
                             key={index}
                             onClick={() => onNavigate(item.id, item.sectionId ? { sectionId: item.sectionId } : undefined)}
                             className={`
-                                group relative h-[120px] sm:h-[280px] lg:h-[340px] cursor-pointer rounded-2xl lg:rounded-[3rem] overflow-hidden transition-all duration-700 
-                                ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'} 
+                                group relative h-[120px] sm:h-[280px] lg:h-[340px] cursor-pointer rounded-2xl lg:rounded-[3rem] overflow-hidden transition-all duration-700
+                                ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'}
                                 hover:shadow-2xl
                             `}
-                            style={{ transitionDelay: `${index * 50}ms` }}
+                            style={{ transitionDelay: isMobile ? '0ms' : `${index * 50}ms` }}
                         >
                             <div className="absolute inset-0">
                                 <img src={item.image} alt={item.title} className="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-110" />
