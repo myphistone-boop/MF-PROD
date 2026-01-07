@@ -8,37 +8,67 @@ export interface PerformanceMode {
   isMobile: boolean;
 }
 
-export const usePerformanceMode = (): PerformanceMode => {
-  // Détection immédiate pour éviter le flash au montage
-  const checkIsMobile = () => typeof window !== 'undefined' ? window.innerWidth < 1024 : false;
+// Calcul synchrone du mode initial AVANT le premier render
+const getInitialPerformanceMode = (): PerformanceMode => {
+  if (typeof window === 'undefined') {
+    return {
+      isLowPerf: false,
+      connectionType: '4g',
+      saveData: false,
+      isMobile: false,
+    };
+  }
 
-  const [mode, setMode] = useState<PerformanceMode>({
-    isLowPerf: false,
-    connectionType: '4g',
-    saveData: false,
-    isMobile: checkIsMobile(),
-  });
+  // @ts-ignore
+  const conn = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+  const saveData = conn?.saveData || false;
+  const connectionType = conn?.effectiveType || '4g';
+  const isMobile = window.innerWidth < 1024;
+  const isLowPerf = saveData || ['slow-2g', '2g', '3g'].includes(connectionType);
+
+  return {
+    isLowPerf,
+    connectionType,
+    saveData,
+    isMobile,
+  };
+};
+
+export const usePerformanceMode = (): PerformanceMode => {
+  // Détection immédiate et complète AVANT le premier render
+  const [mode, setMode] = useState<PerformanceMode>(getInitialPerformanceMode());
 
   useEffect(() => {
     const checkPerformance = () => {
       // @ts-ignore
       const conn = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
-      
+
       const saveData = conn?.saveData || false;
       const connectionType = conn?.effectiveType || '4g';
       const isMobile = window.innerWidth < 1024;
-      
       const isLowPerf = saveData || ['slow-2g', '2g', '3g'].includes(connectionType);
 
-      setMode({
-        isLowPerf,
-        connectionType,
-        saveData,
-        isMobile
+      // Optimisation : ne met à jour que si les valeurs ont changé
+      setMode((prevMode) => {
+        if (
+          prevMode.isMobile === isMobile &&
+          prevMode.isLowPerf === isLowPerf &&
+          prevMode.connectionType === connectionType &&
+          prevMode.saveData === saveData
+        ) {
+          return prevMode; // Pas de changement, évite le re-render
+        }
+
+        return {
+          isLowPerf,
+          connectionType,
+          saveData,
+          isMobile,
+        };
       });
     };
 
-    checkPerformance();
+    // Écoute les changements de taille et de connexion
     window.addEventListener('resize', checkPerformance);
 
     // @ts-ignore
