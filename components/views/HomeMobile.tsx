@@ -75,7 +75,7 @@ const HomeMobile: React.FC<HomeMobileProps> = ({ onNavigate }) => {
                 Plongez dans un spectacle explosif qui célèbre les plus grandes stars de la musique internationale.
               </p>
 
-              <Button onClick={() => onNavigate(View.SPECTACLES)} size="sm" className="text-[10px] py-2 px-6 text-white">
+              <Button onClick={() => onNavigate(View.PRODUCTION_SPECTACLES, { sectionId: 'superstars' })} size="sm" className="text-[10px] py-2 px-6 text-white">
                 Découvrir
               </Button>
             </div>
